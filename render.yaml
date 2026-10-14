@@ -1,0 +1,126 @@
+# One same-origin Node service: Express serves both the built frontend and API.
+# Supply sync:false values in Render; never commit credentials to this file.
+# Legacy mutation/signing routes and hosted legacy agent services are not enabled.
+services:
+  - type: web
+    name: antara
+    runtime: node
+    plan: starter
+    region: oregon
+    autoDeployTrigger: commit
+    buildCommand: npm ci --include=dev && npm --prefix server ci --include=dev && npm --prefix server run typecheck && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    # Persistent disk for paired-vault registrations and the guardian approval
+    # ledger (owner-approved 2026-10-12). A disk pins the service to one instance
+    # and adds brief downtime on each deploy; the vault store lock is in-process.
+    disk:
+      name: antara-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: ">=22.12.0 <23"
+      - key: NODE_ENV
+        value: production
+      # Express binds all interfaces using PORT. tsx is retained by --include=dev.
+      - key: PORT
+        value: "10000"
+      # Per-IP rate limits and the Wi-Fi layer read the client from CF-Connecting-IP:
+      # Render's Cloudflare edge sets it on every request and refuses a client copy
+      # (403). X-Forwarded-For is not used here: the edge appends to the client's
+      # value and Render adds hops (client, Cloudflare, Render internal). This is
+      # also the default on a Render web service; never name a client-settable header.
+      - key: CLIENT_IP_HEADER
+        value: cf-connecting-ip
+      # Express proxy trust for req.ip and X-Forwarded-Proto. Never "true": that
+      # trusts client-forged headers. Not used for client IPs while CLIENT_IP_HEADER is set.
+      - key: TRUST_PROXY
+        value: "1"
+      - key: ANTARA_ENABLE_LEGACY_API
+        value: "false"
+      # Paired-vault storage on the disk above. Production refuses to use the
+      # guardian without it. The server opens the store at every start, whether or
+      # not the guardian is configured, and logs one "antara.vault-store" line:
+      # initialised, ready or refused. On the very first start with an empty disk,
+      # set ANTARA_VAULT_STORE_INIT=1 by hand for one deploy; remove it only after
+      # that start logs "initialised" (or the Render shell shows
+      # /var/data/paired-vaults-solana.initialised). Never set it to clear a refusal.
+      - key: DATA_DIR
+        value: /var/data
+
+      # Browser settings are PUBLIC and are compiled into the frontend bundle.
+      # Use the same Privy app ID for this value and the server value below.
+      - key: VITE_PRIVY_APP_ID
+        sync: false
+      - key: VITE_API_BASE
+        value: ""
+      - key: VITE_SOLANA_CLUSTER
+        value: mainnet-beta
+      - key: VITE_SOLANA_RPC_URL
+        sync: false
+      - key: VITE_SOLANA_WS_URL
+        sync: false
+      # Public pin of the ANTARA Solana guardian address (not a secret). The
+      # client refuses any other guardian. Must equal ANTARA_GUARDIAN_SOLANA_ADDRESS.
+      # Packaged desktop and extension builds set the same value at build time.
+      - key: VITE_ANTARA_GUARDIAN_SOLANA
+        sync: false
+
+      # Server-only credentials. None of these should use a VITE_ prefix.
+      - key: PRIVY_APP_ID
+        sync: false
+      - key: PRIVY_APP_SECRET
+        sync: false
+      - key: RELAY_API_KEY
+        sync: false
+      # No Relay swap caps (owner decision 2026-10-13): only the protocol sanity
+      # ceiling of 100,000 funding-stablecoin units per swap applies.
+      - key: SOLANA_CLUSTER
+        value: mainnet-beta
+      # Dedicated server RPCs, one per supported network in display order. If one
+      # is unset, the API uses that network's rate-limited official public RPC and
+      # reports rpcConfigured=false. Arbitrum and Polygon are no longer supported.
+      - key: SOLANA_RPC_URL
+        sync: false
+      - key: ETHEREUM_RPC_URL
+        sync: false
+      - key: BSC_RPC_URL
+        sync: false
+      - key: ROBINHOOD_RPC_URL
+        sync: false
+      - key: BASE_RPC_URL
+        sync: false
+
+      # Paired Solana vault guardian (docs/GUARDIAN.md). ANTARA_GUARDIAN_AUTH_KEY is
+      # a SECRET server key; never give it a VITE_ prefix. The others are public
+      # Privy ids and the guardian address. If any is missing, the vault routes
+      # answer 503 "not provisioned" and nothing is created or approved.
+      # Owner switch, set LAST: leave unset (off) until --verify-policy and
+      # --probe-user-jwt have both passed and are recorded in docs/VERIFICATION.md,
+      # then set exactly "true". While off, every Solana vault route answers 503
+      # "not provisioned" even with all guardian values present.
+      - key: ANTARA_PAIRED_VAULTS_ENABLED
+        sync: false
+      - key: ANTARA_GUARDIAN_AUTH_KEY
+        sync: false
+      - key: ANTARA_GUARDIAN_SOLANA_WALLET_ID
+        sync: false
+      - key: ANTARA_GUARDIAN_SOLANA_ADDRESS
+        sync: false
+      - key: ANTARA_GUARDIAN_POLICY_ID
+        sync: false
+      - key: ANTARA_GUARDIAN_SIGNER_ID
+        sync: false
+      - key: ANTARA_GUARDIAN_OWNER_QUORUM_ID
+        sync: false
+
+      # Set your actual HTTPS frontend origin(s), and allow them in Privy too.
+      # WEB_ORIGIN is one origin; ALLOWED_ORIGINS is a comma-separated list.
+      # Production: WEB_ORIGIN=https://antara.tech (www.antara.tech redirects there)
+      # ALLOWED_ORIGINS=https://antara.tech,https://www.antara.tech,https://tauri.localhost,chrome-extension://ckfkljfbjkmkjkkjkpbnmoehfipdcoin
+      # (packaged desktop and extension builds call https://antara.tech).
+      - key: WEB_ORIGIN
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
