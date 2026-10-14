@@ -1,0 +1,116 @@
+{
+ "capturedAt": "2026-10-14T05:00:52.827Z/2026-10-14T05:01:01.652Z",
+ "source": "GET https://api.relay.link/currencies/token/price, public, no API key",
+ "cases": {
+  "solana-native": {
+   "request": {
+    "address": "11111111111111111111111111111111",
+    "chainId": 792703809
+   },
+   "status": 200,
+   "body": {
+    "price": 107.831068
+   }
+  },
+  "solana-funding": {
+   "request": {
+    "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "chainId": 792703809
+   },
+   "status": 200,
+   "body": {
+    "price": 0.999898
+   }
+  },
+  "ethereum-native": {
+   "request": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "chainId": 1
+   },
+   "status": 200,
+   "body": {
+    "price": 2511.149244
+   }
+  },
+  "ethereum-funding": {
+   "request": {
+    "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "chainId": 1
+   },
+   "status": 200,
+   "body": {
+    "price": 0.999859
+   }
+  },
+  "bsc-native": {
+   "request": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "chainId": 56
+   },
+   "status": 200,
+   "body": {
+    "price": 744.462048
+   }
+  },
+  "bsc-funding": {
+   "request": {
+    "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "chainId": 56
+   },
+   "status": 200,
+   "body": {
+    "price": 0.999859
+   }
+  },
+  "robinhood-native": {
+   "request": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "chainId": 4663
+   },
+   "status": 200,
+   "body": {
+    "price": 2511.149244
+   }
+  },
+  "robinhood-funding": {
+   "request": {
+    "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+    "chainId": 4663
+   },
+   "status": 200,
+   "body": {
+    "price": 0.999881
+   }
+  },
+  "base-native": {
+   "request": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "chainId": 8453
+   },
+   "status": 200,
+   "body": {
+    "price": 2511.149244
+   }
+  },
+  "base-funding": {
+   "request": {
+    "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "chainId": 8453
+   },
+   "status": 200,
+   "body": {
+    "price": 0.999859
+   }
+  },
+  "unknown-token": {
+   "request": {
+    "address": "0xdeadbeef00000000000000000000000000000000",
+    "chainId": 1
+   },
+   "status": 400,
+   "body": {
+    "error": "Could not get price"
+   }
+  }
+ }
+}

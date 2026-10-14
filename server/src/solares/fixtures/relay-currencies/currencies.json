@@ -1,0 +1,770 @@
+{
+ "capturedAt": "2026-10-14T02:34:00Z/2026-10-14T02:39:40Z (2026-10-13 local, UTC-6)",
+ "source": "POST https://api.relay.link/currencies/v2, public, no API key",
+ "cases": {
+  "rh-native-ext-on": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "WETH",
+     "name": "WETH",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "rh-native-ext-off": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "ETH",
+     "name": "Ether",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "rh-usdg-ext-on": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+     "symbol": "USDG",
+     "name": "Global Dollar",
+     "decimals": 6,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.coingecko.com/coins/images/51281/standard/GDN_USDG_Token_200x200.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "rh-usdg-ext-off": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+     "symbol": "USDG",
+     "name": "Global Dollar",
+     "decimals": 6,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.coingecko.com/coins/images/51281/standard/GDN_USDG_Token_200x200.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "rh-default-list": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "limit": 50,
+    "defaultList": true,
+    "verified": true
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+     "symbol": "USDG",
+     "name": "Global Dollar",
+     "decimals": 6,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.coingecko.com/coins/images/51281/standard/GDN_USDG_Token_200x200.png",
+      "verified": true
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x370dd1181288392843bf52d998eb85c735d91688",
+     "symbol": "WISP",
+     "name": "Wisp",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179441/large/logo.jpg?1791809087",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xa3cc6b9a798573bb622fef64dd6f2bafdcfff71a",
+     "symbol": "Hound",
+     "name": "Dividend Hound",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179454/large/logo.webp?1791839333",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xe3e3df8bfb891d269a78ee33a456d36fb7344ec1",
+     "symbol": "IMD6900",
+     "name": "Identity.md 6900",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179442/large/logo.jpg?1791809391",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x0b7c6c138dc75622f4200d157b13fb93e6bd94fa",
+     "symbol": "MOW",
+     "name": "MowCat",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102175295/large/logo.jpg?1786074528",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x39dbed3a2bd333467115de45665cc57f813c4571",
+     "symbol": "PONS",
+     "name": "Pons",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.geckoterminal.com/jhitvkisdq8fhxvimdkpcw7y3dx5",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+     "symbol": "nvda",
+     "name": "NVIDIA (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xde09eec6f12311d98d982b07c2e0f9360dd002f9",
+     "symbol": "casino",
+     "name": "no crying in the casino",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179452/large/f599fdf06f162b6711d1f8ab8e6db50f_v2l.webp?1791834477",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "ETH",
+     "name": "Ether",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x43fc3c8440d85d7df99ecfbc6a267de8327f923b",
+     "symbol": "CLAUDIA",
+     "name": "Claudia",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179430/large/sIOsPhoS_400x400.jpg?1791776349",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+     "symbol": "spy",
+     "name": "SPDR S&amp;P 500 ETF Trust (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x2e8c31162b855a2ffa90f6f8634643ad6f111e18",
+     "symbol": "AI",
+     "name": "Artificial Inu",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.geckoterminal.com/byuw84qv9ez2sp99h8q3vzcws5iq",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3",
+     "symbol": "googl",
+     "name": "Alphabet Class A (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174124/large/0x2e0847e8910a9732eb3fb1bb4b70a580adad4fe3.png?1782444601",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xe59d493540a5b467fda09299a62c64c97db28972",
+     "symbol": "HOODINU",
+     "name": "Hood Sword Inu",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102179218/large/2182510a-5459-4b0d-bcac-9238095ddfe1.png?1791364374",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea",
+     "symbol": "spacex",
+     "name": "SpaceX (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174129/large/0x4a0e65a3eccec6dbe60ae065f2e7bb85fae35eea.png?1782444614",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x67c51c928d5d8383f3a58fc591a4e6f6463949ed",
+     "symbol": "AnsemCat",
+     "name": "Ansem Cat",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174690/large/logo.png?1784628480",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5",
+     "symbol": "CRCL",
+     "name": "Circle Internet Group • Robinhood Token",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174121/large/0xdf0992e440dd0be65bd8439b609d6d4366bf1cb5.png?1782444593",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x88ad8ddf1e3898412146a534538d418c6f8a9062",
+     "symbol": "STANDARD",
+     "name": "STANDARD",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102178385/large/standard.png?1789445039",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0xc0d6457c16cc70d6790dd43521c899c87ce02f35",
+     "symbol": "meta",
+     "name": "Meta Platforms (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174122/large/0xc0d6457c16cc70d6790dd43521c899c87ce02f35.png?1782444595",
+      "verified": false
+     }
+    },
+    {
+     "chainId": 4663,
+     "address": "0x94641b97010608c3827fb058074889f19868ff33",
+     "symbol": "VRAX",
+     "name": "Commander Vrax",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.geckoterminal.com/9ynfoj2ibjxo3rlf9aghubks9n96",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "rh-nvda-ext-on": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+     "symbol": "NVDA",
+     "name": "NVIDIA • Robinhood Token",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "rh-nvda-ext-off": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+     "symbol": "nvda",
+     "name": "NVIDIA (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174110/large/0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec.png?1782444565",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "rh-spy-ext-on": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+     "symbol": "SPY",
+     "name": "SPDR S&amp;P 500 ETF Trust • Robinhood Token",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "rh-spy-ext-off": {
+   "request": {
+    "chainIds": [
+     4663
+    ],
+    "address": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 4663,
+     "address": "0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+     "symbol": "spy",
+     "name": "SPDR S&amp;P 500 ETF Trust (Robinhood Tokenized Stock)",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/102174115/large/0x117cc2133c37b721f49de2a7a74833232b3b4c0c.png?1782444578",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "base-native-ext-on": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 8453,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "ETH",
+     "name": "Ether",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "base-native-ext-off": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 8453,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "ETH",
+     "name": "Ether",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "eth-native-ext-on": {
+   "request": {
+    "chainIds": [
+     1
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 1,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "ETH",
+     "name": "Ether",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/1/light.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "bsc-native-ext-on": {
+   "request": {
+    "chainIds": [
+     56
+    ],
+    "address": "0x0000000000000000000000000000000000000000",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 56,
+     "address": "0x0000000000000000000000000000000000000000",
+     "symbol": "BNB",
+     "name": "BNB",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://assets.relay.link/icons/currencies/bnb.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "sol-native-ext-on": {
+   "request": {
+    "chainIds": [
+     792703809
+    ],
+    "address": "11111111111111111111111111111111",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 792703809,
+     "address": "11111111111111111111111111111111",
+     "symbol": "SOL",
+     "name": "Solana",
+     "decimals": 9,
+     "vmType": "evm",
+     "metadata": {
+      "verified": false
+     }
+    }
+   ]
+  },
+  "bsc-usdc-ext-on": {
+   "request": {
+    "chainIds": [
+     56
+    ],
+    "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 56,
+     "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+     "symbol": "USDC",
+     "name": "USD Coin",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://ethereum-optimism.github.io/data/USDC/logo.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "bsc-usdc-ext-off": {
+   "request": {
+    "chainIds": [
+     56
+    ],
+    "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 56,
+     "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+     "symbol": "USDC",
+     "name": "USDCoin",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://ethereum-optimism.github.io/data/USDC/logo.png",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "base-bomi-ext-off": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x46d8f8ba030c1d09ae17d2b5107dfef4b331fe0d",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": []
+  },
+  "base-bomi-ext-on": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x46d8f8ba030c1d09ae17d2b5107dfef4b331fe0d",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 8453,
+     "address": "0x46d8f8ba030c1d09ae17d2b5107dfef4b331fe0d",
+     "symbol": "BOMI",
+     "name": "Book of Miggles",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/55572/large/IMG_4754.png?1763088169",
+      "verified": false
+     }
+    }
+   ]
+  },
+  "base-aero-ext-off": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 8453,
+     "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+     "symbol": "AERO",
+     "name": "Aerodrome",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/31745/large/token.png?1696530564",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "base-aero-ext-on": {
+   "request": {
+    "chainIds": [
+     8453
+    ],
+    "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 8453,
+     "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+     "symbol": "AERO",
+     "name": "Aerodrome",
+     "decimals": 18,
+     "vmType": "evm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/31745/large/token.png?1696530564",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "sol-bonk-ext-off": {
+   "request": {
+    "chainIds": [
+     792703809
+    ],
+    "address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+    "useExternalSearch": false,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 792703809,
+     "address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+     "symbol": "BONK",
+     "name": "Bonk",
+     "decimals": 5,
+     "vmType": "svm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/28600/large/bonk.jpg?1696527587",
+      "verified": true
+     }
+    }
+   ]
+  },
+  "sol-bonk-ext-on": {
+   "request": {
+    "chainIds": [
+     792703809
+    ],
+    "address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+    "useExternalSearch": true,
+    "limit": 10
+   },
+   "status": 200,
+   "body": [
+    {
+     "chainId": 792703809,
+     "address": "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
+     "symbol": "Bonk",
+     "name": "Bonk",
+     "decimals": 5,
+     "vmType": "svm",
+     "metadata": {
+      "logoURI": "https://coin-images.coingecko.com/coins/images/28600/large/bonk.jpg?1696527587",
+      "verified": true
+     }
+    }
+   ]
+  }
+ }
+}

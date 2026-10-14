@@ -1,0 +1,420 @@
+{
+  "source": "GET https://api.relay.link/chains (filtered to ANTARA networks and validation-relevant fields)",
+  "httpStatus": 200,
+  "requestedAt": 1791862719369,
+  "chains": [
+    {
+      "id": 792703809,
+      "name": "solana",
+      "displayName": "Solana",
+      "vmType": "svm",
+      "protocol": {
+        "v2": {
+          "chainId": "solana",
+          "depository": "99vQwtBwYtrqqD9YSXbdum3KBdxPAVxYTaQ3cfnJSrN2",
+          "depositoryVault": "7uTT8Xi5RWXzy7h9XL244GRgEycDYDhLjr3ZyNdXi8pZ"
+        }
+      },
+      "contracts": {
+        "erc20Router": "",
+        "v3": {
+          "erc20Router": "",
+          "approvalProxy": ""
+        }
+      },
+      "solverAddresses": [
+        "F7p3dFrjRTbtRp8FRF6qHLomXbKRBzpvBLjtQcfcgmNe",
+        "DNLbQ4t95LLPevvLdcFzN8RHNN83ntQJLt26E8VTnE7p"
+      ],
+      "solverCurrencies": [
+        {
+          "symbol": "PENGU",
+          "address": "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv",
+          "decimals": 6
+        },
+        {
+          "symbol": "USDC",
+          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "decimals": 6
+        },
+        {
+          "symbol": "USDT",
+          "address": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+          "decimals": 6
+        },
+        {
+          "symbol": "CASH",
+          "address": "CASHx9KJUStyftLFWGvEVf59SGeG9sh5FfcnZMVPCASH",
+          "decimals": 6
+        },
+        {
+          "symbol": "PYUSD",
+          "address": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+          "decimals": 6
+        },
+        {
+          "symbol": "USDG",
+          "address": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+          "decimals": 6
+        },
+        {
+          "symbol": "OUSD",
+          "address": "ousd2mJsPEckLHcSCDxyKD7NDGARZcfLbDZkKiatYHB",
+          "decimals": 6
+        },
+        {
+          "symbol": "SOL",
+          "address": "11111111111111111111111111111111",
+          "decimals": 9
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "ethereum",
+      "displayName": "Ethereum",
+      "vmType": "evm",
+      "protocol": {
+        "v2": {
+          "chainId": "ethereum",
+          "depository": "0x4cd00e387622c35bddb9b4c962c136462338bc31"
+        }
+      },
+      "contracts": {
+        "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+        "v3": {
+          "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+          "approvalProxy": "0xccc88a9d1b4ed6b0eaba998850414b24f1c315be"
+        }
+      },
+      "solverAddresses": [
+        "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+        "0x56c262027e0de4aea31d2489529cb25d23e58a8b",
+        "0xabb2acd3be814a80e502575d6c1dc5f789e9cd10",
+        "0xa67d7eb4dc68fa6ce8e34ef8cadaf075b9893fbb",
+        "0xada5bb90d0de0bd1b6f3938708f49295a8d1f7cb",
+        "0xa5a5491bca93dd4c076e4906e79e7673f4a5a142",
+        "0x370a7e2d300c14d79d4a7ee07aaca46c4b3012cf",
+        "0xca7ded7e4f4ba8ab3b10009236ae6d1b95094589",
+        "0x331d9a049d496385998067abf6cbb6371c8d2466",
+        "0x18dd3c14e34c1bc379f7538068c59160d9f68e25"
+      ],
+      "solverCurrencies": [
+        {
+          "symbol": "WETH",
+          "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDe",
+          "address": "0x4c9edd5852cd905f086c759e8383e09bff1e68b3",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDC",
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "decimals": 6
+        },
+        {
+          "symbol": "PLUME",
+          "address": "0x4c1746a800d224393fe2470c70a35717ed4ea5f1",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDT",
+          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "decimals": 6
+        },
+        {
+          "symbol": "mUSD",
+          "address": "0xaca92e438df0b2401ff60da7e4337b687a2435da",
+          "decimals": 6
+        },
+        {
+          "symbol": "DAI",
+          "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "decimals": 18
+        },
+        {
+          "symbol": "APE",
+          "address": "0x4d224452801aced8b2f0aebe155379bb5d594381",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDG",
+          "address": "0xe343167631d89b6ffc58b88d6b7fb0228795491d",
+          "decimals": 6
+        },
+        {
+          "symbol": "AUSD",
+          "address": "0x00000000efe302beaa2b3e6e1b18d08d69a9012a",
+          "decimals": 6
+        },
+        {
+          "symbol": "PYUSD",
+          "address": "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
+          "decimals": 6
+        },
+        {
+          "symbol": "USDm",
+          "address": "0xec2af1c8b110a61fd9c3fa6a554a031ca9943926",
+          "decimals": 18
+        },
+        {
+          "symbol": "kBTC",
+          "address": "0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98",
+          "decimals": 8
+        },
+        {
+          "symbol": "cirBTC",
+          "address": "0x72dfb2e44f59c5ad2bafe84314e5b99a7cd5075e",
+          "decimals": 8
+        },
+        {
+          "symbol": "SOMI",
+          "address": "0x1b0f6590d21dc02b92ad3a7d00f8884dc4f1aed9",
+          "decimals": 18
+        },
+        {
+          "symbol": "OUSD",
+          "address": "0x9f6f3991d525015a6f8caf062c83b62fd3ac4436",
+          "decimals": 6
+        },
+        {
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "name": "bsc",
+      "displayName": "BNB",
+      "vmType": "evm",
+      "protocol": {
+        "v2": {
+          "chainId": "bnb",
+          "depository": "0x4cd00e387622c35bddb9b4c962c136462338bc31"
+        }
+      },
+      "contracts": {
+        "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+        "v3": {
+          "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+          "approvalProxy": "0xccc88a9d1b4ed6b0eaba998850414b24f1c315be"
+        }
+      },
+      "solverAddresses": [
+        "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+        "0xa67d7eb4dc68fa6ce8e34ef8cadaf075b9893fbb",
+        "0x56c262027e0de4aea31d2489529cb25d23e58a8b",
+        "0xabb2acd3be814a80e502575d6c1dc5f789e9cd10",
+        "0xada5bb90d0de0bd1b6f3938708f49295a8d1f7cb",
+        "0xa5a5491bca93dd4c076e4906e79e7673f4a5a142",
+        "0x370a7e2d300c14d79d4a7ee07aaca46c4b3012cf",
+        "0xca7ded7e4f4ba8ab3b10009236ae6d1b95094589",
+        "0x331d9a049d496385998067abf6cbb6371c8d2466",
+        "0x18dd3c14e34c1bc379f7538068c59160d9f68e25",
+        "0x2bb27b73c602643f42471d4751fe4fc4eebefbd1",
+        "0xcc4bc7882d5ec4a3716e589ab3d816b61ae47a1a",
+        "0x0ec4e45f9ce3020024c0418a74cd31fbc487038f"
+      ],
+      "solverCurrencies": [
+        {
+          "symbol": "SOMI",
+          "address": "0xa9616e5e23ec1582c2828b025becf3ef610e266f",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDT",
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDe",
+          "address": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDC",
+          "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+          "decimals": 18
+        },
+        {
+          "symbol": "BNB",
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "id": 4663,
+      "name": "robinhood",
+      "displayName": "Robinhood Chain",
+      "vmType": "evm",
+      "protocol": {
+        "v2": {
+          "chainId": "robinhood",
+          "depository": "0x4cd00e387622c35bddb9b4c962c136462338bc31"
+        }
+      },
+      "contracts": {
+        "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+        "v3": {
+          "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+          "approvalProxy": "0xccc88a9d1b4ed6b0eaba998850414b24f1c315be"
+        }
+      },
+      "solverAddresses": [
+        "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+        "0xabb2acd3be814a80e502575d6c1dc5f789e9cd10",
+        "0xa5a5491bca93dd4c076e4906e79e7673f4a5a142",
+        "0xca7ded7e4f4ba8ab3b10009236ae6d1b95094589",
+        "0x331d9a049d496385998067abf6cbb6371c8d2466",
+        "0x18dd3c14e34c1bc379f7538068c59160d9f68e25",
+        "0x2bb27b73c602643f42471d4751fe4fc4eebefbd1",
+        "0x0ec4e45f9ce3020024c0418a74cd31fbc487038f",
+        "0xe209e0047731aa494289e1af9a0d03da19c5ef08",
+        "0x344daadde53a81f95bcc46a99d39107a509251a1",
+        "0x698dd6c03b50c3d4af12932a0388338bcdd3aaed",
+        "0xcc4bc7882d5ec4a3716e589ab3d816b61ae47a1a",
+        "0x919968a4238a54b381f022a360260ef5d7e015ac",
+        "0xa67d7eb4dc68fa6ce8e34ef8cadaf075b9893fbb",
+        "0x56c262027e0de4aea31d2489529cb25d23e58a8b",
+        "0x728f51950ff096dc03a48f5e83f45ac8bb75f500",
+        "0xada5bb90d0de0bd1b6f3938708f49295a8d1f7cb",
+        "0x511808449be470efaf4131838b2d4998500a6f72",
+        "0x370a7e2d300c14d79d4a7ee07aaca46c4b3012cf",
+        "0xf42b73d2e4d3912eade2a5f7ab39b54064c2acec",
+        "0xd782268f600403843484b70710daee6846fc0db8",
+        "0xd9497b53abcd6972b6370cb195b6bfd6b280e607",
+        "0x69374f8233a4069d48f8994d84052ecae6277ef5",
+        "0x6085932878d587332419ac976fc13d98eba6fdab",
+        "0x9bc462bce2acd6fbe2ef5470d55b439453451083",
+        "0x059df16bdcf8a6bd20bb4814518ff6a2df3c7b11",
+        "0x4381045063b19a615a272733fa6b5f169b622646",
+        "0x81adf99fcc6073157008e25010967d307875c13c",
+        "0xd460b4182ed80992d498290bcbc6b60e95de181b",
+        "0x67d698a325f29e17a9477f28ba4fe50f1cec60e4",
+        "0x1cd9d560440aab96f7b0a007ced7c2191cac5baf"
+      ],
+      "solverCurrencies": [
+        {
+          "symbol": "USDG",
+          "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+          "decimals": 6
+        },
+        {
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18
+        }
+      ]
+    },
+    {
+      "id": 8453,
+      "name": "base",
+      "displayName": "Base",
+      "vmType": "evm",
+      "protocol": {
+        "v2": {
+          "chainId": "base",
+          "depository": "0x4cd00e387622c35bddb9b4c962c136462338bc31"
+        }
+      },
+      "contracts": {
+        "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+        "v3": {
+          "erc20Router": "0xb92fe925dc43a0ecde6c8b1a2709c170ec4fff4f",
+          "approvalProxy": "0xccc88a9d1b4ed6b0eaba998850414b24f1c315be"
+        }
+      },
+      "solverAddresses": [
+        "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+        "0x56c262027e0de4aea31d2489529cb25d23e58a8b",
+        "0xabb2acd3be814a80e502575d6c1dc5f789e9cd10",
+        "0xa67d7eb4dc68fa6ce8e34ef8cadaf075b9893fbb",
+        "0xf42b73d2e4d3912eade2a5f7ab39b54064c2acec",
+        "0xd782268f600403843484b70710daee6846fc0db8",
+        "0xa5a5491bca93dd4c076e4906e79e7673f4a5a142",
+        "0x370a7e2d300c14d79d4a7ee07aaca46c4b3012cf",
+        "0xca7ded7e4f4ba8ab3b10009236ae6d1b95094589",
+        "0x331d9a049d496385998067abf6cbb6371c8d2466",
+        "0xada5bb90d0de0bd1b6f3938708f49295a8d1f7cb",
+        "0x18dd3c14e34c1bc379f7538068c59160d9f68e25",
+        "0x2bb27b73c602643f42471d4751fe4fc4eebefbd1",
+        "0x6085932878d587332419ac976fc13d98eba6fdab",
+        "0xd9497b53abcd6972b6370cb195b6bfd6b280e607",
+        "0xd460b4182ed80992d498290bcbc6b60e95de181b",
+        "0x1cd9d560440aab96f7b0a007ced7c2191cac5baf",
+        "0x4381045063b19a615a272733fa6b5f169b622646",
+        "0x9bc462bce2acd6fbe2ef5470d55b439453451083",
+        "0xe209e0047731aa494289e1af9a0d03da19c5ef08",
+        "0xcc4bc7882d5ec4a3716e589ab3d816b61ae47a1a",
+        "0x0ec4e45f9ce3020024c0418a74cd31fbc487038f",
+        "0x69374f8233a4069d48f8994d84052ecae6277ef5",
+        "0x67d698a325f29e17a9477f28ba4fe50f1cec60e4",
+        "0x919968a4238a54b381f022a360260ef5d7e015ac",
+        "0x344daadde53a81f95bcc46a99d39107a509251a1",
+        "0x698dd6c03b50c3d4af12932a0388338bcdd3aaed",
+        "0x511808449be470efaf4131838b2d4998500a6f72",
+        "0x728f51950ff096dc03a48f5e83f45ac8bb75f500",
+        "0x8583297605d996da21b5f47d69bf56a0f7fb74f4",
+        "0x53939cb0b8b5d8ebc8f8208273a04a12f21c7346",
+        "0x81adf99fcc6073157008e25010967d307875c13c",
+        "0x059df16bdcf8a6bd20bb4814518ff6a2df3c7b11",
+        "0xf57519ebc17347af5a6eb3df2eab68204b1df4e1",
+        "0x59a2c9bd639226012d59bba67b6990743193af78",
+        "0xfdee58cc140e170d72aba75f29b23d7bcc05da0c",
+        "0x6d0a66df5f4a32be3656f63750e0253eb59d9399",
+        "0x035239dd57a4716e14e4a00f84b8fa7ee03e152e",
+        "0x850ae73e224780aff70d46157e7acc1038d9ceb6",
+        "0xeb81da7ac500267f62d9f93a03a0a5fb86864b2a",
+        "0x744dce9a9e94ac1d124bec9f2a02a9b3ec68507d"
+      ],
+      "solverCurrencies": [
+        {
+          "symbol": "cbBTC",
+          "address": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+          "decimals": 8
+        },
+        {
+          "symbol": "WETH",
+          "address": "0x4200000000000000000000000000000000000006",
+          "decimals": 18
+        },
+        {
+          "symbol": "USDT",
+          "address": "0xfde4c96c8593536e31f229ea8f37b2ada2699bb2",
+          "decimals": 6
+        },
+        {
+          "symbol": "USDC",
+          "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "decimals": 6
+        },
+        {
+          "symbol": "SOL",
+          "address": "0x311935cd80b76769bf2ecc9d8ab7635b2139cf82",
+          "decimals": 9
+        },
+        {
+          "symbol": "DEGEN",
+          "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+          "decimals": 18
+        },
+        {
+          "symbol": "OUSD",
+          "address": "0xb2000000000000000000002feb517dfec7415344",
+          "decimals": 6
+        },
+        {
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "decimals": 18
+        }
+      ]
+    }
+  ]
+}
