@@ -1,0 +1,15 @@
+{
+  "id": "/app",
+  "name": "ANTARA Wallet",
+  "short_name": "ANTARA",
+  "description": "A multichain wallet with layered protection.",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#080b10",
+  "theme_color": "#080b10",
+  "icons": [
+    { "src": "/antara/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/antara/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

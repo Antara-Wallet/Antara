@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-layer-location"
+description = "Enables the layer_location command without any pre-configured scope."
+commands.allow = ["layer_location"]
+
+[[permission]]
+identifier = "deny-layer-location"
+description = "Denies the layer_location command without any pre-configured scope."
+commands.deny = ["layer_location"]

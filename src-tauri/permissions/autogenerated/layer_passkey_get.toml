@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-layer-passkey-get"
+description = "Enables the layer_passkey_get command without any pre-configured scope."
+commands.allow = ["layer_passkey_get"]
+
+[[permission]]
+identifier = "deny-layer-passkey-get"
+description = "Denies the layer_passkey_get command without any pre-configured scope."
+commands.deny = ["layer_passkey_get"]

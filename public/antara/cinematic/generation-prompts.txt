@@ -1,0 +1,21 @@
+ANTARA cinematic assets
+Generated with the built-in image_gen tool, October 2026.
+Delivered as WebP for the website; no image-model API key required.
+
+LANDSCAPE — vault-orbit-wide.webp
+Use case: stylized-concept
+Asset type: cinematic widescreen hero background for ANTARA, a premium mobile wallet brand. Create a finished 3D campaign artwork, no UI.
+Primary request: a monumental sculptural vault core: a dark titanium sphere held inside three large precisely engineered open orbital rings, with a small luminous ice-white core visible through the sphere's central seam. Quiet science fiction luxury, museum-grade industrial sculpture, expensive physical materials, cinematic editorial art direction.
+Scene: near-black atmospheric void, polished black stone floor with a very faint reflection, subtle distant horizon. No stars or nebula.
+Composition: very wide 16:9 landscape. Entire sculpture in the RIGHT HALF, three-quarter perspective, outer rings spanning from 50% to 95% of width. The LEFT 45% stays almost entirely black and uncluttered to receive large web typography. Keep all edges of the sculpture inside the frame.
+Lighting: one dramatic cold white top rim, pale blue edge reflections, faint volumetric haze only around the core. Fine brushed silver on the ring faces, black chrome sides. Deep blacks, silver, desaturated glacial blue. Spectacular but restrained.
+Constraints: ultra-detailed photorealistic CGI, physically plausible lighting and reflections, no text, no letters, no logos, no coins, no interface, no watermarks, no purple, no people.
+
+PORTRAIT — vault-orbit-portrait.webp
+Use case: stylized-concept
+Asset type: portrait cinematic artwork for ANTARA mobile wallet and mobile landing.
+Primary request: close, monumental sculptural vault core made of an obsidian titanium sphere within three precisely engineered open orbital rings. A thin seam across its dark core shines icy white. Luxury industrial science-fiction sculpture, photorealistic 3D render.
+Scene: almost-black void with a subtle reflective black stone plinth at the bottom. Dark silver brushed metal, black chrome, glacial blue reflections, soft white volumetric light.
+Composition: portrait 2:3. The sculpture is centered horizontally, concentrated in the middle 55% of height, with the full outer rings visible. Generous nearly black negative space in the top 20% and bottom 18%, soft edges fading into the backdrop so it can blend seamlessly into a black website. Low three-quarter camera, powerful and elegant.
+Lighting: cold white rim on machined ring edges, gentle glacial blue glow in the core, very fine atmospheric haze. No busy background.
+Constraints: finished premium campaign asset, crisp complex metal detail, no text, no logo, no letters, no cryptocurrency coins, no interface, no watermark, no purple, no people.

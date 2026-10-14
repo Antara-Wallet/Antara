@@ -1,0 +1,35 @@
+{
+  "created": "2026-10-13",
+  "file": "vault-still.webp",
+  "sha256": "6477ba51c8b099db57ae079c1e535e48c51677613e586aa70aadc762b940db17",
+  "bytes": 91368,
+  "width": 1600,
+  "height": 900,
+  "purpose": "Static fallback of the vault verification planet when WebGL is unavailable or its context is lost (docs/UI_ARGUS_PARITY.md 7.1, 7.4). No text; the station list carries every state.",
+  "tool": "Playwright headless Chromium 156.0.8078.4 (software WebGL: ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)), canvas WebP encoder at quality 0.86",
+  "command": "node tests/parity/vault-still.mjs",
+  "scene": "/tests/parity/planet.html?scene=still",
+  "parameters": {
+    "component": "AntaraSculpture variant=\"vault\" through VaultPlanet labels=\"none\"",
+    "stations": "all \"on\" (landing order: Bluetooth, Wi-Fi, Biometrics, Geolocation, MFA, Limits)",
+    "animated": false,
+    "reducedMotion": "reduce",
+    "backdrop": "public/antara/planet/space-terrain.png at 35% opacity over #030303",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "text": "none"
+  },
+  "commit": "41ca9f59db7594855b877e2e4b63090124662c4c",
+  "workingTree": "uncommitted changes in the source files below at capture time",
+  "sources": {
+    "src/solares/landing/AntaraSculpture.tsx": "654238ec88e7e7d29929054bca2d2b438a4efb57676866385a5e74cc35ce56bb",
+    "src/solares/verification/VaultPlanet.tsx": "b14fc90a046d7591283c3de1cb40e4f3eed0fe1d9a14140f9926af7a6e5f5634",
+    "src/solares/verification/verification.css": "d27d97ea1291aea65c3451bc440555a7bb7948e12f758fece9c1a6d465e2e500",
+    "tests/parity/planet.tsx": "78955915ca33e3cd252250dfb9d0b5154e519e84b1e9498348fd1c966b599eff",
+    "public/antara/planet/earth-obsidian.png": "49f8b8fd8b38e3db9c571a95f6dfe9a3b76e2f790a15b80483fc5123c99aa663",
+    "public/antara/planet/space-terrain.png": "39a843e5d7ee7d971737a787b84e96b93fec2895ecfa65ebe6f2a6ba8634eb34"
+  }
+}

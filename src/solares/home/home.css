@@ -1,0 +1,570 @@
+/*
+ * Wallet home (docs/UI_ARGUS_PARITY.md 4, 6.2, 6.4, 6.5; owner's Solflare reference,
+ * 2026-10-13). Area A. New classes use the `home-` prefix. A few legacy class names stay on
+ * these elements because the browser specs assert them (.desktop-balance-top,
+ * .desktop-balance-number, .desktop-balance-meta, .desktop-hero-art, .desktop-token-table,
+ * .desktop-token-mark); their legacy rules also style the Vault side, so they are
+ * overridden here inside `.home-*` scopes, never edited.
+ *
+ * One card system: every home card is `.ui-card` with radius --home-radius and padding
+ * --home-pad, so the balance card, the Assets card and the right-column cards line up.
+ */
+.desktop-app {
+  --home-radius: var(--r-lg);
+  --home-pad: 24px;
+  --home-gap: 20px;
+}
+
+/* ---------- Account bar (both sides) ---------- */
+.desktop-app .home-account-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; min-width: 0; }
+.desktop-app .home-switch { display: inline-flex; flex-shrink: 0; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-1); }
+.desktop-app .home-switch button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+  font: 550 var(--text-body)/1 var(--font-ui);
+  cursor: pointer;
+}
+.desktop-app .home-switch button:hover { color: var(--fg); }
+.desktop-app .home-switch button[aria-selected="true"] { background: var(--surface-3); color: var(--fg); box-shadow: inset 0 0 0 1px #ffffff10; }
+.desktop-app .home-switch button[aria-selected="true"] svg { color: var(--accent); }
+.desktop-app .home-switch button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.home-account-context { margin-right: auto; min-width: 0; overflow: hidden; color: var(--muted); font: 450 var(--text-small)/1.3 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-account-context[data-address] { font-family: var(--font-mono); }
+.desktop-app .home-account-bar .home-select { margin-left: auto; }
+
+/* ---------- Selects and search ---------- */
+.desktop-app .home-select {
+  height: 36px;
+  max-width: 180px;
+  padding: 0 32px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%239aa5b6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 4.5 3 3 3-3'/%3E%3C/svg%3E") no-repeat right 11px center;
+  color: var(--fg-2);
+  font: 500 var(--text-small)/1 var(--font-ui);
+  appearance: none;
+  cursor: pointer;
+}
+.desktop-app .home-select:hover { border-color: #ffffff24; }
+.desktop-app .home-select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.desktop-app .home-select option { background: var(--surface-2); color: var(--fg); }
+
+/* ---------- Layout: main column and, when wide, a right column ---------- */
+.home-layout { container: home / inline-size; }
+/* Single column (narrow and medium): balance, notices, Your vault, Assets. The column wrappers
+   step aside (display: contents) so the cards order themselves; Swap lives in the actions and the nav. */
+.home-grid { display: flex; flex-direction: column; gap: 16px; }
+.home-col-main, .home-col-side { display: contents; }
+.home-grid .home-hero { order: 1; }
+.home-grid .home-notices { order: 2; }
+.home-grid .home-vault-card { order: 3; }
+.home-grid .home-tabs { order: 4; }
+.home-grid .home-swap-card { order: 5; display: none; }
+/* Wide: a 2x2 grid so each right-hand card shares its row with the left-hand card beside it
+   (balance | Your vault, assets | Swap) and both end on the same line. Notices span both columns. */
+@container home (min-width: 900px) {
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 30%, 360px);
+    grid-template-areas: "hero vault" "notices notices" "tabs swap";
+    align-items: stretch;
+    /* Rows are spaced by margins, so the notices row adds no gap when there is no notice. */
+    gap: 0 var(--home-gap);
+  }
+  .home-grid :is(.home-hero, .home-vault-card, .home-notices) { margin-bottom: var(--home-gap); }
+  .home-col-main, .home-col-side { display: contents; }
+  .home-grid .home-hero { grid-area: hero; }
+  .home-grid .home-vault-card { grid-area: vault; }
+  .home-grid .home-notices { grid-area: notices; }
+  .home-grid .home-tabs { grid-area: tabs; min-width: 0; }
+  .home-grid .home-swap-card { grid-area: swap; display: flex; }
+  .desktop-app .home-grid .home-side-card { display: flex; flex-direction: column; min-width: 0; }
+  .home-grid .home-vault-card .home-side-actions,
+  .home-grid .home-swap-card .home-swap-open { margin-top: auto; }
+  .desktop-app .home-grid .home-swap-card > .home-swap-open,
+  .home-grid .home-vault-card > .home-side-actions { flex: 0 0 auto; }
+}
+
+/* ---------- Balance card ---------- */
+.desktop-app .home-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--home-pad) var(--home-pad) 20px;
+  border-radius: var(--home-radius);
+  background: var(--surface-1);
+  animation: none;
+}
+.desktop-app .home-hero .desktop-hero-art {
+  position: absolute;
+  inset: 0 0 0 38%;
+  z-index: -2;
+  background: url("/antara/observatory.png") right 30% / cover no-repeat;
+  opacity: .5;
+  filter: saturate(.5);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 55%);
+  mask-image: linear-gradient(90deg, transparent, #000 55%);
+  transform: none;
+  animation: none;
+}
+.desktop-app .home-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, var(--surface-1) 30%, #10121600 75%), linear-gradient(0deg, var(--surface-1) 24%, #10121600 64%);
+  pointer-events: none;
+}
+.home-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; min-height: 28px; }
+.desktop-app .home-hero .desktop-balance-top {
+  display: block;
+  margin: 0;
+  color: var(--muted);
+  font: 500 var(--text-eyebrow)/1.4 var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.home-hero-body { display: grid; justify-items: start; margin-top: 10px; }
+.home-hero-value { display: flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
+.desktop-app .home-hero .desktop-balance-number {
+  margin: 0;
+  min-width: 0;
+  color: var(--fg);
+  font: 500 52px/1.08 var(--font-display);
+  letter-spacing: -.055em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: none;
+  overflow-wrap: anywhere;
+}
+.desktop-app .home-hero .desktop-balance-number small {
+  margin-left: 10px;
+  color: var(--muted);
+  font: 500 var(--text-section)/1 var(--font-ui);
+  letter-spacing: 0;
+}
+/* Unknown balances: the muted "0.00" stand-in, never styled as a loaded amount. */
+.desktop-app .home-hero .desktop-balance-number .balance-placeholder { color: var(--faint); }
+/* "≈" before an estimated USD total: quieter than the figure. Explicit, so the legacy shells'
+   `.desktop-balance-number > span:first-child` prefix rule cannot restyle it. */
+.desktop-app .home-hero .desktop-balance-number .home-approx,
+.home-vault-amount .home-approx { margin: 0 .12em 0 0; color: var(--muted); font-size: .62em; font-weight: 450; letter-spacing: 0; vertical-align: .12em; }
+.desktop-app .home-privacy { width: 36px; min-height: 36px; height: 36px; color: var(--muted); }
+.home-breakdown { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 0; color: var(--fg-2); font: 500 var(--text-small)/1.5 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-breakdown span + span::before { content: "·"; margin-right: 14px; color: var(--faint); }
+/* What a total leaves out ("Excludes Base (couldn't load)"): one quiet line per note. */
+.home-notes { display: grid; gap: 2px; margin: 6px 0 0; color: var(--muted); font: 450 var(--text-small)/1.45 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 8px; min-width: 0; }
+.desktop-app .home-hero .desktop-balance-meta { display: block; max-width: none; margin: 0; color: var(--muted); font: 450 var(--text-small)/1.5 var(--font-ui); }
+.home-load-failed { margin-top: 6px; }
+
+/* Address, copy and explorer: top right of the card. */
+.home-address { display: flex; align-items: center; gap: 4px; min-width: 0; color: var(--muted); font-size: var(--text-small); }
+.home-address .ui-address {
+  align-items: center;
+  height: 30px;
+  padding: 0 4px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #0c0d10b3;
+}
+.home-address .ui-address-text { color: var(--fg-2); line-height: 1; }
+.home-address .ui-address-copy { width: 24px; height: 24px; margin: 0; border-radius: var(--r-pill); }
+.desktop-app .home-explorer {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #0c0d10b3;
+  color: var(--fg-2);
+  font: 500 var(--text-small)/1 var(--font-ui);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.desktop-app .home-explorer svg { color: var(--muted); }
+.desktop-app .home-explorer:hover { color: var(--fg); border-color: #ffffff26; }
+:is(.desktop-app, .ui-layer) .home-detail-explorer { color: var(--accent); font: 500 var(--text-small)/1.4 var(--font-ui); text-decoration: none; white-space: nowrap; }
+:is(.desktop-app, .ui-layer) .home-detail-explorer:hover { color: var(--fg); }
+.home-address-empty { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-pill); background: #0c0d10b3; color: var(--faint); white-space: nowrap; }
+.home-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.home-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 9px 0 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #0c0d10b3;
+  color: var(--fg-2);
+  font: 500 var(--text-min)/1 var(--font-ui);
+  white-space: nowrap;
+}
+.home-chip svg { width: 13px; height: 13px; color: var(--muted); }
+
+/* ---------- Actions, inside the balance card ---------- */
+/* When the wide grid stretches the card to its row, the extra room is shared above and below the
+   balance (justify-content: space-between on .home-hero), so the actions stay on the bottom edge
+   and the balance sits centred, never a band of empty card. */
+.desktop-app .home-hero { justify-content: space-between; }
+.home-hero-body { margin-bottom: 22px; }
+.home-actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.desktop-app .home-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: #15171cd9;
+  color: var(--fg);
+  font: 550 var(--text-body)/1 var(--font-ui);
+  letter-spacing: -.005em;
+  cursor: pointer;
+  transition: background-color var(--t-hover), border-color var(--t-hover);
+}
+.home-action-icon { display: grid; place-items: center; flex-shrink: 0; color: var(--accent); }
+.home-action-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.desktop-app .home-action:hover { background: var(--surface-3); border-color: #ffffff24; }
+.desktop-app .home-action:active:not(:disabled) { transform: none; background: #1d2026; }
+.desktop-app .home-action:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- Notices ---------- */
+.home-notices { display: grid; gap: 8px; }
+.desktop-app .home-notice { padding: 12px 16px; border-radius: var(--r-md); background: var(--surface-1); overflow-wrap: anywhere; }
+
+/* ---------- Right column cards: Your vault, Swap ---------- */
+.desktop-app .home-side-card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 14px;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: var(--home-radius);
+}
+.home-side-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.desktop-app .home-side-title { flex: 1; min-width: 0; margin: 0; color: var(--fg); font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; }
+.home-side-meta { flex-shrink: 0; color: var(--faint); font: 500 var(--text-min)/1.2 var(--font-ui); }
+.home-side-text { margin: 0; color: var(--muted); font: 450 var(--text-body)/1.55 var(--font-ui); overflow-wrap: anywhere; }
+.home-side-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.desktop-app .home-side-action { flex: 1 1 auto; min-height: 42px; }
+.desktop-app .home-side-action.ui-btn svg { color: var(--muted); }
+.desktop-app .home-side-retry { min-height: 42px; }
+.desktop-app .home-side-link { min-height: 36px; color: var(--muted); font-weight: 500; }
+/* Medium single column: the vault's action keeps a button's width instead of spanning the card. */
+@media (min-width: 641px) {
+  .desktop-app .home-vault-card .home-side-action { flex: 0 0 auto; min-width: 220px; }
+}
+.desktop-app .home-side-link:hover { color: var(--fg); }
+.desktop-app .home-side-link svg { color: currentColor; }
+
+/* Your vault */
+.home-vault-art { position: absolute; inset: 0 0 0 42%; z-index: -2; pointer-events: none; }
+.home-vault-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 72% 40%; opacity: .45; -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%); mask-image: linear-gradient(90deg, transparent, #000 60%); }
+.desktop-app .home-vault-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--surface-1) 35%, #10121600 85%); pointer-events: none; }
+.home-vault-icon { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border: 1px solid #9cbfff2e; border-radius: var(--r-sm); background: var(--accent-tint); color: var(--accent); }
+.home-vault-chip { flex-shrink: 0; }
+.home-vault-card .home-side-text { max-width: 52ch; }
+.home-vault-balance { display: grid; gap: 4px; }
+.home-vault-balance-label { color: var(--muted); font: 500 var(--text-eyebrow)/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+.home-vault-amount { color: var(--fg); font: 500 32px/1.1 var(--font-display); letter-spacing: -.045em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.home-vault-amount small { margin-left: 8px; color: var(--muted); font: 500 var(--text-body)/1 var(--font-ui); letter-spacing: 0; }
+.home-vault-sub { color: var(--muted); font: 450 var(--text-small)/1.4 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-vault-source { color: var(--faint); }
+.home-vault-steps { margin-top: 2px; }
+.home-vault-card[aria-busy="true"] .home-side-text { color: var(--faint); }
+/* In the right column the vault art is a banner across the card's top. */
+@container home (min-width: 900px) {
+  .home-col-side .home-vault-art { inset: 0 0 auto 0; height: 168px; }
+  .home-col-side .home-vault-art img { opacity: .8; object-position: 74% 42%; -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent); mask-image: linear-gradient(180deg, #000 45%, transparent); }
+  .desktop-app .home-col-side .home-vault-card::after { background: linear-gradient(90deg, #101216d9 0, #10121640 60%, #10121600), linear-gradient(180deg, #10121600 40px, var(--surface-1) 168px); }
+  .desktop-app .home-col-side .home-vault-card { padding-top: 100px; }
+  .home-col-side .home-side-actions { flex-direction: column; align-items: stretch; }
+  .home-col-side :is(.home-side-retry, .home-side-link) { align-self: center; }
+  /* With a balance or activation progress to show, the art moves behind the right half instead
+     of a top banner, so the card stays level with the balance card beside it. */
+  .desktop-app .home-col-side .home-vault-card:is([data-vault-state="active"], [data-vault-state="registered"]) { padding-top: 20px; }
+  .home-col-side .home-vault-card:is([data-vault-state="active"], [data-vault-state="registered"]) .home-vault-art { inset: 0 0 0 52%; height: auto; }
+  .home-col-side .home-vault-card:is([data-vault-state="active"], [data-vault-state="registered"]) .home-vault-art img { opacity: .3; -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%); mask-image: linear-gradient(90deg, transparent, #000 60%); }
+  .desktop-app .home-col-side .home-vault-card:is([data-vault-state="active"], [data-vault-state="registered"])::after { background: linear-gradient(90deg, var(--surface-1) 35%, #10121600 85%); }
+}
+
+/* Swap entry */
+.home-swap-legs { display: grid; gap: 0; }
+.desktop-app .home-swap-leg {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "label label" "asset amount";
+  align-items: center;
+  gap: 8px 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-hover), border-color var(--t-hover);
+}
+.desktop-app .home-swap-leg:hover { background: var(--surface-3); border-color: #ffffff24; }
+.desktop-app .home-swap-leg:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.home-swap-leg-label { grid-area: label; color: var(--muted); font: 500 var(--text-min)/1.2 var(--font-ui); }
+.home-swap-leg-asset { grid-area: asset; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.home-swap-leg-name { display: grid; gap: 2px; min-width: 0; }
+.home-swap-leg-name strong { overflow: hidden; color: var(--fg); font: 550 14px/1.2 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-swap-leg-name small { overflow: hidden; color: var(--muted); font: 450 var(--text-min)/1.3 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-swap-leg-amount { grid-area: amount; display: grid; justify-items: end; gap: 2px; text-align: right; }
+.home-swap-leg-amount strong { color: var(--fg); font: 550 15px/1.2 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-swap-leg-amount small { color: var(--muted); font: 450 var(--text-min)/1.3 var(--font-ui); }
+.home-swap-leg-chevron { grid-area: amount; justify-self: end; color: var(--muted); transform: rotate(-90deg); }
+:is(.desktop-app, .ui-layer) .home-swap-mark.home-token-mark { width: 32px; height: 32px; }
+:is(.desktop-app, .ui-layer) .home-swap-mark.home-token-mark svg { width: 17px; height: 17px; }
+.home-swap-pick { display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; border: 1px dashed #ffffff2e; border-radius: 50%; color: var(--muted); }
+.home-swap-switch { position: relative; z-index: 1; display: grid; place-items: center; justify-self: center; width: 30px; height: 30px; margin: -9px 0; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-1); color: var(--accent); }
+
+/* ---------- Assets card: Tokens | Activity ---------- */
+.desktop-app .home-tabs { overflow: hidden; border-radius: var(--home-radius); }
+.home-tabs-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 16px; padding: 0 var(--home-pad); border-bottom: 1px solid var(--hair); }
+.home-tablist { display: flex; gap: 24px; align-self: stretch; }
+.desktop-app .home-tab {
+  position: relative;
+  min-height: 54px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 550 14px/1 var(--font-ui);
+  cursor: pointer;
+}
+.desktop-app .home-tab:hover { color: var(--fg); }
+.desktop-app .home-tab[aria-selected="true"] { color: var(--fg); }
+.home-tab[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--accent); }
+.desktop-app .home-tab:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: var(--r-xs); }
+.home-controls { display: flex; align-items: center; gap: 8px; padding: 9px 0; min-width: 0; }
+.home-search { display: flex; align-items: center; gap: 8px; height: 36px; min-width: 0; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--faint); }
+.home-search:focus-within { border-color: #9cbfff66; }
+.desktop-app .home-search input { width: 140px; min-width: 0; padding: 0; border: 0; outline: none; background: none; color: var(--fg); font: 450 var(--text-body)/1 var(--font-ui); }
+.home-search input::placeholder { color: var(--faint); }
+.desktop-app .home-refresh { width: 36px; min-height: 36px; height: 36px; }
+.home-panel { min-height: 0; }
+
+/* Token rows */
+.desktop-app .home-token-table { display: block; width: 100%; margin: 0; border-collapse: separate; }
+.desktop-app .home-token-table tbody { display: block; }
+.desktop-app .home-token-table th, .desktop-app .home-token-table td { padding: 0; border: 0; color: inherit; font: inherit; letter-spacing: normal; text-align: left; text-transform: none; }
+.desktop-app .home-token-table thead th { font-size: var(--text-small); }
+.desktop-app .home-token-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 66px;
+  padding: 0 var(--home-pad);
+  border-top: 1px solid var(--hair);
+  transition: background-color var(--t-hover);
+}
+.desktop-app .home-token-row:first-child { border-top: 0; }
+.desktop-app .home-token-row:hover { background: #ffffff05; }
+.desktop-app .home-token-row:has(.home-token-open:focus-visible) { outline: 2px solid var(--focus); outline-offset: -2px; border-radius: var(--r-sm); }
+.desktop-app .home-token-asset { display: block; min-width: 0; }
+.desktop-app .home-token-open {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.home-token-open::after { content: ""; position: absolute; inset: 0; }
+.desktop-app .home-token-open:focus-visible { outline: none; }
+:is(.desktop-app, .ui-layer) .home-token-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface-3);
+  box-shadow: none;
+  color: var(--fg-2);
+  font-size: 0;
+}
+:is(.desktop-app, .ui-layer) .home-token-mark svg { width: 21px; height: 21px; }
+:is(.desktop-app, .ui-layer) .home-token-mark[data-mark="usdc"] { color: var(--accent); background: #9cbfff14; border-color: #9cbfff2e; }
+:is(.desktop-app, .ui-layer) .home-token-mark[data-mark="sol"] { color: var(--ice); }
+.home-token-name { display: grid; gap: 3px; min-width: 0; }
+.home-token-name strong { overflow: hidden; color: var(--fg); font: 550 14px/1.25 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-token-name small { overflow: hidden; color: var(--muted); font: 450 var(--text-small)/1.3 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.desktop-app .home-token-balance { display: grid; gap: 3px; justify-items: end; text-align: right; }
+.home-token-balance strong { color: var(--fg); font: 550 14px/1.25 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-token-balance small { color: var(--muted); font: 450 var(--text-min)/1.3 var(--font-ui); }
+.home-token-balance .home-token-usd { color: var(--faint); font-variant-numeric: tabular-nums; }
+
+.home-token-empty { padding-bottom: 8px; }
+.home-empty.ui-empty { padding: 34px 20px 30px; }
+.home-token-skeleton { display: grid; gap: 0; padding: 0 var(--home-pad) 8px; }
+.home-skeleton-row { display: grid; grid-template-columns: 40px minmax(0, 1fr) 64px; align-items: center; gap: 14px; height: 64px; border-top: 1px solid var(--hair); }
+.home-skeleton-dot { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-3); }
+.home-skeleton-lines { display: grid; gap: 7px; }
+.home-skeleton-lines span, .home-skeleton-amount { height: 9px; border-radius: 5px; background: var(--surface-3); }
+.home-skeleton-lines span:first-child { width: 42%; }
+.home-skeleton-lines span:last-child { width: 26%; opacity: .7; }
+
+/* Activity tab */
+.home-activity { padding-bottom: 6px; }
+.home-inline-alert { margin: 14px var(--home-pad) 0; }
+.home-activity-list { margin: 0; padding: 0; list-style: none; }
+.home-activity-row { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto auto; align-items: center; gap: 14px; min-height: 66px; padding: 0 var(--home-pad); border-top: 1px solid var(--hair); }
+.home-activity-row:first-child { border-top: 0; }
+.home-activity-icon { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface-3); color: var(--fg-2); }
+.home-activity-text { display: grid; gap: 3px; min-width: 0; }
+.home-activity-text strong { overflow: hidden; color: var(--fg); font: 550 var(--text-body)/1.3 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-activity-text small { overflow: hidden; color: var(--muted); font: 450 var(--text-min)/1.35 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.home-activity-amount { color: var(--fg); font: 550 var(--text-body)/1.2 var(--font-ui); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.desktop-app .home-activity-link { width: 36px; min-height: 36px; height: 36px; }
+.home-activity-loading { margin: 0; padding: 34px 20px; color: var(--muted); font-size: var(--text-body); text-align: center; }
+.home-activity-foot { display: flex; justify-content: center; padding: 6px 20px 10px; border-top: 1px solid var(--hair); }
+
+/* ---------- Sign-in welcome (6.2), inside the Assets card ---------- */
+.home-welcome { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 300px; overflow: hidden; }
+.home-welcome-art { position: absolute; inset: 0 0 0 34%; z-index: -2; }
+.home-welcome-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 78% 30%; opacity: .85; }
+.home-welcome::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--surface-1) 36%, #10121600 72%), linear-gradient(0deg, var(--surface-1), #10121600 34%); pointer-events: none; }
+.home-welcome-copy { display: grid; justify-items: start; gap: 10px; max-width: 460px; padding: 32px var(--home-pad); }
+.home-welcome-copy .ui-eyebrow { margin: 0; color: var(--accent); }
+.desktop-app .home-welcome-copy h2 { margin: 0; color: var(--fg); font: 550 26px/1.15 var(--font-display); letter-spacing: -.04em; }
+.home-welcome-facts { display: grid; gap: 8px; margin: 6px 0 10px; padding: 0; list-style: none; }
+.home-welcome-facts li { position: relative; padding-left: 18px; color: var(--fg-2); font: 450 var(--text-body)/1.55 var(--font-ui); }
+.home-welcome-facts li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid var(--accent); }
+.home-welcome-action { min-width: 150px; }
+
+/* ---------- Token detail (6.5) ---------- */
+:is(.desktop-app, .ui-layer) .home-detail-panel { display: grid; gap: 16px; max-width: 760px; margin: 0 auto; }
+:is(.desktop-app, .ui-layer) .home-detail-back { justify-self: start; min-height: 36px; padding: 0 6px 0 2px; }
+.home-detail { display: grid; gap: 16px; }
+.home-detail-head { display: grid; justify-items: center; gap: 6px; padding: 6px 0 4px; text-align: center; }
+:is(.desktop-app, .ui-layer) .home-detail-mark { width: 64px; height: 64px; margin-bottom: 6px; }
+:is(.desktop-app, .ui-layer) .home-detail-mark svg { width: 32px; height: 32px; }
+:is(.desktop-app, .ui-layer) .home-detail-name { margin: 0; color: var(--fg); font: 550 var(--text-screen)/1.15 var(--font-display); letter-spacing: -.04em; }
+.home-detail-label { margin: 0; color: var(--muted); font: 500 var(--text-body)/1.4 var(--font-ui); }
+.home-network-chip { display: inline-flex; align-items: center; gap: 7px; height: 28px; margin-top: 6px; padding: 0 11px 0 9px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface-2); color: var(--fg-2); font: 500 var(--text-small)/1 var(--font-ui); }
+.home-network-chip svg { width: 14px; height: 14px; color: var(--muted); }
+.home-detail-card { display: grid; gap: 8px; padding: 18px 20px; }
+.home-detail-card .ui-eyebrow { margin: 0; }
+.home-detail-amount { margin: 0; color: var(--fg); font: 500 30px/1.15 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.home-detail-amount small { margin-left: 8px; color: var(--muted); font: 500 var(--text-body)/1 var(--font-ui); letter-spacing: 0; }
+.home-detail-note { margin: 0; color: var(--muted); font-size: var(--text-small); }
+.home-detail-usd { margin: 2px 0 0; color: var(--muted); font: 450 var(--text-body)/1.4 var(--font-ui); font-variant-numeric: tabular-nums; }
+.home-detail-identity { margin: 0; color: var(--fg); font: 550 var(--text-section)/1.35 var(--font-ui); }
+.home-detail-facts { display: grid; gap: 0; margin: 4px 0 0; }
+.home-detail-facts > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--hair); }
+.home-detail-facts dt { color: var(--muted); font: 500 var(--text-small)/1.55 var(--font-ui); }
+.home-detail-facts dd { min-width: 0; margin: 0; color: var(--fg-2); font: 450 var(--text-small)/1.55 var(--font-ui); }
+.home-detail-issuer { margin: 4px 0 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); font: 450 var(--text-small)/1.55 var(--font-ui); }
+:is(.desktop-app, .ui-layer) .home-detail-explorer { justify-self: center; }
+.home-detail-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.home-detail-actions .ui-btn svg { color: var(--muted); }
+.home-detail-foot { margin: 0; color: var(--faint); font: 450 var(--text-min)/1.5 var(--font-ui); text-align: center; }
+.home-detail-panel > .home-detail-head { margin-top: -8px; }
+
+/* ---------- Narrow: phones (390px) and the extension side panel (360-420px) ---------- */
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .desktop-app { --home-pad: 18px; --home-gap: 14px; }
+  .desktop-app .home-account-bar { gap: 10px; margin-bottom: 14px; }
+  .desktop-app .home-account-bar .home-select { max-width: 150px; height: 44px; }
+  .desktop-app .home-switch button { min-height: 38px; padding: 0 14px; }
+  .home-grid { gap: 14px; }
+
+  .desktop-app .home-hero { padding: 18px 18px 16px; }
+  .desktop-app .home-hero .desktop-hero-art {
+    inset: 0 -14% 0 44%;
+    background: url("/antara/cinematic/vault-orbit-portrait.webp") center 30% / cover no-repeat;
+    opacity: .45;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
+    mask-image: linear-gradient(90deg, transparent, #000 60%);
+  }
+  .desktop-app .home-hero::after { background: linear-gradient(90deg, var(--surface-1) 34%, #10121600 88%), linear-gradient(0deg, var(--surface-1) 38%, #10121600 75%); }
+  .desktop-app .home-hero .desktop-balance-number { font-size: 40px; }
+  .desktop-app .home-hero .desktop-balance-number small { font-size: 14px; margin-left: 8px; }
+  .desktop-app .home-privacy { width: 40px; height: 40px; min-height: 40px; }
+  .home-hero-body { margin-top: 8px; margin-bottom: 18px; }
+  /* Compact address: the short address with copy; the explorer as an icon. */
+  .home-address .ui-address { height: 32px; padding-left: 9px; }
+  .home-address .ui-address-copy { width: 30px; height: 30px; }
+  .desktop-app .home-explorer { width: 32px; height: 32px; padding: 0; justify-content: center; }
+  .home-explorer-text { display: none; }
+  .home-chips { gap: 5px; }
+  .home-chip { height: 22px; padding: 0 7px 0 6px; }
+  .home-chip > span { display: none; }
+
+  /* Actions: four equal tiles inside the card, icon above label. */
+  .home-actions { gap: 8px; }
+  .desktop-app .home-action { flex-direction: column; gap: 6px; height: 66px; padding: 0 4px; border-radius: var(--r-md); font-size: var(--text-small); }
+  .home-action-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-tint); }
+
+  .desktop-app .home-side-card { padding: 16px 18px; gap: 12px; }
+  .home-vault-art { inset: 0 0 0 52%; }
+  .home-vault-art img { opacity: .32; }
+  .home-vault-card .home-side-text { font-size: var(--text-small); }
+  .desktop-app .home-side-action { min-height: 44px; }
+
+  /* Tabs and the network filter on one row; search and refresh below. */
+  .home-tabs-head { display: grid; grid-template-columns: minmax(0, 1fr) 112px 44px; grid-template-areas: "tabs select select" "search search refresh"; align-items: center; gap: 0 8px; padding: 0 16px; }
+  .home-tablist { grid-area: tabs; gap: 22px; }
+  .desktop-app .home-tab { min-height: 52px; }
+  .home-controls { display: contents; }
+  .desktop-app .home-controls .home-select { grid-area: select; width: 100%; height: 40px; max-width: none; }
+  .home-search { grid-area: search; height: 44px; margin: 10px 0 12px; }
+  .desktop-app .home-search input { width: 100%; font-size: 16px; }
+  .desktop-app .home-refresh { grid-area: refresh; width: 44px; height: 44px; min-height: 44px; margin: 10px 0 12px; }
+
+  .desktop-app .home-token-row { min-height: 64px; padding: 0 16px; gap: 12px; }
+  .desktop-app .home-token-mark { width: 38px; height: 38px; }
+  .home-activity-row { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; padding: 0 16px; }
+  .desktop-app .home-activity-link { display: none; }
+
+  .home-welcome { display: block; min-height: 0; }
+  .home-welcome-art { inset: 0 -20% auto 40%; height: 220px; }
+  .home-welcome-art img { object-position: center 40%; opacity: .65; }
+  .home-welcome::after { background: linear-gradient(90deg, var(--surface-1) 26%, #10121600 80%), linear-gradient(0deg, var(--surface-1) 30%, #10121600 62%); }
+  .home-welcome-copy { max-width: none; padding: 22px 18px 20px; }
+  .desktop-app .home-welcome-copy h2 { font-size: 22px; }
+  .home-welcome-action { width: 100%; }
+
+  .home-detail { gap: 14px; }
+  :is(.desktop-app, .ui-layer) .home-detail-mark.home-token-mark { width: 56px; height: 56px; }
+  .home-detail-facts > div { grid-template-columns: 80px minmax(0, 1fr); }
+  .home-detail-actions .ui-btn { padding: 0 8px; }
+}
+@media (max-width: 380px) {
+  .home-address .ui-address-text { font-size: var(--text-min); }
+  .desktop-app .home-hero .desktop-balance-number { font-size: 36px; }
+}

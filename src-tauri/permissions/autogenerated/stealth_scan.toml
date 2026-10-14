@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-stealth-scan"
+description = "Enables the stealth_scan command without any pre-configured scope."
+commands.allow = ["stealth_scan"]
+
+[[permission]]
+identifier = "deny-stealth-scan"
+description = "Denies the stealth_scan command without any pre-configured scope."
+commands.deny = ["stealth_scan"]

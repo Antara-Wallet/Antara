@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "noEmit": true
+  },
+  "include": ["../vite.extension.config.ts", "../playwright.extension.config.ts", "./**/*.ts", "../tests/extension/**/*.ts", "../src/extension/**/*", "../src/platform/**/*", "../src/vite-env.d.ts"]
+}

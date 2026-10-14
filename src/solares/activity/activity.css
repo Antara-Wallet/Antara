@@ -1,0 +1,101 @@
+/*
+ * Activity screen and detail sheet (docs/UI_ARGUS_PARITY.md 6.11). Area E.
+ * Tokens come from ui/tokens.css (scoped to .desktop-app and the .ui-layer portal).
+ * Rows keep the legacy class `desktop-activity-row` for the browser specs until the
+ * post-gate test update; every legacy rule on it is overridden here with selectors at
+ * least as specific (section 9, CSS ownership rule 3).
+ */
+.act-screen { display: grid; gap: 16px; width: 100%; max-width: 880px; margin: 0 auto; color: var(--fg); font: 400 var(--text-body)/1.5 var(--font-ui); }
+
+/* ---------- Heading and filters ---------- */
+.act-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; }
+.act-heading { min-width: 0; }
+.act-heading h2 { margin: 0; font: 550 var(--text-screen)/1.15 var(--font-display); letter-spacing: -.04em; color: var(--fg); }
+.act-heading p { margin: 6px 0 0; color: var(--muted); font-size: var(--text-body); }
+.act-filters { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-1); }
+.act-filters button {
+  min-width: 56px; min-height: 34px; padding: 0 12px; border: 0; border-radius: 7px; background: none;
+  color: var(--muted); font: 550 var(--text-small)/1 var(--font-ui); cursor: pointer;
+  transition: background-color var(--t-hover), color var(--t-hover);
+}
+.act-filters button:hover { color: var(--fg); }
+.act-filters button[aria-pressed="true"] { background: var(--accent-tint); color: var(--fg); box-shadow: inset 0 -2px 0 var(--accent); }
+.act-filters button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- Rows ---------- */
+.act-list { margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.act-list > .act-row.desktop-activity-row { display: flex; align-items: center; gap: 4px; margin: 0; padding: 0 10px 0 0; border: 0; border-bottom: 1px solid var(--hair); }
+.act-list > .act-row.desktop-activity-row:last-child { border-bottom: 0; }
+.act-row-main {
+  flex: 1; min-width: 0; display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; grid-template-areas: "icon text amount";
+  align-items: center; gap: 14px; margin: 0; padding: 14px 10px 14px 18px; border: 0; border-radius: 0;
+  background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  transition: background-color var(--t-hover);
+}
+.act-row-main:hover { background: var(--surface-2); }
+.act-row-main:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.act-icon {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--line); color: var(--fg-2);
+}
+.act-icon[data-tone="ok"] { color: var(--ice); }
+.act-icon[data-tone="warn"] { color: var(--warn); }
+.act-icon[data-tone="danger"] { color: var(--danger); }
+.act-row-main > .act-icon { grid-area: icon; }
+.act-text { grid-area: text; display: grid; gap: 3px; min-width: 0; }
+.act-title { overflow: hidden; color: var(--fg); font: 500 14px/1.3 var(--font-ui); letter-spacing: -.01em; text-overflow: ellipsis; white-space: nowrap; }
+.act-meta { color: var(--muted); font-size: var(--text-small); line-height: 1.45; overflow-wrap: anywhere; }
+.act-amount { grid-area: amount; color: var(--fg); font: 550 14px/1.2 var(--font-display); letter-spacing: -.01em; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.act-action { flex: 0 0 auto; }
+.act-action-none { display: block; width: var(--control-h); }
+
+/* ---------- Empty, loading and footnote ---------- */
+.act-screen .act-empty.ui-empty { position: relative; isolation: isolate; overflow: hidden; min-height: 300px; align-content: center; justify-items: start; gap: 10px; padding: 40px; text-align: left; }
+.act-screen .act-empty .ui-empty-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; aspect-ratio: auto; max-width: none; border: 0; border-radius: 0; object-fit: cover; object-position: right center; opacity: .9; }
+.act-screen .act-empty::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--surface-1) 0%, #101216f2 38%, #10121666 70%, #10121614); }
+.act-screen .act-empty .ui-empty-title { margin: 0; font-size: 20px; }
+.act-screen .act-empty .ui-empty-text { max-width: 38ch; }
+.act-loading { display: grid; gap: 14px; padding: 18px; }
+.act-loading > p { margin: 0; color: var(--muted); }
+.act-skeleton { display: grid; gap: 10px; }
+.act-skeleton span { display: block; height: 44px; border-radius: var(--r-sm); background: var(--surface-2); }
+.act-filter-empty { margin: 0; padding: 22px 18px; color: var(--muted); text-align: center; }
+.act-foot { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; }
+.act-note { flex: 1 1 320px; margin: 0; color: var(--muted); font-size: var(--text-small); line-height: 1.6; }
+.act-foot .ui-btn-text { min-height: 32px; }
+
+/* ---------- Detail sheet ---------- */
+.act-detail-hero { display: grid; justify-items: center; gap: 8px; padding: 4px 0 16px; text-align: center; }
+.act-icon-lg { width: 56px; height: 56px; border-radius: var(--r-md); }
+.act-detail-title { margin: 4px 0 0; color: var(--fg); font: 550 20px/1.25 var(--font-display); letter-spacing: -.02em; overflow-wrap: anywhere; }
+.act-detail-list { margin: 0; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); overflow: hidden; }
+.act-detail-row { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; padding: 11px 14px; border-top: 1px solid var(--hair); }
+.act-detail-row:first-child { border-top: 0; }
+.act-detail-row dt { color: var(--muted); font-size: var(--text-small); line-height: 1.55; }
+.act-detail-row dd { margin: 0; min-width: 0; color: var(--fg); font-size: var(--text-body); line-height: 1.55; overflow-wrap: anywhere; }
+.act-detail-sub { display: block; color: var(--muted); font-size: var(--text-small); }
+.act-detail-note { margin: 14px 0 0; color: var(--muted); font-size: var(--text-small); line-height: 1.6; }
+.act-sheet .ui-sheet-footer > * { flex: 1 1 200px; }
+
+/* ---------- Narrow: phones and the extension side panel ---------- */
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .act-screen { gap: 14px; }
+  .act-head { align-items: stretch; }
+  .act-heading p { font-size: var(--text-small); }
+  .act-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; }
+  .act-filters button { min-width: 0; min-height: 44px; padding: 0 6px; }
+  .act-foot .ui-btn-text { min-height: 44px; }
+  .act-list > .act-row.desktop-activity-row { padding-right: 4px; }
+  .act-row-main { grid-template-columns: 36px minmax(0, 1fr); grid-template-areas: "icon text" ". amount"; gap: 4px 12px; padding: 12px 6px 12px 14px; }
+  .act-icon { width: 36px; height: 36px; align-self: start; }
+  .act-amount { justify-self: start; font-size: 13px; text-align: left; white-space: normal; overflow-wrap: anywhere; }
+  .act-screen .act-empty.ui-empty { min-height: 0; padding: 26px 20px; }
+  /* 4.5: no art in the narrow Activity empty state (ActivityScreen omits the image). */
+  .act-screen .act-empty::before { display: none; }
+  .act-detail-row { grid-template-columns: 92px minmax(0, 1fr); padding: 10px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act-screen *, .act-sheet * { transition: none !important; animation: none !important; }
+}
+:is([data-motion="off"], [data-window-hidden="true"]) .act-screen * { transition: none !important; animation: none !important; }

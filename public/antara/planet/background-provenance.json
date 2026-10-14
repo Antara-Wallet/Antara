@@ -1,0 +1,8 @@
+{
+  "created": "2026-10-12",
+  "tool": "built-in image_gen",
+  "source": "User-selected Obsidian Atlas concept",
+  "purpose": "Static cinematic terrain background; animated globe, stars and foreground rocks are rendered separately in Three.js",
+  "file": "space-terrain.png",
+  "prompt": "Edit this reference into a BACKGROUND PLATE for the same cinematic website. REMOVE absolutely all typography, logos, UI buttons, icons, callout lines, labels. REMOVE the entire central Earth planet AND its metal orbital ring and all attached stations. Inpaint that entire area with continuous deep near-black outer space and very subtle sparse stars. KEEP the beautiful realistic jagged black rocky terrain along the lowest 15 percent and bottom corners, the faint angled blue-white distant horizon in the lower right, the small distant planet partially visible at the far right edge, and subtle dark cosmic dust. Keep center and top almost black with clean negative space for us to composite a separate real-time 3D planet and website text. No central planet or ring, no floating central object, NO WORDS or labels whatsoever. Wide16:9 cinematic photoreal scene, cold black charcoal with selective icy blue highlights. Background support layer only, extraordinarily subtle and dark so the main 3D object will dominate."
+}

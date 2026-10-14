@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-webauthn-get-assertion"
+description = "Enables the webauthn_get_assertion command without any pre-configured scope."
+commands.allow = ["webauthn_get_assertion"]
+
+[[permission]]
+identifier = "deny-webauthn-get-assertion"
+description = "Denies the webauthn_get_assertion command without any pre-configured scope."
+commands.deny = ["webauthn_get_assertion"]

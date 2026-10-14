@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-layer-passkey-create"
+description = "Enables the layer_passkey_create command without any pre-configured scope."
+commands.allow = ["layer_passkey_create"]
+
+[[permission]]
+identifier = "deny-layer-passkey-create"
+description = "Denies the layer_passkey_create command without any pre-configured scope."
+commands.deny = ["layer_passkey_create"]

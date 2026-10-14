@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-list-usb-devices"
+description = "Enables the list_usb_devices command without any pre-configured scope."
+commands.allow = ["list_usb_devices"]
+
+[[permission]]
+identifier = "deny-list-usb-devices"
+description = "Denies the list_usb_devices command without any pre-configured scope."
+commands.deny = ["list_usb_devices"]

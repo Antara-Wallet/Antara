@@ -1,0 +1,28 @@
+ANTARA
+A Solana-primary multichain wallet with on-chain multisig vaults.
+
+Privy supplies identity and embedded spending wallets. Spending wallets are
+separate from vaults.
+
+Paired vaults (Solana) are Squads 2-of-2 multisigs: your Privy wallet and the
+ANTARA guardian, a Privy server wallet under a deny-by-default policy. The
+guardian approves a release only to one of your own linked Solana wallets,
+and only within any per-release or daily caps you set with the optional
+Limits layer (ANTARA sets none). Paired vaults have no on-chain time lock.
+Both keys are held by Privy. Paired vaults cannot be activated until the
+guardian is configured on the API server. Earlier EVM paired Safes are shown read-only.
+
+Independent-owner vaults (Squads on Solana, Safe on EVM networks) remain in
+Settings. Each new independent vault requires multiple signatures. A Squads
+vault may set an optional on-chain time lock (none by default); Safe has none.
+
+The legacy local keystore can no longer sign, reveal its recovery phrase or
+private keys, or import a private key in this build. Do not send funds to a
+legacy keystore account or its stealth addresses: this build cannot spend
+them.
+USB, Bluetooth and location readings are contextual signals, not independent
+cryptographic signers.
+
+This is a developer preview. Funded acceptance testing is not complete.
+Configure your providers and test with limited funds before relying on a
+deployment. Review README.md and docs/SECURITY.md.

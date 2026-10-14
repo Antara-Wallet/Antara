@@ -1,0 +1,98 @@
+/*
+ * ANTARA design tokens (docs/UI_ARGUS_PARITY.md 4.1-4.3). One set for every new
+ * component. Scoped, never on :root, so the public landing and Tailwind's own
+ * theme variables are untouched:
+ *   .desktop-app  the wallet shell
+ *   .ui-layer, .ui-toast-host  portal roots (Sheet, Toast) that render outside the shell
+ *   .ui-scope     any other root that renders ui/ components (test harnesses)
+ *
+ * Phase 0 adds the tokens only. Re-pointing the legacy --desktop-* variables of
+ * desktop.css / cinematic.css / observatory.css / mobile.css to these tokens is a
+ * visible change and lands with the phase-1 shell work (section 9, Area A task 1).
+ */
+:where(.desktop-app, .ui-layer, .ui-scope, .ui-toast-host) {
+  /* Surfaces: black and charcoal only. Blue never fills more than a chip, a switch or a 2px underline. */
+  --ink-0: #030303;
+  --ink-1: #08090b;
+  --surface-1: #101216;
+  --surface-2: #131519;
+  --surface-3: #191b20;
+  --line: #ffffff14;
+  --hair: #ffffff0d;
+
+  /* Text */
+  --fg: #eaf1ff;
+  --fg-2: #c9d2df;
+  --muted: #9aa5b6;
+  --faint: #6f7a8a;
+
+  /* Selective ice and cobalt accents */
+  --accent: #9cbfff;
+  --accent-tint: #a9c6ff12;
+  --primary-bg: #c3d5f1;
+  --primary-fg: #142038;
+  --primary-hover: #d8e5fb;
+  --focus: #86afff;
+  --ice: #c4e5ff;
+  --warn: #e9c07a;
+  --danger: #ff8f86;
+  --switch-on: #3867df;
+
+  /* Type (4.2). --font-display matches Tailwind's theme value; --antara-body was referenced by relay.css but never defined. */
+  --font-display: "Space Grotesk Variable", "Inter Variable", system-ui, sans-serif;
+  --font-ui: "Inter Variable", Inter, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+  --antara-body: var(--font-ui);
+  --text-balance: 56px;
+  --text-title: 15px;
+  --text-screen: 28px;
+  --text-section: 16px;
+  --text-body: 13px;
+  --text-small: 12px;
+  --text-min: 11px;
+  --text-eyebrow: 10px;
+
+  /* Shape and depth (4.3) */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+  --shadow-dialog: 0 30px 120px #000b;
+  --shadow-sheet: 0 -20px 70px #0006;
+  --glass-topbar: #0b0c0feb;
+  --glass-backdrop: #000000c2;
+  --glass-tabbar: #0a0b0ef2;
+  --blur-topbar: blur(20px);
+  --blur-backdrop: blur(16px);
+  --blur-tabbar: blur(22px);
+
+  /* Motion (4.3). Zeroed below under reduced motion. */
+  --ease-reveal: cubic-bezier(.2, .75, .2, 1);
+  --t-reveal: .35s;
+  --t-sheet: .26s;
+  --t-stagger: .04s;
+  --t-hover: .16s;
+
+  /* Controls */
+  --control-h: 40px;
+}
+
+/* Narrow: phones (390px) and the extension side panel (360-420px). */
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  :where(.desktop-app, .ui-layer, .ui-scope, .ui-toast-host) {
+    --text-balance: 40px;
+    --text-screen: 22px;
+    --text-section: 15px;
+    --control-h: 44px;
+  }
+}
+
+/* Reduced motion: the system preference, the in-app "Celestial motion" switch and a hidden window. */
+@media (prefers-reduced-motion: reduce) {
+  :where(.desktop-app, .ui-layer, .ui-scope, .ui-toast-host) { --t-reveal: 0s; --t-sheet: 0s; --t-stagger: 0s; --t-hover: 0s; }
+}
+:where(html[data-motion="off"], [data-motion="off"], [data-window-hidden="true"]) :where(.desktop-app, .ui-layer, .ui-scope, .ui-toast-host),
+:where(.desktop-app, .ui-layer, .ui-scope, .ui-toast-host):where([data-motion="off"], [data-window-hidden="true"]) {
+  --t-reveal: 0s; --t-sheet: 0s; --t-stagger: 0s; --t-hover: 0s;
+}

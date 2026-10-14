@@ -1,0 +1,104 @@
+/* ANTARA — The Observatory. The cinematic shell keeps every wallet control native. */
+/* Neutral black surfaces, geometric typography, blue controls and cinematic artwork. */
+.desktop-app {
+  --desktop-bg: var(--ink-1);
+  --desktop-panel: var(--surface-1);
+  --desktop-raised: var(--surface-2);
+  --desktop-line: var(--line);
+  --desktop-muted: var(--muted);
+  --desktop-blue: var(--accent);
+  position: relative;
+  isolation: isolate;
+  background: var(--ink-1);
+  color: var(--fg);
+}
+.desktop-main { z-index: 1; background: transparent; }
+
+.desktop-content { padding: 26px 29px 38px; position: relative; }
+
+.desktop-balance-card {
+  min-height: 436px; padding: 32px 31px 20px; border-radius: 15px;
+  border-color: #b6c8e32a; background: #030304;
+  box-shadow: 0 15px 75px #0005,inset 0 1px 0 #d1e8ff18;
+}
+.desktop-balance-card::before { background: #030303; }
+.desktop-hero-art { background: url('/antara/observatory.png') right center / cover no-repeat; opacity: 1; animation: antara-world-drift 28s ease-in-out infinite alternate; transform-origin: 78% 40%; }
+.desktop-balance-card::after { background: linear-gradient(90deg,#03030399 0%,#03030330 42%,transparent 72%),linear-gradient(0deg,#030303f5,transparent 48%); }
+
+.desktop-app .desktop-button-primary { background: var(--primary-bg)!important; border-color: var(--primary-bg)!important; box-shadow: none!important; }
+.desktop-app .desktop-button-primary:hover { background: var(--primary-hover)!important; box-shadow: none!important; }
+.desktop-app button:active:not(:disabled) { transform: translateY(1px); }
+
+.desktop-balance-bottom { margin-top: 23px; padding-top: 14px; border-color: #b7d6ff26; position: relative; z-index: 1; gap: 10px; }
+.desktop-balance-address { font-size: 11px; color: #a1b6d5; }
+.desktop-app :is(h1,h2,h3),.desktop-balance-number { font-family: var(--antara-display); }
+.desktop-modal-backdrop { background: #000000c2; backdrop-filter: blur(16px); }
+.desktop-app .desktop-button:not(.desktop-button-primary) { background: #19191c; border-color: #ffffff20; color: #d1d5df; }
+.desktop-content { animation: antara-page-reveal .6s cubic-bezier(.2,.75,.2,1) both; }
+@keyframes antara-page-reveal { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes antara-reveal { from { opacity: 0; transform: translateY(12px); filter: blur(3px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes antara-world-drift { from { transform: scale(1.015) translate(0,0); } to { transform: scale(1.06) translate(-3px,2px); } }
+
+@media(min-width:1700px) { .desktop-content { padding: 32px 42px; } .desktop-balance-card { min-height: 490px; padding: 39px 39px 25px; } }
+@media(max-width:1200px) and (min-width:1001px) { .desktop-content { padding: 23px 22px; } .desktop-balance-card { padding: 27px 23px 20px; } .desktop-balance-bottom { flex-wrap: wrap; } }
+@media(max-width:1000px) { .desktop-balance-card { min-height: 447px; } .desktop-balance-bottom { flex-wrap: wrap; } }
+@media(max-width:760px) { .desktop-content { padding: 22px 20px; } .desktop-balance-card { padding: 27px 24px 20px; } }
+@media(max-width:640px) {
+
+  .desktop-content { padding: 22px 16px 30px; }
+
+  .desktop-balance-card { min-height: 473px; padding: 27px 23px 18px; border-radius: 12px; }
+  .desktop-hero-art { background-position: 63% center; opacity: .9; }
+  .desktop-balance-card::after { background: linear-gradient(90deg,#03030399,#0303033b),linear-gradient(0deg,#030303fa,transparent 70%); }
+
+  .desktop-balance-bottom { margin-top: 20px; gap: 12px; padding-top: 14px; }
+
+}
+
+/* The portfolio opens on a compact wallet summary, with the balance as its focus. */
+.desktop-balance-card.antara-portfolio-summary {
+  min-height: 236px; padding: 25px 28px 17px; border-radius: 22px;
+  border-color: #ffffff12; background: #171719;
+  box-shadow: inset 0 1px 0 #ffffff09;
+}
+.antara-portfolio-summary::before {
+  z-index: -3; background: repeating-radial-gradient(ellipse at 80% -55%,transparent 0 8px,#ffffff06 9px 10px,transparent 11px 17px);
+  transform: none; animation: none;
+}
+.antara-portfolio-summary .desktop-hero-art {
+  inset: 0 0 0 20%; opacity: .2; filter: saturate(.3);
+  background-size: cover; background-position: right 40%;
+  mask-image: linear-gradient(90deg,transparent,#000 65%);
+}
+.antara-portfolio-summary::after {
+  background: linear-gradient(90deg,#17171955,transparent 65%),linear-gradient(0deg,#171719ef,transparent 75%);
+}
+
+.antara-portfolio-summary .desktop-balance-main { margin: 0; }
+.antara-portfolio-summary .antara-balance-readout { display: block; margin: 0; max-width: none; }
+.antara-portfolio-summary .desktop-balance-top { color: #b8bac2; font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .09em; }
+.antara-summary-value { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.antara-portfolio-summary .desktop-balance-number { margin: 0; font-size: clamp(34px,3.1vw,46px); font-weight: 600; letter-spacing: -.055em; line-height: 1.2; text-align: left; overflow-wrap: anywhere; text-shadow: none; }
+.antara-portfolio-summary .desktop-balance-number small { font-size: 14px; font-weight: 500; color: #acb7c8; }
+.antara-summary-value .desktop-icon-button { flex-shrink: 0; color: #999ca6; }
+.antara-portfolio-summary .desktop-balance-meta { margin: 6px 0 0; font-size: 11px; color: #a4a7b0; flex-wrap: wrap; gap: 5px; min-height: 18px; }
+
+.antara-portfolio-summary .desktop-balance-bottom { margin-top: 17px; padding-top: 12px; border-color: #ffffff0d; gap: 10px; flex-wrap: wrap; }
+.antara-portfolio-summary .desktop-balance-address { font-size: 11px; color: #9299a7; }
+
+@media(max-width:1200px) and (min-width:1001px) {
+  .desktop-balance-card.antara-portfolio-summary { padding: 24px 20px 16px; }
+
+}
+@media(max-width:640px) {
+
+  .desktop-balance-card.antara-portfolio-summary { min-height: 0; padding: 23px 19px 16px; border-radius: 18px; }
+
+  .antara-portfolio-summary .desktop-balance-number { font-size: 38px; }
+
+  .antara-portfolio-summary .desktop-balance-bottom { align-items: flex-start; gap: 11px; }
+
+}
+.desktop-app[data-motion='off'] *,.desktop-app[data-motion='off'] *::before,.desktop-app[data-motion='off'] *::after { animation: none!important; transition: none!important; scroll-behavior: auto!important; }
+.desktop-app[data-window-hidden='true'] *,.desktop-app[data-window-hidden='true'] *::before,.desktop-app[data-window-hidden='true'] *::after { animation-play-state: paused!important; }
+@media(prefers-reduced-motion:reduce) { .desktop-app *,.desktop-app *::before,.desktop-app *::after { animation: none!important; transition: none!important; scroll-behavior: auto!important; } }

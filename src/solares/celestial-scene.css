@@ -1,0 +1,77 @@
+.antara-celestial-scene {
+  --celestial-x: 0px;
+  --celestial-y: 0px;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  background: #030303;
+  contain: strict;
+}
+
+.antara-celestial-nebula {
+  position: absolute;
+  pointer-events: none;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.antara-celestial-nebula-primary {
+  width: 112%;
+  height: 125%;
+  top: -48%;
+  left: 7%;
+  opacity: .24;
+  background:
+    radial-gradient(ellipse at 54% 54%, rgb(135 135 140 / 12%), transparent 43%),
+    radial-gradient(ellipse at 66% 37%, rgb(110 110 115 / 8%), transparent 37%);
+  transform: translate3d(var(--celestial-x), var(--celestial-y), 0) rotate(-19deg);
+  animation: antara-nebula-breathe 38s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.antara-celestial-nebula-secondary {
+  width: 100%;
+  height: 100%;
+  bottom: -44%;
+  left: -26%;
+  opacity: .15;
+  background:
+    radial-gradient(ellipse at 38% 55%, rgb(110 110 115 / 10%), transparent 49%);
+  transform: translate3d(calc(var(--celestial-x) * -.6), calc(var(--celestial-y) * -.6), 0);
+  animation: antara-nebula-undertow 46s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.antara-celestial-stars,
+.antara-celestial-vignette { position: absolute; inset: 0; width: 100%; height: 100%; }
+.antara-celestial-stars { opacity: .7; }
+.antara-celestial-vignette {
+  background:
+    linear-gradient(180deg, transparent 62%, rgb(0 0 0 / 48%)),
+    radial-gradient(ellipse at 56% 37%, transparent 24%, rgb(0 0 0 / 36%) 100%);
+}
+
+.antara-celestial-scene[data-motion='running'] .antara-celestial-nebula { animation-play-state: running; }
+.antara-celestial-scene[data-motion='still'] .antara-celestial-nebula { will-change: auto; }
+
+@keyframes antara-nebula-breathe {
+  from { transform: translate3d(var(--celestial-x), var(--celestial-y), 0) rotate(-19deg) scale(1); }
+  to { transform: translate3d(calc(var(--celestial-x) - 25px), calc(var(--celestial-y) + 22px), 0) rotate(-14deg) scale(1.07); }
+}
+
+@keyframes antara-nebula-undertow {
+  from { transform: translate3d(calc(var(--celestial-x) * -.6), calc(var(--celestial-y) * -.6), 0) rotate(0deg); }
+  to { transform: translate3d(calc(var(--celestial-x) * -.6 + 30px), calc(var(--celestial-y) * -.6 - 18px), 0) rotate(9deg); }
+}
+
+@media (max-width: 760px) {
+  .antara-celestial-nebula-primary { width: 190%; left: -50%; }
+  .antara-celestial-stars { opacity: .45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .antara-celestial-scene .antara-celestial-nebula { animation: none; will-change: auto; }
+}

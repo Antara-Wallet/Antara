@@ -1,0 +1,76 @@
+/* ANTARA / Obsidian. Visual layer; wallet behavior lives in DesktopWallet. */
+.desktop-app {
+  --desktop-bg: var(--ink-1);
+  --desktop-panel: var(--surface-1);
+  --desktop-raised: var(--surface-2);
+  --desktop-line: var(--line);
+  --desktop-muted: var(--muted);
+  --desktop-blue: var(--accent);
+  background: var(--ink-1);
+  color: var(--fg);
+  font-size: 13px;
+  letter-spacing: -.015em;
+}
+.desktop-app button { transition: color .2s, background .2s, border-color .2s, box-shadow .2s, transform .2s; }
+.desktop-app button:disabled { opacity: .45; }
+.desktop-app button:focus-visible,.desktop-app a:focus-visible,.desktop-app input:focus-visible,.desktop-app select:focus-visible { outline-color: var(--focus); }
+.desktop-app a { color: var(--accent); }
+.desktop-app a:hover { color: var(--fg); }
+
+/* The brand mark (app-icon-192.png, the same emblem as emblem.png at 40 KB) sits on black: screen it into the surface. */
+.desktop-app img[src='/antara/app-icon-192.png'] { mix-blend-mode: screen; }
+
+.desktop-main { background: radial-gradient(ellipse at 48% -20%,#19327319,transparent 60%),#030508; }
+
+.desktop-icon-button { color: #777f91; border-radius: 7px; }
+.desktop-icon-button:hover { background: #ffffff09; color: #e0e9ff; }
+
+.desktop-content { padding: 29px 34px 32px; scrollbar-color: #202632 transparent; }
+
+.desktop-balance-card { min-height: 334px; padding: 31px 30px 22px; border-radius: 15px; border-color: #8fa9ff23; background: #070c18; box-shadow: 0 15px 70px #0006,0 0 45px #1237800b,inset 0 1px 0 #c2d4ff0b; }
+.desktop-balance-card::before { background: linear-gradient(90deg,#030712 0%,#050b17 34%,#07132b 100%); animation: none; transform: none; }
+.desktop-hero-art { position: absolute; inset: 0; z-index: -2; background: url('/solares/helios.png') top right / auto 110% no-repeat; transform: scale(1.02); animation: solares-atmosphere 28s ease-in-out infinite alternate; transform-origin: 85% 20%; }
+.desktop-balance-card::after { background: linear-gradient(90deg,#040710e8 0%,#05091270 42%,transparent 70%),linear-gradient(0deg,#050811eb 0%,transparent 45%); }
+.desktop-balance-main { position: relative; z-index: 1; }
+.desktop-balance-top { color: #a8b3c8; font-size: 11px; letter-spacing: .015em; gap: 8px; }
+.desktop-balance-top .desktop-icon-button { color: #8594b1; }
+.desktop-balance-top small { border-color: #98b1ef28; color: #abbcde; background: #06102360; font-size: 11px; letter-spacing: .13em; padding: 4px 6px; margin-left: 8px; }
+.desktop-balance-number { font-size: clamp(44px,4.5vw,64px); font-weight: 450; line-height: 1.15; letter-spacing: -.06em; color: #fbfcff; margin: 14px 0 8px; text-shadow: 0 2px 30px #0007; }
+.desktop-balance-number>span:first-child { font-size: .73em; font-weight: 350; color: #b8c9ed; margin-right: 5px; vertical-align: 4%; }
+
+.desktop-balance-number small { font-size: 17px; color: #a7bae0; letter-spacing: -.015em; }
+.desktop-balance-meta { font-size: 11px; color: #8f9dba; margin-top: 10px; }
+.desktop-balance-meta>span { color: #566888; }
+
+/* The only primary: ice (4.1). The cobalt gradient is retired. */
+.desktop-button-primary { background: var(--primary-bg,#c3d5f1)!important; color: var(--primary-fg,#142038)!important; border: 1px solid var(--primary-bg,#c3d5f1)!important; box-shadow: none!important; }
+.desktop-button-primary:hover { background: var(--primary-hover,#d8e5fb)!important; }
+.desktop-balance-bottom { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-top: 27px; padding-top: 17px; border-top-color: #b5caff14; color: #7388aa; font-size: 11px; }
+.desktop-balance-address { display: flex; align-items: center; gap: 8px; }
+.desktop-workspace .sv-workspace h1 { font-size: 30px; font-weight: 470; letter-spacing: -.045em; }
+.desktop-workspace .sv-workspace .sv-panel { padding: 26px; background: linear-gradient(145deg,#0e131d,#080b10); border-color: #ffffff0e; border-radius: 14px; }
+.desktop-workspace .sv-workspace .sv-grid { gap: 20px; }
+.desktop-button { border-color: #ffffff13; color: #c7d4ef; background: #141e2f; font-size: 11px; }
+.desktop-button:hover { background: #202f49; }
+.desktop-modal-backdrop { background: #010205ce; backdrop-filter: blur(18px); }
+.desktop-activity-row { padding: 22px; }
+.desktop-activity-row strong { font-size: 12px; }
+.desktop-activity-row small { font-size: 11px; color: #8592ab; }
+
+.desktop-loading { padding: 30px; color: #8595b3; }
+.desktop-app ::-webkit-scrollbar { width: 4px; }
+.desktop-app ::-webkit-scrollbar-thumb { background: #202735; }
+
+.desktop-balance-card { animation: solares-enter .85s .06s cubic-bezier(.16,1,.3,1) both; }
+
+@keyframes solares-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes solares-atmosphere { from { transform: scale(1.025) translateX(0); filter: brightness(1); } to { transform: scale(1.065) translateX(-3px); filter: brightness(1.12); } }
+@media(min-width:1700px) { .desktop-content { padding: 38px 48px; } .desktop-balance-card { min-height: 367px; padding: 37px; } .desktop-balance-number { font-size: 72px; } .desktop-balance-bottom { margin-top: 34px; } }
+@media(max-width:1200px) { .desktop-content { padding: 28px 24px; } .desktop-balance-card { padding: 28px 23px 20px; min-height: 328px; } .desktop-balance-number { font-size: 48px; } .desktop-balance-bottom { flex-wrap: wrap; gap: 10px; margin-top: 25px; } }
+@media(max-width:1000px) { .desktop-balance-card { min-height: 335px; } .desktop-balance-number { font-size: 58px; } .desktop-balance-bottom { flex-wrap: nowrap; } }
+@media(max-width:640px) { .desktop-content { padding: 25px 18px; } .desktop-balance-card { min-height: 361px; padding: 24px 20px 18px; } .desktop-hero-art { background-position: 65% center; opacity: .8; } .desktop-balance-card::after { background: linear-gradient(90deg,#040710e6,#05091266 75%),linear-gradient(0deg,#050811fa,transparent 70%); } .desktop-balance-number { font-size: 46px; margin-top: 20px; } .desktop-balance-top { font-size: 11px; } .desktop-balance-meta { max-width: 220px; flex-wrap: wrap; gap: 5px; font-size: 11px; } .desktop-balance-bottom { flex-direction: column; align-items: flex-start; margin-top: 23px; gap: 10px; font-size: 11px; } .desktop-workspace .sv-workspace h1 { font-size: 27px; } }
+@media(prefers-reduced-motion:reduce) { .desktop-app *, .desktop-app *::before,.desktop-app *::after { animation: none!important; transition: none!important; } }
+@media(max-width:460px) {
+
+  .desktop-balance-card::after { background: linear-gradient(90deg,#040710ed,#05091280 75%),linear-gradient(0deg,#050811fa,transparent 70%); }
+}

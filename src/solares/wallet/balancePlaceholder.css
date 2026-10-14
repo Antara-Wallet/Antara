@@ -1,0 +1,43 @@
+/* Balance stand-ins (BalancePlaceholder.tsx): a muted zero, and the "Couldn't load · Retry" line. */
+.balance-placeholder {
+  color: var(--faint, #6f7a8a);
+  font-variant-numeric: tabular-nums;
+}
+.balance-load-failed {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--muted, #9aa5b6);
+  font: 500 var(--text-small, 12px)/1.4 var(--font-ui, "Inter Variable", Inter, system-ui, sans-serif);
+}
+.balance-retry {
+  margin: 0;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--r-xs, 6px);
+  background: none;
+  color: var(--accent, #9cbfff);
+  font: 600 var(--text-small, 12px)/1.4 var(--font-ui, "Inter Variable", Inter, system-ui, sans-serif);
+  text-decoration: underline transparent;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: text-decoration-color var(--t-hover, .16s), color var(--t-hover, .16s);
+}
+.balance-retry:hover { color: var(--fg, #eaf1ff); text-decoration-color: currentColor; }
+.balance-retry:focus-visible { outline: 2px solid var(--focus, #86afff); outline-offset: 2px; }
+.balance-retry:disabled { opacity: .5; cursor: default; }
+@media (pointer: coarse) {
+  .balance-retry { min-height: 32px; padding-inline: 8px; }
+}
+.home-load-failed { margin-top: 8px; }
+/* Inside a big balance number the stand-in keeps the number's own size and weight: the legacy
+   shells (desktop.css, cinematic.css) style `.desktop-balance-number > span:first-child` as a
+   small currency prefix. Muted, not faint, so a 56px zero stays legible. */
+.desktop-balance-number > .balance-placeholder {
+  margin: 0;
+  font-size: 1em;
+  font-weight: inherit;
+  vertical-align: baseline;
+  color: var(--muted, #9aa5b6);
+}

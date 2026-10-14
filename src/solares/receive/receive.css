@@ -1,0 +1,90 @@
+/*
+ * Receive sheet (docs/UI_ARGUS_PARITY.md 6.7). Area B. Every selector starts with `rcv-`
+ * (section 9, CSS ownership rule 2); tokens come from ui/tokens.css through the Sheet's
+ * `.ui-layer`. Charcoal surfaces; the only light surface is the QR itself.
+ */
+.rcv-step { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; outline: none; }
+
+/* Side indicator: which account receives. */
+.rcv-side { display: inline-flex; align-items: center; gap: 7px; justify-self: start; margin: 0; padding: 4px 10px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface-2); color: var(--fg-2); font: 500 var(--text-small)/1.3 var(--font-ui); }
+.rcv-side svg { color: var(--accent); }
+.rcv-side[data-side="vault"] { border-color: #9cbfff33; background: var(--accent-tint); }
+
+/* Network select and its stablecoin identity line. */
+.rcv-network { display: grid; gap: 8px; }
+.rcv-field { display: grid; gap: 6px; }
+.rcv-field-label { color: var(--fg-2); font: 550 var(--text-small)/1.3 var(--font-ui); }
+.rcv-select {
+  width: 100%; min-height: var(--control-h); padding: 0 36px 0 12px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa5b6' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 12px center;
+  color: var(--fg); font: 500 14px/1.2 var(--font-ui); appearance: none; cursor: pointer; outline: none;
+}
+.rcv-select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.rcv-select option { background: var(--surface-1); color: var(--fg); }
+.rcv-identity { margin: 0; color: var(--muted); font-size: var(--text-small); line-height: 1.55; }
+
+/* Search */
+.rcv-search { display: flex; align-items: center; gap: 10px; min-height: var(--control-h); padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--faint); }
+.rcv-search:focus-within { border-color: #86afff80; outline: 2px solid var(--focus); outline-offset: 2px; }
+/* The search group carries the one focus ring (4.4), so the input inside it draws none. */
+.ui-layer .rcv-search .rcv-search-input:focus-visible { outline: none; }
+.rcv-search-input { flex: 1; min-width: 0; height: calc(var(--control-h) - 2px); padding: 0; border: 0; outline: none; background: none; color: var(--fg); font: 400 14px/1.2 var(--font-ui); }
+.rcv-search-input::placeholder { color: var(--faint); }
+.rcv-search-input::-webkit-search-cancel-button { filter: invert(.7); }
+
+/* Asset groups (one per network, registry order) */
+.rcv-groups { display: grid; gap: 14px; }
+.rcv-group { display: grid; gap: 7px; scroll-margin: 12px; }
+.rcv-group-title { margin: 0; padding: 0 2px; }
+.rcv-group[data-current] .rcv-group-title { color: var(--accent); }
+.rcv-current { letter-spacing: .14em; }
+.rcv-group[data-current] .rcv-list { border-color: #9cbfff40; }
+.rcv-group-note { margin: 0; padding: 0 2px; color: var(--muted); font-size: var(--text-small); line-height: 1.5; }
+.rcv-list { margin: 0; padding: 0; list-style: none; overflow: hidden; }
+.rcv-row { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 8px 8px 8px 14px; }
+.rcv-row + .rcv-row { border-top: 1px solid var(--hair); }
+.rcv-row[data-disabled] .rcv-logo, .rcv-row[data-disabled] .rcv-main { opacity: .55; }
+.rcv-logo { flex: 0 0 auto; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-3); border: 1px solid var(--hair); color: var(--fg-2); }
+.rcv-logo svg { width: 20px; height: 20px; }
+.rcv-main { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.rcv-label { font: 600 14px/1.3 var(--font-ui); color: var(--fg); }
+.rcv-sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: var(--text-small); }
+.rcv-actions { flex: 0 0 auto; display: flex; gap: 4px; }
+.rcv-actions .ui-icon-btn { border-color: var(--line); background: var(--surface-2); }
+.rcv-actions .ui-icon-btn:hover:not(:disabled) { background: var(--surface-3); }
+.rcv-note { flex: 0 0 auto; color: var(--faint); font: 500 var(--text-small)/1.3 var(--font-ui); }
+.rcv-empty { margin: 4px 2px; color: var(--muted); font-size: var(--text-body); }
+
+/* Signed out and vault-blocked states */
+.rcv-signed-out, .rcv-blocked { display: grid; justify-items: center; gap: 8px; padding: 26px 20px 22px; text-align: center; }
+.rcv-signed-out h3, .rcv-blocked h3 { margin: 4px 0 0; font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; color: var(--fg); }
+.rcv-signed-out p, .rcv-blocked p { margin: 0; max-width: 40ch; color: var(--muted); font-size: var(--text-body); line-height: 1.55; }
+.rcv-signed-out .ui-btn-primary { margin-top: 8px; min-width: 140px; }
+.rcv-signed-out-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-md); background: var(--surface-3); color: var(--accent); }
+
+/* Step 2: QR, address, notes */
+.rcv-qr-step { justify-items: center; text-align: center; gap: 12px; padding-top: 2px; }
+.rcv-qr { position: relative; display: grid; place-items: center; padding: 10px; border-radius: var(--r-lg); background: #f2f7ff; line-height: 0; }
+.rcv-qr > svg:first-child { display: block; width: 200px; height: 200px; }
+.rcv-qr-mark {
+  position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  border-radius: 50%; background: #0c1c35; box-shadow: 0 0 0 3px #f2f7ff; color: #f2f7ff;
+}
+.rcv-qr-mark svg { width: 22px; height: 22px; }
+.rcv-qr-asset { margin: 2px 0 0; font: 600 var(--text-section)/1.3 var(--font-display); color: var(--fg); }
+.rcv-qr-asset span { color: var(--muted); font-weight: 500; }
+.rcv-address { display: grid; gap: 6px; width: 100%; }
+.rcv-address-label { margin: 0; color: var(--muted); font-size: var(--text-small); }
+.rcv-address-box { padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); }
+.rcv-address-box .ui-address-text { font-size: 13px; }
+.rcv-notes { display: grid; gap: 6px; width: 100%; text-align: left; }
+.rcv-notes p { margin: 0; color: var(--muted); font-size: var(--text-small); line-height: 1.55; }
+.rcv-copy { width: 100%; }
+
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .rcv-search-input, .rcv-select { font-size: 16px; }
+  .rcv-address-box { padding: 12px; }
+  .rcv-address-box .ui-address-text { font-size: 12px; }
+  .rcv-row { padding: 6px 6px 6px 12px; gap: 10px; }
+  .rcv-actions { gap: 2px; }
+}

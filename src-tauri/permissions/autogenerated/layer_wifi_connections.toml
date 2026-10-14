@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-layer-wifi-connections"
+description = "Enables the layer_wifi_connections command without any pre-configured scope."
+commands.allow = ["layer_wifi_connections"]
+
+[[permission]]
+identifier = "deny-layer-wifi-connections"
+description = "Denies the layer_wifi_connections command without any pre-configured scope."
+commands.deny = ["layer_wifi_connections"]

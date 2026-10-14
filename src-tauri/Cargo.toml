@@ -1,0 +1,41 @@
+[package]
+name = "antara-desktop"
+version = "1.0.0"
+description = "ANTARA secure multichain wallet"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "antara_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["unstable"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = "0.32"
+nusb = "0.1"
+# Vault core: HD wallet + at-rest encryption. Secrets never leave this process.
+bip39 = { version = "2", features = ["rand"] }
+bip32 = { version = "0.5", default-features = false, features = ["secp256k1", "std"] }
+k256 = { version = "0.13", features = ["ecdsa"] }
+sha3 = "0.10"
+aes-gcm = "0.10"
+argon2 = "0.5"
+rand = "0.8"
+zeroize = { version = "1", features = ["derive"] }
+hex = "0.4"
+base64 = "0.22"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = ["Win32_Networking_WindowsWebServices", "Win32_Foundation", "Win32_UI_WindowsAndMessaging", "Win32_Devices_Bluetooth", "Win32_NetworkManagement_WiFi", "Devices_Geolocation", "Foundation"] }
+

@@ -1,0 +1,69 @@
+.desktop-app {
+  /* Legacy names, re-pointed to the one token set (ui/tokens.css). */
+  --desktop-bg: var(--ink-1);
+  --desktop-panel: var(--surface-1);
+  --desktop-raised: var(--surface-2);
+  --desktop-line: var(--line);
+  --desktop-muted: var(--muted);
+  --desktop-blue: var(--accent);
+  display:flex; width:100%; height:100dvh; overflow:hidden;
+  color:var(--fg); background:var(--desktop-bg);
+  font-family:"Inter Variable",Inter,system-ui,sans-serif; font-size:13px;
+  -webkit-font-smoothing:antialiased; color-scheme:dark;
+}
+.desktop-app *, .desktop-app *::before, .desktop-app *::after { box-sizing:border-box; }
+.desktop-app button,.desktop-app input,.desktop-app select { font:inherit; }
+.desktop-app button { cursor:pointer; transition:background .18s,color .18s,border-color .18s,box-shadow .18s; }
+.desktop-app button:disabled { cursor:default; opacity:.4; }
+.desktop-app button:focus-visible,.desktop-app a:focus-visible,.desktop-app input:focus-visible,.desktop-app select:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+.desktop-app button svg { flex-shrink:0; }
+.desktop-app a { color:var(--accent); text-decoration:none; }
+.desktop-app a:hover { color:var(--fg); }
+
+.desktop-main { min-width:0; flex:1; display:flex; flex-direction:column; position:relative; background:radial-gradient(ellipse at 57% -17%,#234c6d20,transparent 57%); }
+
+.desktop-icon-button { width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; background:transparent; border:0; color:#758aa3; border-radius:7px; padding:7px; }
+.desktop-icon-button:hover { color:#d6eaff; background:#172337; }
+
+.desktop-body { display:flex; flex:1; min-height:0; overflow:hidden; }
+.desktop-content { flex:1; min-width:0; padding:30px 32px 38px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#29405a transparent; }
+
+.desktop-balance-card { position:relative; isolation:isolate; overflow:hidden; min-height:247px; border:1px solid #6094be35; border-radius:18px; padding:29px; background:#040c17; box-shadow:0 16px 45px #0005,inset 0 1px 0 #b0daff14; }
+.desktop-balance-card::before { content:""; position:absolute; z-index:-2; inset:0; background:linear-gradient(90deg,rgba(2,9,18,.05),transparent 100%),url('/solares/horizon.png') center right/cover; transform:scale(1.035); animation:desktop-horizon 24s ease-in-out infinite alternate; }
+.desktop-balance-card::after { content:""; position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,#06112044,transparent 65%),linear-gradient(0deg,#020a16c9,transparent 48%); pointer-events:none; }
+.desktop-balance-top { display:flex; align-items:center; gap:10px; color:#99b1cc; font-size:11px; }
+.desktop-balance-top p { margin:0; }
+.desktop-balance-top .desktop-icon-button { width:23px; height:23px; padding:3px; color:#819bb7; }
+.desktop-balance-number { font-size:46px; font-weight:500; letter-spacing:-.055em; line-height:1.2; font-variant-numeric:tabular-nums; color:#edf8ff; text-shadow:0 2px 23px #001523; margin:8px 0; }
+.desktop-balance-number small { font-size:16px; letter-spacing:-.01em; color:#b1d0e6; margin-left:7px; }
+.desktop-balance-meta { display:flex; align-items:center; gap:8px; color:#7d9ab7; font-size:11px; line-height:1.6; margin-top:9px; }
+.desktop-balance-meta .positive { color:#86d0b7; }
+.desktop-workspace .sv-workspace { padding-top:0; }
+.desktop-workspace .sv-workspace h1 { font-size:24px; font-weight:500; }
+.desktop-workspace .sv-workspace .sv-panel { padding:23px; background:linear-gradient(130deg,#11213777,#0a1523aa); border-color:var(--desktop-line); border-radius:13px; }
+.desktop-workspace .sv-workspace .sv-grid { gap:15px; }
+.desktop-loading { color:#708eac; font-size:11px; padding:30px 0; }
+.desktop-qr { background:white; padding:18px; border-radius:12px; width:fit-content; margin:22px auto; }
+.desktop-app ::-webkit-scrollbar { width:5px; height:5px; }
+.desktop-app ::-webkit-scrollbar-thumb { background:#233b54; }
+
+.desktop-balance-top small { margin-left:auto; color:#7f9cb7; font:11px "JetBrains Mono Variable",monospace; border:1px solid #87bade2b; border-radius:4px; padding:4px 6px; }
+.desktop-balance-number>span:first-child { font-size:.8em; margin-right:2px; }
+
+.desktop-balance-bottom { display:flex; align-items:center; gap:9px; margin-top:22px; padding-top:16px; border-top:1px solid #8bb9de12; color:#5d7c9c; font-size:11px; }
+
+.desktop-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid #6d99bc35; border-radius:7px; padding:10px 15px; color:#bedbf1; background:#132841; font-size:11px; font-weight:500; white-space:nowrap; }
+.desktop-button:hover { background:#244767; }
+.desktop-button-primary { background:var(--primary-bg,#c3d5f1)!important; color:var(--primary-fg,#142038)!important; border-color:var(--primary-bg,#c3d5f1)!important; }
+
+.desktop-modal-backdrop { position:fixed; inset:0; z-index:100; background:#01050cc4; backdrop-filter:blur(12px); display:grid; place-items:center; padding:25px; }
+.desktop-activity-row { display:flex; align-items:center; gap:15px; padding:21px; border-bottom:1px solid var(--desktop-line); }
+.desktop-activity-row strong { font-size:11px; font-weight:500; }
+.desktop-activity-row small { display:block; font-size:11px; color:#7690ac; margin-top:6px; }
+
+@media(max-width:640px) { .desktop-balance-bottom { font-size:11px; } }
+@keyframes desktop-horizon { from { transform:scale(1.035) translateY(0); } to { transform:scale(1.08) translateY(2px); } }
+@media(prefers-reduced-motion:reduce) { .desktop-app *, .desktop-app *::before { animation:none!important; transition:none!important; } }
+@media(min-width:1700px) { .desktop-content { padding:38px 48px; } .desktop-balance-card { min-height:270px; padding:35px; } }
+@media(max-width:1200px) { .desktop-content { padding:25px 24px; } .desktop-balance-card { padding:24px; } .desktop-balance-number { font-size:40px; } }
+@media(max-width:640px) { .desktop-content { padding:24px 17px; } .desktop-balance-card { padding:22px; min-height:235px; } .desktop-balance-number { font-size:37px; } }

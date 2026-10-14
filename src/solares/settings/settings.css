@@ -1,0 +1,93 @@
+/*
+ * Settings (docs/UI_ARGUS_PARITY.md 6.16). Area E. ARGUS S20's structure (a small section
+ * label above one card of rows) in ANTARA's tokens (ui/tokens.css): charcoal cards, ice
+ * primary, cobalt only on the "on" switch track. The embedded Safe/Squads workspace is
+ * restyled in ../workspace-cinema.css.
+ */
+.set-screen { display: grid; gap: 26px; width: 100%; max-width: 760px; margin: 0 auto; color: var(--fg); font: 400 var(--text-body)/1.5 var(--font-ui); }
+.set-section { display: grid; gap: 10px; min-width: 0; scroll-margin-top: 16px; border-radius: var(--r-md); }
+.set-section:focus { outline: none; }
+.set-section:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.set-section-title { margin: 0 4px; }
+.set-card { min-width: 0; overflow: hidden; }
+
+/* ---------- Rows ---------- */
+.set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 16px 20px; border-top: 1px solid var(--hair); }
+.set-card > :first-child { border-top: 0; }
+.set-row-text { flex: 1 1 auto; min-width: 0; }
+.set-row-text h3 { margin: 0; color: var(--fg); font: 500 14px/1.35 var(--font-ui); letter-spacing: -.005em; }
+.set-row-text p { margin: 4px 0 0; max-width: 60ch; color: var(--muted); font-size: var(--text-small); line-height: 1.55; }
+.set-row-status { margin-top: 8px; }
+.set-row-control { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; }
+.set-note { margin: 0; padding: 16px 20px; color: var(--muted); font-size: var(--text-body); line-height: 1.55; }
+
+/* ---------- Switch: the only blue fill on this screen (the "on" track) ---------- */
+.set-switch { display: inline-grid; place-items: center; width: 48px; min-height: 36px; margin: 0; padding: 0; border: 0; border-radius: var(--r-pill); background: none; cursor: pointer; }
+.set-switch-track { position: relative; display: block; width: 40px; height: 24px; border: 1px solid #ffffff24; border-radius: var(--r-pill); background: var(--surface-3); transition: background-color var(--t-hover), border-color var(--t-hover); }
+.set-switch-knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform var(--t-hover), background-color var(--t-hover); }
+.set-switch[aria-checked="true"] .set-switch-track { background: var(--switch-on); border-color: #6186e7; }
+.set-switch[aria-checked="true"] .set-switch-knob { transform: translateX(16px); background: #fff; }
+.set-switch:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- Wallets ---------- */
+.set-wallet-group { padding: 14px 20px 4px; border-top: 1px solid var(--hair); }
+.set-group-title { margin: 0 0 4px; color: var(--muted); font: 500 var(--text-small)/1.4 var(--font-ui); }
+.set-wallet-list { margin: 0; padding: 0; list-style: none; }
+.set-wallet { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hair); }
+.set-wallet:first-child { border-top: 0; }
+.set-wallet-logo { flex: 0 0 auto; display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); }
+.set-wallet-logo svg { width: 18px; height: 18px; }
+.set-wallet-text { flex: 1 1 auto; display: grid; gap: 2px; min-width: 0; }
+.set-wallet-title { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.set-wallet-name { min-width: 0; overflow: hidden; color: var(--fg); font-size: var(--text-body); font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.set-wallet-tag { flex: 0 0 auto; padding: 1px 6px; border: 1px solid var(--line); border-radius: var(--r-xs); color: var(--muted); font: 500 var(--text-min)/1.35 var(--font-ui); }
+.set-wallet .ui-chip { flex: 0 0 auto; }
+.set-wallet-group .set-note { padding: 4px 0 12px; }
+
+/* ---------- Address book ---------- */
+.set-addressbook-inline { padding: 16px 20px; }
+.set-addressbook-inline .set-note, .set-addressbook-missing .set-note { padding: 0; }
+.set-addressbook-missing { display: grid; justify-items: start; gap: 6px; }
+.set-card > .set-addressbook-missing { padding: 16px 20px; }
+.set-addressbook-page { display: grid; gap: 12px; min-width: 0; }
+
+/* ---------- Embedded Safe/Squads workspace ---------- */
+.set-embed { padding: 4px 20px 22px; border-top: 1px solid var(--hair); }
+.set-embed > .set-note { padding: 16px 0 0; }
+
+/* ---------- Networks ---------- */
+.set-net-list { margin: 0; padding: 0; list-style: none; }
+.set-net { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-top: 1px solid var(--hair); }
+.set-net:first-child { border-top: 0; }
+.set-net-text { display: grid; gap: 2px; min-width: 0; }
+.set-net-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; color: var(--fg); font-size: 14px; font-weight: 500; }
+.set-net-cluster { padding: 1px 6px; border: 1px solid var(--line); border-radius: var(--r-xs); color: var(--muted); font: 500 var(--text-min)/1.4 var(--font-mono); }
+.set-net-explorer { color: var(--muted); font-size: var(--text-small); }
+.set-net .ui-chip { flex: 0 0 auto; }
+
+/* ---------- About ---------- */
+.set-about { display: grid; gap: 16px; padding: 18px 20px; }
+.set-about-name { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--fg); font: 600 15px/1 var(--font-display); letter-spacing: .14em; }
+.set-about-name img { border-radius: 8px; }
+.set-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; margin: 0; }
+.set-fact { min-width: 0; }
+.set-fact dt { color: var(--muted); font-size: var(--text-small); }
+.set-fact dd { margin: 2px 0 0; color: var(--fg); font-size: var(--text-body); overflow-wrap: anywhere; }
+.set-docs { justify-self: start; padding-left: 0; }
+
+/* ---------- Narrow: phones and the extension side panel ---------- */
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .set-screen { gap: 22px; }
+  .set-row { flex-wrap: wrap; gap: 10px 14px; padding: 14px 16px; }
+  .set-row-text { flex: 1 1 170px; }
+  .set-wallet-group, .set-net, .set-about, .set-addressbook-inline, .set-card > .set-addressbook-missing { padding-left: 16px; padding-right: 16px; }
+  .set-note { padding: 14px 16px; }
+  .set-embed { padding: 4px 12px 16px; }
+  .set-switch { width: 52px; min-height: 44px; }
+  .set-facts { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .set-screen *, .set-screen *::before, .set-screen *::after { transition: none !important; animation: none !important; }
+}
+:is([data-motion="off"], [data-window-hidden="true"]) .set-screen * { transition: none !important; animation: none !important; }

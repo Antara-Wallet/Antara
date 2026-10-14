@@ -1,0 +1,56 @@
+@media(max-width:640px), (max-height:500px) and (pointer:coarse) {
+  .desktop-app { height:100svh; height:var(--wallet-viewport-height,100dvh); overscroll-behavior:none; background:var(--ink-1); }
+  .desktop-app button,.desktop-app a { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  .desktop-app button:active:not(:disabled) { opacity:.8; }
+
+  .desktop-app .desktop-main { width:100%; min-width:0; background:none; }
+
+  .desktop-app .desktop-content { padding:17px 18px 24px; overscroll-behavior-y:contain; -webkit-overflow-scrolling:touch; scroll-padding-block:18px; scrollbar-width:none; }
+  .desktop-app .desktop-content::-webkit-scrollbar { display:none; }
+  .desktop-app[data-motion=on][data-window-hidden=false] .desktop-content { animation:mobile-screen-in .24s ease-out; }
+
+  .desktop-app .desktop-balance-card.antara-portfolio-summary { min-height:0; padding:23px 21px 18px; border-radius:var(--r-lg); background:var(--surface-1); border-color:var(--line); box-shadow:none; }
+  .desktop-app .desktop-balance-card .desktop-hero-art { background:url('/antara/cinematic/vault-orbit-portrait.webp') 120% 45% / 65% auto no-repeat; opacity:.37; animation:none; }
+  .desktop-app .desktop-balance-card::after { background:linear-gradient(90deg,#101216 0%,#10121670 66%,#10121622),linear-gradient(0deg,#101216f2,transparent 65%); }
+  .desktop-app .desktop-balance-main { display:block; }
+  .desktop-app .desktop-balance-top { font-size:11px; text-transform:none; letter-spacing:.025em; color:var(--fg-2); }
+  .desktop-app .desktop-balance-number { font-size:43px; line-height:1.15; margin:9px 0 4px; letter-spacing:-.045em; font-weight:450; }
+  .desktop-app .desktop-balance-number small { font-size:14px; margin-left:9px; }
+  .desktop-app .desktop-balance-meta { font-size:11px; margin:6px 0 0; line-height:1.5; }
+  .desktop-app .antara-summary-value { gap:8px; }
+
+  .desktop-app .desktop-balance-bottom { margin-top:18px; padding-top:14px; gap:8px; border-color:var(--hair); flex-direction:row; align-items:center; }
+  .desktop-app .desktop-balance-address { font-size:11px; gap:6px; }.desktop-app .desktop-balance-address .desktop-icon-button { min-width:24px; }
+
+  .desktop-app .antara-protection-overview { display:block; margin-top:13px; }
+  .desktop-app .antara-protection-overview .antara-protection-entry-vault { display:none; }
+  .desktop-app .antara-protection-entry { width:100%; min-height:0; padding:16px 18px; border-radius:var(--r-lg); background:var(--surface-1); display:grid; grid-template-columns:1fr auto; align-items:center; gap:7px 14px; }
+  .desktop-app .antara-protection-entry-label { font-size:11px; margin:0; grid-column:1; }
+  .desktop-app .antara-protection-entry-title { font-size:15px; grid-column:1; }
+  .desktop-app .antara-protection-entry-description { display:none; }
+  .desktop-app .antara-protection-entry-action { grid-column:2; grid-row:1/3; font-size:0; gap:0; margin:0; }.desktop-app .antara-protection-entry-action>span { font-size:23px; }
+
+  .desktop-app .wallet-vault { gap:14px; }.desktop-app .wallet-vault-summary { min-height:0; padding-bottom:18px; }
+  .desktop-app .wallet-vault-settings { width:44px; height:44px; top:-10px; right:-9px; }
+  .desktop-app .wallet-vault-network { font-size:11px; }.desktop-app .wallet-vault-network .desktop-token-logo { width:15px; height:15px; }
+  .desktop-app .wallet-vault-intro { padding:23px; gap:17px; border-radius:18px; background:var(--surface-1); border-color:var(--line); }
+  .desktop-app .wallet-vault-emblem { width:45px; height:45px; border-radius:13px; }
+  .desktop-app .wallet-vault-eyebrow { font-size:11px; margin-bottom:10px; }.desktop-app .wallet-vault-intro h2 { font-size:22px; }.desktop-app .wallet-vault-intro p { font-size:12px; line-height:1.75; }
+  .desktop-app .wallet-vault-cta { margin-top:20px; gap:9px; }.desktop-app .wallet-vault-cta .desktop-button { min-height:42px; font-size:11px; }
+  .desktop-app .protection-page-heading { margin:4px 0 22px; }.desktop-app .protection-page-heading h2 { font-size:26px; }.desktop-app .protection-page-heading p { font-size:12px; }
+  .desktop-app .antara-protection-layers { grid-template-columns:1fr; gap:13px; }.desktop-app .antara-protection-layer { padding:22px; border-radius:var(--r-lg); background:var(--surface-1); }
+  .desktop-app .antara-protection-layer h3 { font-size:20px; }.desktop-app .antara-protection-layer>p { font-size:12px; }.desktop-app .antara-protection-action { min-height:40px; }
+  .desktop-app .antara-protection-footnote { font-size:11px; line-height:1.7; }
+  .desktop-app .trade-card { border-radius:var(--r-lg); padding:8px; background:var(--surface-1); border-color:var(--line); }
+  .desktop-app .trade-asset { background:var(--surface-3); border-color:var(--line); padding:8px; }
+
+  .desktop-app .desktop-modal-backdrop { height:var(--wallet-viewport-height,100dvh); bottom:auto; align-items:flex-end; padding:0; background:#02050bcc; backdrop-filter:blur(10px); }
+}
+@media(max-width:360px) { .desktop-app .desktop-content { padding-inline:13px; } }
+@media(max-height:700px) and (max-width:640px) {
+  .desktop-app .desktop-content { padding-top:12px; }
+  .desktop-app .desktop-balance-card.antara-portfolio-summary { padding:18px; }.desktop-app .desktop-balance-bottom { margin-top:14px; padding-top:11px; }.desktop-app .wallet-vault-intro { padding:21px; }
+}
+@keyframes mobile-screen-in { from { opacity:.65; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+@keyframes mobile-sheet-in { from { opacity:0; transform:translateY(35px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { .desktop-app .desktop-content { animation:none!important; } }

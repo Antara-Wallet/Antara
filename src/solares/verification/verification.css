@@ -1,0 +1,322 @@
+/*
+ * Verification planet, station rail and chips, the verification and activation sequences and
+ * the vault deposit (docs/UI_ARGUS_PARITY.md 6.12-6.14, 7). Area D. Every selector is new
+ * (`vseq-`), or overrides the shared sheet for these screens only, so legacy rules never match.
+ * Tokens come from src/solares/ui/tokens.css (scoped to .desktop-app, .ui-layer, .ui-scope).
+ * Blue stays an accent: borders, marks, 2px lines. Never a surface fill.
+ */
+
+/* ---------- Planet ---------- */
+.vseq-planet { position: relative; display: grid; gap: 12px; min-width: 0; container-type: inline-size; }
+.vseq-planet-stage { position: relative; width: 100%; aspect-ratio: 16 / 10; isolation: isolate; }
+.vseq-planet[data-size="compact"] .vseq-planet-stage { aspect-ratio: auto; height: 210px; }
+/* No card: the art feathers into the page, as the landing's planet does. */
+.vseq-planet-frame { position: absolute; inset: 0; overflow: hidden; }
+.vseq-planet-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center 72%;
+  opacity: .35;
+  -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 70% at 50% 52%, #000 45%, transparent 100%);
+}
+/* The sculpture's own classes, without the landing's bottom fade (landing.css may or may not be loaded). */
+.vseq-planet .landing-sculpture { position: absolute; inset: 0; z-index: 1; -webkit-mask-image: none; mask-image: none; }
+.vseq-planet .landing-sculpture canvas { display: block; width: 100%; height: 100%; }
+.vseq-planet .landing-sculpture[data-renderer="fallback"] canvas { display: none; }
+.vseq-planet .landing-emblem-fallback { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: radial-gradient(ellipse 80% 78% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 80% 78% at 50% 50%, #000 62%, transparent 100%); }
+.vseq-planet .landing-sculpture canvas:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
+
+/* ---------- Rail: leader-line labels at the stations' projected positions ---------- */
+.vseq-rail { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; list-style: none; pointer-events: none; }
+.vseq-rail-item { --leader: 28px; position: absolute; left: var(--node-x); top: var(--node-y); transform: translate(var(--leader), -50%); }
+.vseq-rail-item[data-side="left"] { transform: translate(calc(-100% - var(--leader)), -50%); }
+/* A label never leaves the stage: it wraps in the room between its station and the stage edge. */
+.vseq-rail-item[data-side="right"] { max-width: calc(100% - var(--node-x) - var(--leader) - 4px); }
+.vseq-rail-item[data-side="left"] { max-width: calc(var(--node-x) - var(--leader) - 4px); }
+.vseq-rail-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin: 0;
+  padding: 3px;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: 500 13px/1.25 var(--font-ui);
+  text-align: left;
+  pointer-events: auto;
+}
+button.vseq-rail-node { cursor: pointer; }
+.vseq-rail-item[data-side="left"] .vseq-rail-node { flex-direction: row-reverse; text-align: right; }
+.vseq-rail-line { position: absolute; top: 50%; left: calc(-1 * var(--leader)); width: var(--leader); height: 1px; background: #b6d8ff59; pointer-events: none; }
+.vseq-rail-item[data-side="left"] .vseq-rail-line { left: auto; right: calc(-1 * var(--leader)); }
+.vseq-rail-line::before { content: ""; position: absolute; left: -2px; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: #a3caff; }
+.vseq-rail-item[data-side="left"] .vseq-rail-line::before { left: auto; right: -2px; }
+.vseq-rail-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #c9d8e74d;
+  border-radius: 50%;
+  background: #07090dd9;
+  color: var(--fg-2);
+}
+.vseq-rail-text { display: grid; gap: 1px; min-width: 0; max-width: 140px; }
+.vseq-rail-name { color: var(--fg); text-shadow: 0 2px 12px #000, 0 0 8px #000; }
+.vseq-rail-status {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 450;
+  text-shadow: 0 2px 10px #000, 0 0 8px #000;
+}
+button.vseq-rail-node:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--r-sm); }
+button.vseq-rail-node:hover .vseq-rail-icon { border-color: #c4e5ff99; color: var(--fg); }
+
+/* ---------- Chips: 3×2 grid (narrow, no WebGL), one row of six in compact planets ---------- */
+.vseq-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.vseq-chips-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@container (min-width: 560px) {
+  .vseq-planet[data-size="compact"] .vseq-chips { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@container (min-width: 720px) {
+  .vseq-planet .vseq-chips { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.vseq-chip-item { min-width: 0; }
+.vseq-chips-note { margin: 0; color: var(--muted); font-size: 12px; }
+.vseq-chip {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface-1);
+  color: var(--fg-2);
+  font: 500 12px/1.25 var(--font-ui);
+  text-align: center;
+}
+button.vseq-chip { cursor: pointer; }
+button.vseq-chip:hover { background: var(--surface-3); }
+button.vseq-chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.vseq-chip-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #c9d8e733; background: var(--surface-2); color: var(--muted); }
+.vseq-chip-text { display: grid; gap: 1px; min-width: 0; width: 100%; }
+.vseq-chip-name { overflow: hidden; color: var(--fg); text-overflow: ellipsis; white-space: nowrap; }
+.vseq-chip-status { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; color: var(--muted); font-size: 11px; font-weight: 450; overflow-wrap: anywhere; }
+
+/* ---------- Station states (shared by rail and chips). Text always carries the state; colour only supports it. ---------- */
+[data-station-state="unknown"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--faint); border-color: #ffffff14; }
+[data-station-state="unknown"] :is(.vseq-rail-name, .vseq-chip-name) { color: var(--muted); }
+[data-station-state="off"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--muted); }
+[data-station-state="on"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--fg); border-color: #9cbfff73; }
+[data-station-state="on"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--fg-2); }
+[data-station-state="pending-removal"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--fg-2); border-style: dashed; border-color: #e9c07a80; }
+[data-station-state="pending-removal"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--warn); }
+[data-station-state="required"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--fg); border-color: var(--accent); }
+[data-station-state="required"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--accent); }
+[data-station-state="collecting"] :is(.vseq-rail-icon, .vseq-chip-icon),
+[data-station-state="collected"] :is(.vseq-rail-icon, .vseq-chip-icon),
+[data-station-state="checking"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--fg); border-color: #c4e5ffb3; box-shadow: 0 0 0 3px #c4e5ff14; }
+[data-station-state="collecting"] :is(.vseq-rail-status, .vseq-chip-status),
+[data-station-state="collected"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--ice); }
+[data-station-state="checking"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--fg-2); }
+[data-station-state="passed"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--ice); border-color: var(--ice); box-shadow: 0 0 0 3px #c4e5ff1f; }
+[data-station-state="passed"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--ice); }
+[data-station-state="passed"] .vseq-chip { border-color: #c4e5ff40; }
+[data-station-state="failed"] :is(.vseq-rail-icon, .vseq-chip-icon) { color: var(--danger); border-color: var(--danger); }
+[data-station-state="failed"] :is(.vseq-rail-status, .vseq-chip-status) { color: var(--danger); }
+[data-station-state="failed"] .vseq-chip { border-color: #ff8f8640; }
+/* Pulses only when the reader allows motion; never in the side panel or with the in-app switch off. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-surface="sidepanel"]) [data-station-state="collecting"] :is(.vseq-rail-icon, .vseq-chip-icon) { animation: vseq-pulse 1s ease-in-out infinite; }
+  html:not([data-surface="sidepanel"]) [data-station-state="required"] :is(.vseq-rail-icon, .vseq-chip-icon) { animation: vseq-pulse 2.5s ease-in-out infinite; }
+}
+:is([data-motion="off"], [data-window-hidden="true"]) [data-station-state] :is(.vseq-rail-icon, .vseq-chip-icon) { animation: none !important; }
+@keyframes vseq-pulse { 50% { box-shadow: 0 0 0 5px #9cbfff1f; } }
+
+/* ---------- Full-screen sheet (verification; activation on narrow) ---------- */
+.ui-layer:has(> .ui-sheet.vseq-fullscreen) { padding: 0; place-items: end stretch; }
+.ui-layer .ui-sheet.vseq-fullscreen[data-size] {
+  width: 100%;
+  height: calc(var(--wallet-viewport-height, 100dvh) - var(--extension-bar-height, 0px));
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  background: var(--ink-1);
+  box-shadow: none;
+}
+.vseq-sheet .ui-sheet-header { position: relative; flex-wrap: wrap; justify-content: center; gap: 2px; padding: 16px 64px 10px; text-align: center; }
+.vseq-sheet .vseq-eyebrow { flex-basis: 100%; margin: 0; color: var(--muted); text-align: center; }
+.vseq-sheet .ui-sheet-title { flex: 0 1 auto; font-size: 22px; letter-spacing: -.03em; text-align: center; }
+.vseq-sheet .ui-sheet-header > .ui-icon-btn { position: absolute; top: 12px; right: 12px; }
+.vseq-sheet .ui-sheet-body { scrollbar-gutter: stable; }
+
+/* ---------- Verification layout ---------- */
+.vseq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "steps" "visual" "status" "card" "actions" "extra" "foot";
+  gap: 14px;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.vseq-layout > .vseq-steps { grid-area: steps; min-width: 0; }
+.vseq-layout > .vseq-visual { grid-area: visual; min-width: 0; }
+.vseq-layout > .vseq-status { grid-area: status; }
+.vseq-layout > .vseq-release { grid-area: card; }
+.vseq-layout > .vseq-actions { grid-area: actions; }
+.vseq-layout > .vseq-extra { grid-area: extra; }
+.vseq-layout > .vseq-footnote { grid-area: foot; }
+/* Step labels wrap rather than cut ("ANTARA’s vote" in a narrow column). */
+.vseq-sheet .ui-step-text { white-space: normal; overflow: visible; text-overflow: clip; }
+@media (min-width: 960px) {
+  .vseq-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
+    grid-template-rows: auto auto auto auto auto 1fr;
+    grid-template-areas: "visual steps" "visual card" "visual status" "visual actions" "visual extra" "visual foot";
+    column-gap: 36px;
+    row-gap: 16px;
+    align-items: start;
+    padding-top: 8px;
+  }
+  .vseq-visual { align-self: center; }
+  /* The full-screen planet uses the height it has; the canvas reframes to any shape. */
+  .vseq-visual .vseq-planet[data-size="hero"] .vseq-planet-stage { aspect-ratio: auto; height: clamp(380px, calc(100dvh - 220px), 620px); }
+  /* Without WebGL the chips sit under the still, so the still gives up some height. */
+  .vseq-visual .vseq-planet[data-size="hero"][data-list="chips"] .vseq-planet-stage { height: clamp(300px, calc(100dvh - 400px), 460px); }
+}
+.vseq-step-note { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.vseq-step-note-muted { margin-top: 2px; color: var(--faint); }
+.vseq-status { min-height: 20px; }
+.vseq-status p { margin: 0; color: var(--fg-2); font: 500 13px/1.5 var(--font-ui); }
+.vseq-status[data-tone="ok"] p { color: var(--ice); }
+.vseq-status[data-tone="warn"] p { color: var(--warn); }
+.vseq-status[data-tone="danger"] p { color: var(--danger); }
+/* Problems read as a calm card, never a wall of coloured text. */
+.vseq-status[data-tone="warn"] p, .vseq-status[data-tone="danger"] p {
+  padding: 10px 12px; border-radius: 10px; color: var(--fg-1); overflow-wrap: anywhere;
+  background: color-mix(in srgb, var(--warn) 7%, transparent); border: 1px solid color-mix(in srgb, var(--warn) 28%, transparent);
+}
+.vseq-status[data-tone="danger"] p { background: color-mix(in srgb, var(--danger) 7%, transparent); border-color: color-mix(in srgb, var(--danger) 30%, transparent); }
+.vseq-reasons { display: grid; gap: 4px; margin: 8px 0 0; padding: 0; list-style: none; color: var(--fg-2); font-size: 12px; line-height: 1.5; }
+.vseq-reasons strong { margin-right: 6px; color: var(--fg); font-weight: 600; }
+.vseq-release { display: grid; gap: 4px; padding: 14px 16px 15px; }
+.vseq-release p { margin: 0; }
+.vseq-release-amount { margin-top: 2px !important; color: var(--fg); font: 500 30px/1.1 var(--font-display); letter-spacing: -.04em; }
+.vseq-release-asset { color: var(--muted); font-size: 15px; letter-spacing: 0; }
+.vseq-release-to, .vseq-release-index { color: var(--fg-2); font-size: 12px; }
+.vseq-release-to .ui-address { vertical-align: baseline; }
+.vseq-release-index { color: var(--muted) !important; }
+.vseq-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.vseq-link { min-height: var(--control-h); }
+.vseq-footnote { margin: 0; color: var(--faint); font-size: 11px; line-height: 1.55; }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .vseq-sheet .ui-sheet-header { padding: 14px 56px 8px; }
+  .vseq-sheet .ui-sheet-title { font-size: 19px; }
+  .vseq-sheet .ui-sheet-header > .ui-icon-btn { top: 6px; right: 6px; }
+  .vseq-planet[data-size="hero"] .vseq-planet-stage { aspect-ratio: 1 / .78; }
+  .vseq-actions > :is(.ui-btn, .ui-btn-primary) { flex: 1 1 140px; }
+  .vseq-release-amount { font-size: 26px; }
+}
+
+/* ---------- Activation ---------- */
+.vseq-act-layout { display: grid; gap: 14px; min-width: 0; }
+/* An empty status line takes no room (its live region stays in place for announcements). */
+.vseq-act-layout > .vseq-status:empty { position: absolute; min-height: 0; }
+.vseq-act-how { display: grid; gap: 8px; border-top: 1px solid var(--hair); padding-top: 10px; }
+.vseq-act-how > summary { cursor: pointer; width: fit-content; color: var(--accent); font-size: 12px; font-weight: 600; }
+.vseq-act-how p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.vseq-act-heading { margin: 4px 0 0; color: var(--fg); font: 550 21px/1.25 var(--font-display); letter-spacing: -.03em; }
+.vseq-act-text { margin: 0; color: var(--fg-2); font-size: 13px; line-height: 1.6; }
+.vseq-act-muted { color: var(--muted); font-size: 12px; }
+.vseq-act-rules { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.vseq-act-rules li { display: flex; align-items: flex-start; gap: 10px; color: var(--fg-2); font-size: 13px; line-height: 1.5; }
+.vseq-act-rules li > svg { flex: 0 0 auto; margin-top: 1px; color: var(--accent); }
+.vseq-act-subheading { margin: 6px 0 0; color: var(--muted); font: 500 var(--text-eyebrow)/1.4 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+.vseq-act-checks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.vseq-act-checks li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); font-size: 13px; }
+.vseq-act-claims { display: grid; gap: 8px; margin: 0; padding: 0 0 0 18px; list-style: disc; color: var(--fg-2); font-size: 13px; line-height: 1.55; }
+.vseq-act-claims li::marker { color: var(--accent); }
+.vseq-act-fee { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.vseq-act-ack { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg); font-size: 13px; line-height: 1.5; cursor: pointer; }
+.vseq-act-ack input { flex: 0 0 auto; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--switch-on); }
+.vseq-act-lines { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.vseq-act-lines li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--hair); border-radius: var(--r-sm); background: var(--surface-1); color: var(--muted); font-size: 13px; line-height: 1.45; }
+.vseq-act-line-mark { display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 50%; font: 500 11px/1 var(--font-mono); }
+.vseq-act-line-state { color: var(--faint); font-size: 11px; white-space: nowrap; }
+.vseq-act-lines li[data-state="active"] { border-color: #9cbfff40; color: var(--fg); }
+.vseq-act-lines li[data-state="active"] .vseq-act-line-mark { border-color: var(--accent); color: var(--accent); }
+.vseq-act-lines li[data-state="active"] .vseq-act-line-state { color: var(--accent); }
+.vseq-act-lines li[data-state="done"] { color: var(--fg-2); }
+.vseq-act-lines li[data-state="done"] .vseq-act-line-mark { border-color: #c4e5ff66; color: var(--ice); }
+.vseq-act-lines li[data-state="failed"] { border-color: #ff8f8633; color: var(--fg-2); }
+.vseq-act-lines li[data-state="failed"] :is(.vseq-act-line-mark, .vseq-act-line-state) { border-color: var(--danger); color: var(--danger); }
+.vseq-act-done { display: grid; gap: 12px; }
+/* Steps 1-2: no vault yet, so a small still planet without a station list. */
+.vseq-planet.vseq-act-planet-small .vseq-planet-stage { height: 150px; }
+/* The step's actions stay in view at the bottom of the sheet. */
+.vseq-act-actions { position: sticky; bottom: 0; z-index: 2; margin: 0 -2px; padding: 14px 2px 2px; background: linear-gradient(180deg, #10121600, var(--surface-1) 28%); }
+.vseq-fullscreen .vseq-act-actions { background: linear-gradient(180deg, #08090b00, var(--ink-1) 28%); }
+.vseq-act-done-art { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border: 1px solid var(--hair); border-radius: var(--r-md); }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .vseq-act-heading { font-size: 19px; }
+  .vseq-act-done-art { aspect-ratio: 4 / 5; max-height: 52vh; }
+  .vseq-planet.vseq-act-planet-small .vseq-planet-stage { height: 112px; }
+  .vseq-act-lines li { grid-template-columns: 26px minmax(0, 1fr); }
+  .vseq-act-line-state { grid-column: 2; }
+}
+
+/* ---------- Deposit ---------- */
+.vseq-deposit { display: grid; gap: 12px; padding: 18px; min-width: 0; }
+.vseq-deposit-head h3 { margin: 0; color: var(--fg); font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; }
+.vseq-deposit-head p { margin: 4px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.vseq-field-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.vseq-field { display: grid; gap: 6px; min-width: 110px; color: var(--muted); font-size: 12px; }
+.vseq-field-grow { flex: 1 1 200px; }
+.vseq-field :is(select, input) {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--control-h);
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: 450 13px/1.2 var(--font-ui);
+  color-scheme: dark;
+}
+.vseq-field :is(select, input):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.vseq-input-wrap { position: relative; display: block; }
+.vseq-input-wrap input { padding-right: 56px; font-family: var(--font-mono); }
+.vseq-max { position: absolute; top: 50%; right: 4px; min-height: 32px !important; transform: translateY(-50%); }
+.vseq-hint { margin: -4px 0 0; color: var(--muted); font-size: 12px; }
+.vseq-hint .ui-mono { color: var(--fg-2); }
+.vseq-review { display: grid; gap: 0; margin: 0; border: 1px solid var(--hair); border-radius: var(--r-sm); background: var(--surface-2); }
+.vseq-review > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 10px 12px; border-top: 1px solid var(--hair); }
+.vseq-review > div:first-child { border-top: 0; }
+.vseq-review dt { color: var(--muted); font-size: 12px; }
+.vseq-review dd { display: grid; gap: 2px; margin: 0; min-width: 0; color: var(--fg); font-size: 13px; }
+.vseq-review-amount { font: 500 18px/1.2 var(--font-display) !important; letter-spacing: -.02em; }
+.vseq-review-label { color: var(--fg-2); font-size: 12px; }
+.vseq-result { margin: 0; color: var(--ice); font-size: 13px; font-weight: 500; }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .vseq-review > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .vseq-deposit { padding: 16px; }
+}

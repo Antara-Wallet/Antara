@@ -1,0 +1,80 @@
+/* Extension-only page chrome. The wallet's own styles are shared unchanged. */
+html[data-surface='sidepanel'],
+html[data-surface='tab'] {
+  background: #030405;
+  color-scheme: dark;
+}
+
+html[data-surface='sidepanel'] body {
+  min-width: 320px;
+  overscroll-behavior: none;
+}
+
+/* Side panel only: a slim bar above the wallet with "Open in full tab". The wallet
+   shell is shortened by the bar's height so the page never scrolls as a whole. */
+html[data-surface='sidepanel'] {
+  --extension-bar-height: 30px;
+}
+html[data-surface='sidepanel'] .desktop-app {
+  height: calc(var(--wallet-viewport-height, 100dvh) - var(--extension-bar-height));
+}
+.extension-panel-bar {
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+  height: var(--extension-bar-height);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 0 14px;
+  background: #030405;
+  border-bottom: 1px solid #c5ddff12;
+  font: 500 10px/1 'Inter Variable', Inter, system-ui, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #6f7d90;
+}
+.extension-panel-bar-label { flex: 0 0 auto; }
+.extension-panel-bar-problem {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #ffb4b4;
+}
+.extension-panel-bar-button {
+  margin-left: auto;
+  flex: 0 0 auto;
+  height: 24px;
+  padding: 0 9px;
+  border: 1px solid #78c8ff33;
+  border-radius: 6px;
+  background: transparent;
+  color: #b9d9ff;
+  font: inherit;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.extension-panel-bar-button:hover { background: #78c8ff14; border-color: #78c8ff66; }
+.extension-panel-bar-button:focus-visible { outline: 2px solid #5b9dff; outline-offset: 1px; }
+
+/* Shown by WalletErrorBoundary when the wallet cannot render. No account data. */
+.extension-failure {
+  min-height: calc(100vh - var(--extension-bar-height, 0px));
+  box-sizing: border-box;
+  padding: 32px 20px;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+  background: #050507;
+  color: #d8e2ee;
+  font-family: 'Inter Variable', Inter, system-ui, sans-serif;
+}
+.extension-failure h1 { margin: 0; font: 600 20px/1.2 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif; color: #fff; }
+.extension-failure p { margin: 0; font-size: 14px; line-height: 1.5; color: #9aa7b6; }
+.extension-failure .extension-failure-reason { color: #ffb4b4; overflow-wrap: anywhere; }
+.extension-failure button { justify-self: start; margin-top: 4px; padding: 9px 16px; border-radius: 8px; border: 1px solid #2f6fd1; background: #0d1a2c; color: #cfe3ff; font: inherit; cursor: pointer; }
+.extension-failure button:focus-visible { outline: 2px solid #5b9dff; outline-offset: 2px; }

@@ -1,0 +1,194 @@
+/* Vault protection (VaultLayers.tsx, LayerList.tsx, LayerApproval.tsx). Tokens from ui/tokens.css, with fallbacks for
+   roots outside the shell: charcoal surfaces, ice for "on", no decorative art. The list is one card of compact rows;
+   each layer's set-up and settings open in a sheet (rendered in a portal, so .vl-sheet rules are not scoped to .vl). */
+.vl,.vl-approval,.vl-sheet { color: var(--fg, #eaf1ff); font-family: var(--font-ui, 'Inter Variable', Inter, sans-serif); -webkit-font-smoothing: antialiased; min-width: 0; }
+.vl *,.vl-approval *,.vl-sheet * { box-sizing: border-box; }
+.vl { display: grid; gap: 14px; container-type: inline-size; }
+.vl h3,.vl-approval h3 { font-family: var(--font-display, 'Space Grotesk Variable', 'Inter Variable', sans-serif); font-size: 18px; font-weight: 600; letter-spacing: -.02em; margin: 0; color: var(--fg, #eaf1ff); }
+.vl h4 { font-family: var(--font-display, 'Space Grotesk Variable', 'Inter Variable', sans-serif); font-size: 14px; font-weight: 600; letter-spacing: -.01em; margin: 0; color: var(--fg, #eaf1ff); }
+.vl p,.vl-approval p,.vl-sheet p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--muted, #9aa5b6); overflow-wrap: anywhere; }
+.vl code,.vl-approval code,.vl-sheet code { font-family: var(--font-mono, 'JetBrains Mono Variable', monospace); font-size: 11px; color: var(--fg-2, #c9d2df); overflow-wrap: anywhere; }
+.vl-head { display: grid; gap: 4px; }
+.vl-summary { font-size: 13px !important; color: var(--fg-2, #c9d2df) !important; }
+.vl-summary strong { color: var(--fg, #eaf1ff); font-weight: 600; }
+.vl-claim,.vl-note { color: var(--muted, #9aa5b6) !important; font-size: 12px !important; }
+.vl-progress,.vl-busy { color: var(--accent, #9cbfff) !important; font-size: 12px !important; }
+.vl-notice { border: 1px solid #9cbfff2e; background: #9cbfff0a; border-radius: var(--r-sm, 10px); padding: 10px 12px; color: var(--fg-2, #c9d2df) !important; }
+/* Validation and "what is still missing": amber, never red (routine, not a failure). */
+.vl-form-error { color: var(--warn, #e9c07a) !important; font-size: 12px !important; }
+
+/* ---- The list: one card, hairline-separated rows; two columns when there is room ---- */
+.vl-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; background: var(--line, #ffffff14); border: 1px solid var(--line, #ffffff14); border-radius: var(--r-md, 14px); overflow: hidden; }
+@container (min-width: 760px) { .vl-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.vl-row { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 76px; padding: 14px 16px; background: var(--surface-1, #101216); min-width: 0; }
+.vl-row-icon,.vl-sheet-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--r-sm, 10px); border: 1px solid var(--line, #ffffff14); background: var(--surface-2, #131519); color: #ffffff66; }
+.vl-row[data-tone="on"] .vl-row-icon { color: var(--ice, #c4e5ff); border-color: #9cbfff47; background: #9cbfff12; }
+.vl-row[data-tone="warn"] .vl-row-icon { color: var(--warn, #e9c07a); border-color: #e9c07a40; }
+.vl-row-text { display: grid; gap: 3px; min-width: 0; }
+.vl-row-title { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; min-width: 0; }
+.vl-row-name { font: 600 14px/1.3 var(--font-display, 'Space Grotesk Variable', 'Inter Variable', sans-serif); letter-spacing: -.01em; color: var(--fg, #eaf1ff); }
+.vl-row-line { font-size: 12px; line-height: 1.45; color: #ffffff8c; overflow-wrap: anywhere; }
+.vl-row-note { font-size: 11.5px; line-height: 1.4; color: var(--faint, #6f7a8a); }
+.vl-pill { display: inline-flex; align-items: center; white-space: nowrap; font: 600 10.5px/1 var(--font-ui, Inter, sans-serif); letter-spacing: .02em; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--line, #ffffff14); color: var(--muted, #9aa5b6); background: #ffffff08; }
+.vl-pill[data-tone="on"] { color: var(--ice, #c4e5ff); border-color: #c4e5ff3d; background: #c4e5ff14; }
+.vl-pill[data-tone="warn"] { color: var(--warn, #e9c07a); border-color: #e9c07a47; background: #e9c07a12; }
+.vl-row-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; min-width: 84px; padding: 0 14px; border-radius: var(--r-sm, 10px); font: 600 12.5px/1 var(--font-ui, Inter, sans-serif); cursor: pointer; white-space: nowrap;
+  border: 1px solid #9cbfff5c; background: #9cbfff1f; color: #e3eeff; transition: background-color .16s, border-color .16s, color .16s; }
+.vl-row-btn:hover { background: #9cbfff33; border-color: #9cbfff8c; color: #fff; }
+.vl-row-btn[data-kind="manage"] { border-color: var(--line, #ffffff1f); background: var(--surface-2, #131519); color: var(--fg, #eaf1ff); }
+.vl-row-btn[data-kind="manage"]:hover { background: var(--surface-3, #191b20); border-color: #ffffff2e; }
+.vl-row-btn:focus-visible,.vl button:focus-visible,.vl summary:focus-visible,.vl-sheet summary:focus-visible { outline: 2px solid var(--focus, #86afff); outline-offset: 2px; }
+@container (max-width: 440px) {
+  .vl-row { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 10px; padding: 12px; }
+  .vl-row-icon { width: 32px; height: 32px; }
+  .vl-row-btn { min-width: 0; padding: 0 12px; }
+}
+@media (pointer: coarse), (max-width: 640px) { .vl-row-btn { min-height: 44px; } }
+
+.vl-handoff,.vl-unavailable { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border: 1px solid var(--line, #ffffff14); background: var(--surface-1, #101216); border-radius: var(--r-md, 14px); padding: 12px 14px; }
+.vl-unavailable p,.vl-handoff p { color: var(--fg-2, #c9d2df) !important; flex: 1 1 260px; }
+
+/* ---- Pending changes and the folded extras below the list ---- */
+.vl-section { display: grid; gap: 8px; border: 1px solid #e9c07a33; background: var(--surface-1, #101216); border-radius: var(--r-md, 14px); padding: 14px 16px; }
+.vl-folds { display: grid; gap: 1px; border: 1px solid var(--line, #ffffff14); border-radius: var(--r-md, 14px); overflow: hidden; background: var(--line, #ffffff14); }
+.vl-fold { background: var(--surface-1, #101216); padding: 0 16px; }
+.vl-fold > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; min-height: 46px; font-size: 12.5px; font-weight: 600; color: var(--fg-2, #c9d2df); }
+.vl-fold > summary::-webkit-details-marker { display: none; }
+.vl-fold > summary::after { content: ''; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); margin: -3px 4px 0 0; opacity: .7; }
+.vl-fold[open] > summary::after { transform: rotate(-135deg); margin-top: 3px; }
+.vl-fold[open] { padding-bottom: 14px; }
+.vl-fold > :not(summary) { display: grid; gap: 8px; }
+.vl-fold > p + p { margin-top: 8px; }
+#vl-pending:focus { outline: none; }
+#vl-pending:focus-visible { outline: 2px solid var(--focus, #86afff); outline-offset: 3px; }
+
+/* ---- Items (inside a layer's sheet, the devices fold and pending changes) ---- */
+.vl-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.vl-items>li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 10px 12px; border: 1px solid var(--hair, #ffffff0d); border-radius: var(--r-sm, 10px); background: var(--surface-2, #131519); font-size: 12px; }
+.vl-items>li[data-state="pending-addition"],.vl-items>li[data-state="pending-removal"] { border-style: dashed; border-color: #e9c07a55; }
+.vl-item-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 170px; }
+.vl-item-main strong { font-weight: 600; color: var(--fg, #eaf1ff); overflow-wrap: anywhere; }
+.vl-item-main small { font-size: 11.5px; color: var(--muted, #9aa5b6); overflow-wrap: anywhere; }
+.vl-item-main small.vl-item-pending { color: var(--warn, #e9c07a); }
+.vl-item-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.vl-item-actions:empty { display: none; }
+.vl-link { font: inherit; font-size: 12px; font-weight: 600; background: none; border: 0; padding: 6px 0; color: var(--accent, #9cbfff); cursor: pointer; }
+.vl-link:hover:not(:disabled) { color: var(--fg, #eaf1ff); }
+.vl-link:disabled { cursor: default; color: var(--faint, #6f7a8a); }
+
+/* ---- A layer's sheet ---- */
+.vl-sheet .vl-sheet-icon { width: 30px; height: 30px; color: var(--ice, #c4e5ff); border-color: #9cbfff40; background: #9cbfff10; flex: none; }
+.vl-sheet-body { display: grid; gap: 14px; min-width: 0; }
+.vl-lead { font-size: 13px !important; line-height: 1.55 !important; color: var(--fg-2, #c9d2df) !important; }
+.vl-field { display: grid; gap: 6px; font-size: 12px; color: var(--muted, #9aa5b6); min-width: 0; }
+.vl-sheet input:not([type="radio"]),.vl-sheet select,.vl-approval input { font: inherit; font-size: 13px; background: var(--surface-2, #131519); color: var(--fg, #eaf1ff); border: 1px solid var(--line, #ffffff14); border-radius: var(--r-sm, 10px); min-height: 42px; padding: 9px 12px; width: 100%; outline: none; }
+.vl-sheet input:focus-visible,.vl-sheet select:focus-visible { outline: 2px solid var(--focus, #86afff); outline-offset: 2px; }
+.vl-sheet select option { background: var(--surface-2, #131519); color: var(--fg, #eaf1ff); }
+.vl-caps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.vl-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.vl-choice { border: 0; margin: 0; padding: 0; display: flex; gap: 8px 16px; flex-wrap: wrap; }
+.vl-choice legend { font-size: 12px; color: var(--muted, #9aa5b6); margin-bottom: 6px; padding: 0; }
+.vl-choice label { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--fg-2, #c9d2df); min-height: 32px; }
+.vl-choice input { accent-color: var(--switch-on, #3867df); }
+.vl-more,.vl-how,.vl-recovery { border-top: 1px solid var(--hair, #ffffff0d); padding-top: 10px; display: grid; gap: 10px; }
+.vl-more > summary,.vl-how > summary,.vl-recovery > summary { cursor: pointer; font-size: 12px; font-weight: 600; color: var(--accent, #9cbfff); width: fit-content; }
+.vl-how p { font-size: 12px !important; }
+.vl-how p.vl-how-kind { color: var(--fg-2, #c9d2df) !important; font-weight: 500; }
+.vl-how p.vl-how-item { color: var(--faint, #6f7a8a) !important; }
+.vl-sheet-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.vl-sheet-actions :is(.ui-btn, .ui-btn-primary) { min-height: 42px; }
+.vl-sheet-actions .ui-btn-text { padding-inline: 0; }
+/* Turning a layer off is a routine choice, confirmed on the next screen: muted, never red. */
+.vl-off { color: var(--muted, #9aa5b6) !important; }
+.vl-off:hover:not(:disabled) { color: var(--fg, #eaf1ff) !important; }
+.vl-timing { color: var(--fg, #eaf1ff) !important; font-weight: 500; font-size: 13px !important; }
+.vl-wait { display: grid; gap: 6px; padding: 12px 14px; border: 1px solid #e9c07a33; border-radius: var(--r-sm, 10px); background: #e9c07a0a; }
+.vl-one-step { color: var(--fg-2, #c9d2df) !important; }
+
+/* The pinned footer of every protection sheet: the main action is always visible and fills the row; a routine
+   "Turn off" sits at the left edge, aligned with the content. */
+.vl-sheet .ui-sheet-footer { align-items: center; gap: 10px; }
+.vl-sheet .ui-sheet-footer :is(.ui-btn, .ui-btn-primary) { min-height: 44px; }
+.vl-sheet .ui-sheet-footer .ui-btn-primary { flex: 1 1 auto; }
+.vl-sheet .ui-sheet-footer .vl-off { margin-right: auto; padding-inline: 0; flex: 0 1 auto; }
+/* Desktop: anchored near the top, so the sheet does not jump as each step changes its height. */
+@media (min-width: 641px) {
+  .ui-layer:has(> .vl-sheet) { align-items: start; padding-top: min(10vh, 96px); }
+  .ui-layer > .vl-sheet { max-height: min(calc(100dvh - min(10vh, 96px) - 24px), 760px); }
+}
+
+/* Steps: at most three, numbered; done ones carry a check and say so in text too. */
+.vl-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.vl-steps > li { display: grid; grid-template-columns: 26px minmax(0, 1fr); align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--r-sm, 10px); border: 1px solid var(--hair, #ffffff0d); background: var(--surface-2, #131519); }
+/* Before anything starts the steps are a light preview under the form, not cards competing with it. */
+.vl-steps.vl-steps-preview { gap: 2px; padding-top: 2px; }
+.vl-steps.vl-steps-preview > li { grid-template-columns: 22px minmax(0, 1fr); gap: 10px; border: 0; background: none; padding: 4px 0; }
+.vl-steps-preview .vl-step-mark { width: 22px; height: 22px; font-size: 10px; }
+.vl-steps-preview .vl-step-text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; }
+.vl-steps-preview .vl-step-text strong { font-size: 12.5px; font-weight: 500; color: var(--fg-2, #c9d2df); }
+.vl-step-mark { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line, #ffffff1f); font: 600 11px/1 var(--font-mono, monospace); color: var(--muted, #9aa5b6); }
+.vl-step-text { display: grid; gap: 1px; min-width: 0; }
+.vl-step-text strong { font-size: 13px; font-weight: 600; color: var(--fg-2, #c9d2df); }
+.vl-step-text small { font-size: 11.5px; color: var(--faint, #6f7a8a); }
+.vl-steps > li[data-state="active"] { border-color: #9cbfff59; background: #9cbfff0d; }
+.vl-steps > li[data-state="active"] .vl-step-mark { border-color: var(--accent, #9cbfff); color: var(--accent, #9cbfff); animation: vl-pulse 1.6s ease-in-out infinite; }
+.vl-steps > li[data-state="active"] strong,.vl-steps > li[data-state="done"] strong { color: var(--fg, #eaf1ff); }
+.vl-steps > li[data-state="done"] .vl-step-mark { border-color: #c4e5ff66; background: #c4e5ff1f; color: var(--ice, #c4e5ff); }
+.vl-steps > li[data-state="failed"] { border-color: #e9c07a59; }
+.vl-steps > li[data-state="failed"] .vl-step-mark { border-color: var(--warn, #e9c07a); color: var(--warn, #e9c07a); }
+@keyframes vl-pulse { 50% { box-shadow: 0 0 0 4px #9cbfff1f; } }
+.vl-pause { display: grid; gap: 12px; }
+
+/* A step that didn't finish: calm, never red. */
+.vl-problem { display: grid; gap: 10px; border: 1px solid #e9c07a40; background: #e9c07a0a; border-radius: var(--r-md, 14px); padding: 14px; }
+.vl-problem-title { font: 600 14px/1.3 var(--font-display, 'Space Grotesk Variable', sans-serif) !important; color: var(--fg, #eaf1ff) !important; }
+.vl-problem p:not(.vl-problem-title) { color: var(--fg-2, #c9d2df) !important; }
+.vl-done { display: grid; justify-items: center; text-align: center; gap: 10px; padding: 10px 0 4px; }
+.vl-done-mark { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; border: 1px solid #c4e5ff59; background: #c4e5ff17; color: var(--ice, #c4e5ff); }
+.vl-done h3 { margin: 4px 0 0; font: 600 20px/1.25 var(--font-display, 'Space Grotesk Variable', sans-serif); letter-spacing: -.02em; color: var(--fg, #eaf1ff); }
+.vl-done p { max-width: 380px; font-size: 13px !important; color: var(--fg-2, #c9d2df) !important; }
+.vl-done .vl-sheet-actions { justify-content: center; margin-top: 6px; }
+
+/* Vault authenticator (MFA layer): QR, manual key and the 6-digit code field. */
+.vl-totp-setup { display: grid; gap: 8px; justify-items: start; }
+.vl-totp-qr { background: #fff; border-radius: 10px; padding: 8px; line-height: 0; }
+.vl-totp-qr svg { width: 168px; height: 168px; display: block; }
+.vl-totp-key code { font-size: 14px; letter-spacing: .06em; word-break: normal; overflow-wrap: normal; }
+.vl-code { display: grid; gap: 6px; max-width: 280px; font-size: 12px; color: var(--muted, #9aa5b6); }
+.vl-code input { font-variant-numeric: tabular-nums; letter-spacing: .3em; font-size: 18px; padding: 10px 12px; }
+
+/* ---- Release check (LayerApproval.tsx) and the pending-change warning, shown outside settings too ---- */
+.vl-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 10px; }
+.vl-actions :is(.ui-btn, .ui-btn-primary) { min-height: 36px; padding: 0 14px; font-size: 12px; white-space: normal; text-align: center; }
+.vl-badges { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.vl-badge { font: 600 11px/1.2 var(--font-ui, Inter, sans-serif); letter-spacing: .04em; text-transform: uppercase; border-radius: var(--r-xs, 6px); padding: 4px 7px; border: 1px solid var(--line, #ffffff14); color: var(--fg-2, #c9d2df); background: #ffffff05; white-space: nowrap; }
+.vl-badge-cryptographic { border-color: #9cbfff40; color: var(--accent, #9cbfff); background: #9cbfff0d; }
+.vl-badge-device-reported { border-style: dashed; color: var(--muted, #9aa5b6); }
+.vl-alert { border: 1px solid #ff8f8640; background: #ff8f860d; border-radius: var(--r-md, 14px); padding: 12px 14px; margin: 10px 0; }
+.vl-alert p { color: #ffc7c1 !important; }
+.vl-alert[role="note"] { border-color: #9cbfff2e; background: #9cbfff0a; }
+.vl-alert[role="note"] p { color: var(--fg-2, #c9d2df) !important; }
+.vl-alert :is(.ui-btn, .ui-btn-primary) { margin-top: 6px; }
+.vl-pending-alert { font-family: var(--font-ui, 'Inter Variable', Inter, sans-serif); border-color: #ff8f8659; min-width: 0; }
+.vl-pending-alert p { margin: 4px 0; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.vl-pending-alert p:first-child { color: #ffd0c7 !important; font-weight: 500; }
+.wallet-vault>.vl-pending-alert { margin: 0; }
+.vl-approval { border: 1px solid #9cbfff33; background: var(--surface-1, #101216); border-radius: var(--r-md, 14px); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+.vl-approval p { margin: 6px 0; }
+.vl-release { color: var(--fg, #eaf1ff) !important; font-size: 13px !important; }
+.vl-required { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.vl-required>li { border: 1px solid var(--hair, #ffffff0d); border-radius: var(--r-sm, 10px); padding: 10px 12px; background: var(--surface-2, #131519); }
+.vl-required>li.is-failed { border-color: #ff8f8666; background: #ff8f860d; }
+.vl-row-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.vl-row-head strong { font-size: 13px; font-weight: 600; color: var(--fg, #eaf1ff); }
+.vl-reason { color: #ffc7c1 !important; }
+.vl-approval small.vl-note { display: block; line-height: 1.6; }
+
+@media (max-width: 640px) {
+  .vl-caps,.vl-split { grid-template-columns: minmax(0, 1fr); }
+  .vl-sheet-actions .ui-btn-primary { flex: 1 1 auto; }
+  .vl-sheet .ui-sheet-footer > .vl-off { flex: 0 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vl *,.vl-approval *,.vl-sheet * { transition: none !important; animation: none !important; }
+}

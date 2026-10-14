@@ -1,0 +1,270 @@
+/*
+ * Shared ANTARA components (docs/UI_ARGUS_PARITY.md 4.4). Every selector starts with
+ * `ui-`, so legacy rules never match these and these never match legacy markup.
+ * Owned by Area A: other areas import, never edit; request changes in hand-off notes.
+ */
+@import "./tokens.css";
+
+/* ---------- Text ---------- */
+.ui-eyebrow {
+  font: 500 var(--text-eyebrow)/1.4 var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ui-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- Buttons: .ui-btn (secondary), .ui-btn-primary (ice), .ui-btn-text, .ui-btn-danger ---------- */
+.ui-btn,
+.ui-btn-primary,
+.ui-btn-text,
+.ui-btn-danger,
+.ui-icon-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--control-h);
+  margin: 0;
+  font: 550 var(--text-body)/1.2 var(--font-ui);
+  letter-spacing: -.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover), border-color var(--t-hover), color var(--t-hover);
+}
+.ui-btn,
+.ui-btn-primary,
+.ui-btn-danger { padding: 0 16px; border-radius: var(--r-sm); }
+.ui-btn { background: var(--surface-2); border: 1px solid var(--line); color: var(--fg); }
+.ui-btn:hover:not(:disabled) { background: var(--surface-3); }
+.ui-btn-primary { background: var(--primary-bg); border: 1px solid var(--primary-bg); color: var(--primary-fg); }
+.ui-btn-primary:hover:not(:disabled) { background: var(--primary-hover); border-color: var(--primary-hover); }
+.ui-btn-text { padding: 0 4px; background: none; border: 0; color: var(--accent); }
+.ui-btn-text:hover:not(:disabled) { color: var(--fg); }
+.ui-btn-danger { background: none; border: 1px solid var(--danger); color: var(--danger); }
+.ui-btn-danger:hover:not(:disabled) { background: #ff8f8614; }
+.ui-icon-btn { width: var(--control-h); padding: 0; border-radius: var(--r-sm); background: none; border: 1px solid transparent; color: var(--muted); }
+.ui-icon-btn:hover:not(:disabled) { background: var(--surface-3); color: var(--fg); }
+:is(.ui-btn, .ui-btn-primary, .ui-btn-text, .ui-btn-danger, .ui-icon-btn):disabled { cursor: default; opacity: .45; }
+/* Busy keeps the label visible ("Waiting for your wallet…") and the width (ButtonLabel). */
+:is(.ui-btn, .ui-btn-primary, .ui-btn-text, .ui-btn-danger)[aria-busy="true"] { cursor: progress; opacity: .8; }
+.ui-btn-labels { display: inline-grid; }
+.ui-btn-labels > span { grid-area: 1 / 1; text-align: center; }
+.ui-btn-labels > [data-active="false"] { visibility: hidden; }
+
+/* One focus ring for every ui- control: 2px, offset 2px. */
+:is(.ui-btn, .ui-btn-primary, .ui-btn-text, .ui-btn-danger, .ui-icon-btn, .ui-address-copy, .ui-toast button):focus-visible,
+.ui-layer :is(a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Card: the one card surface (the 10.4 colour check reads it) ---------- */
+.ui-card {
+  box-sizing: border-box;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+
+/* ---------- Inline alert (6.17): role="alert", danger text on surface-2 ---------- */
+.ui-alert {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--danger);
+  font: 450 var(--text-small)/1.5 var(--font-ui);
+}
+.ui-alert[data-tone="warn"] { color: var(--warn); }
+.ui-alert[data-tone="neutral"] { color: var(--fg-2); }
+
+/* ---------- Sheet: centred dialog (desktop), bottom sheet (narrow) ---------- */
+.ui-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  color: var(--fg);
+  font: 400 var(--text-body)/1.5 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
+}
+.ui-layer *, .ui-layer *::before, .ui-layer *::after { box-sizing: border-box; }
+.ui-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--glass-backdrop);
+  backdrop-filter: var(--blur-backdrop);
+  -webkit-backdrop-filter: var(--blur-backdrop);
+  animation: ui-fade var(--t-sheet) ease-out both;
+}
+.ui-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 520px);
+  max-height: min(calc(100dvh - 48px), 760px);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-dialog);
+  outline: none;
+  animation: ui-sheet-in var(--t-sheet) var(--ease-reveal) both;
+}
+/* The sheet itself only receives landing focus on open; its controls show the ring. */
+.ui-sheet:focus { outline: none; }
+.ui-sheet[data-size="large"] { width: min(100%, 760px); }
+.ui-layer[data-size="drawer"] { place-items: stretch end; padding: 0; }
+.ui-sheet[data-size="drawer"] { width: min(100%, 380px); height: 100dvh; max-height: none; border-radius: 0; border-width: 0 0 0 1px; animation-name: ui-drawer-in; }
+.ui-sheet-header { display: flex; align-items: center; gap: 10px; padding: 18px 18px 12px 22px; }
+.ui-sheet-title { flex: 1; min-width: 0; margin: 0; font: 550 19px/1.25 var(--font-display); letter-spacing: -.02em; color: var(--fg); }
+.ui-sheet-description { margin: -4px 22px 8px; color: var(--muted); font-size: var(--text-small); }
+.ui-sheet-body { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 22px 22px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent; }
+.ui-sheet-footer { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; padding: 14px 22px 20px; border-top: 1px solid var(--hair); }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  /* Every size, the drawer included, is a bottom sheet when narrow. */
+  .ui-layer, .ui-layer[data-size="drawer"] { place-items: end stretch; padding: 0; }
+  .ui-sheet,
+  .ui-sheet[data-size="large"],
+  .ui-sheet[data-size="drawer"] {
+    width: 100%;
+    height: auto;
+    /* Never under the side panel's "Open in full tab" bar. */
+    max-height: calc(var(--wallet-viewport-height, 100dvh) - var(--extension-bar-height, 0px) - 24px);
+    border-width: 1px 0 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: var(--shadow-sheet);
+    animation-name: ui-sheet-up;
+  }
+  .ui-sheet-body { padding: 4px 18px calc(18px + env(safe-area-inset-bottom, 0px)); }
+  .ui-sheet-header { padding: 16px 12px 10px 18px; }
+  .ui-sheet-footer { padding: 12px 18px calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .ui-sheet-footer > * { flex: 1 1 140px; }
+  /* Full-screen flows (Send steps, Receive step 2, Activation, Verification). */
+  .ui-sheet[data-full-narrow="true"] { height: calc(var(--wallet-viewport-height, 100dvh) - var(--extension-bar-height, 0px)); max-height: none; border-radius: 0; border-width: 0; }
+}
+@keyframes ui-fade { from { opacity: 0; } }
+@keyframes ui-sheet-in { from { opacity: 0; transform: translateY(8px) scale(.985); } }
+@keyframes ui-sheet-up { from { transform: translateY(100%); } }
+@keyframes ui-drawer-in { from { transform: translateX(100%); } }
+
+/* ---------- AddressText ---------- */
+.ui-address { display: inline-flex; align-items: flex-start; gap: 6px; max-width: 100%; vertical-align: top; }
+.ui-address-text { min-width: 0; font: 450 var(--text-small)/1.55 var(--font-mono); color: var(--muted); word-break: break-all; overflow-wrap: anywhere; font-variant-ligatures: none; }
+.ui-address-edge { color: var(--fg); }
+.ui-address[data-form="short"] .ui-address-text { word-break: normal; white-space: nowrap; color: var(--fg-2); }
+.ui-address-copy {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px -4px -4px 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-xs);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.ui-address-copy:hover { color: var(--fg); background: var(--surface-3); }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  /* 44×44 touch target around the 28px glyph button. */
+  .ui-address-copy { width: 44px; height: 44px; margin: -12px -10px -12px -4px; }
+}
+
+/* ---------- StatusChip: text always present, colour never the only signal ---------- */
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-height: 22px;
+  padding: 2px 8px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--fg-2);
+  font: 500 var(--text-min)/1.3 var(--font-ui);
+  white-space: nowrap;
+}
+.ui-chip-mark { flex: 0 0 auto; display: inline-grid; place-items: center; width: 12px; height: 12px; }
+.ui-chip-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ui-chip[data-tone="ok"] { color: var(--ice); border-color: #c4e5ff2e; background: #c4e5ff0d; }
+.ui-chip[data-tone="warn"] { color: var(--warn); border-color: #e9c07a33; background: #e9c07a0d; }
+.ui-chip[data-tone="danger"] { color: var(--danger); border-color: #ff8f8633; background: #ff8f860d; }
+
+/* ---------- Stepper ---------- */
+.ui-stepper { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; counter-reset: none; }
+.ui-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; color: var(--faint); font: 500 var(--text-min)/1.3 var(--font-ui); }
+.ui-step::before { content: ""; height: 2px; border-radius: 2px; background: var(--line); }
+.ui-step-label { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.ui-step-number { font-family: var(--font-mono); font-size: var(--text-min); }
+.ui-step-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-step[data-status="complete"] { color: var(--muted); }
+.ui-step[data-status="complete"]::before { background: #c4e5ff66; }
+.ui-step[data-status="current"] { color: var(--fg); }
+.ui-step[data-status="current"]::before { background: var(--accent); }
+
+/* ---------- Toast ---------- */
+.ui-toast-host { position: fixed; inset: auto 0 0; z-index: 80; display: grid; justify-items: center; padding: 0 16px calc(24px + env(safe-area-inset-bottom, 0px)); pointer-events: none; }
+.ui-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(100%, 440px);
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-dialog);
+  color: var(--fg);
+  font: 500 var(--text-body)/1.45 var(--font-ui);
+  animation: ui-sheet-in var(--t-sheet) var(--ease-reveal) both;
+}
+.ui-toast > span { min-width: 0; }
+.ui-toast button { flex: 0 0 auto; display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: var(--r-xs); background: none; color: var(--muted); cursor: pointer; }
+.ui-toast button:hover { color: var(--fg); background: var(--surface-3); }
+/* While a sheet is open the toast moves to the top, so it never covers the sheet's actions. */
+body:has(> .ui-layer) .ui-toast-host { inset: 0 0 auto; padding: calc(12px + var(--extension-bar-height, 0px) + env(safe-area-inset-top, 0px)) 16px 0; }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  /* Above the bottom tab bar (72px plus the safe area). */
+  body:not(:has(> .ui-layer)) .ui-toast-host { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .ui-toast button { width: 44px; height: 44px; }
+}
+
+/* ---------- EmptyState ---------- */
+.ui-empty { display: grid; justify-items: center; gap: 10px; padding: 32px 20px; text-align: center; }
+.ui-empty-art { width: min(100%, 320px); aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-md); border: 1px solid var(--hair); opacity: .9; }
+.ui-empty-title { margin: 6px 0 0; font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; color: var(--fg); }
+.ui-empty-text { margin: 0; max-width: 42ch; color: var(--muted); font-size: var(--text-body); line-height: 1.55; }
+.ui-empty-action { margin-top: 6px; }
+
+/* ---------- Reduced motion: system preference, the in-app switch, a hidden window ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :is(.ui-layer, .ui-toast-host, .ui-scope, .desktop-app) :is([class^="ui-"], [class*=" ui-"]) { animation: none !important; transition: none !important; }
+}
+:is(html[data-motion="off"], [data-motion="off"], [data-window-hidden="true"]) :is([class^="ui-"], [class*=" ui-"]),
+:is(.ui-layer, .ui-toast-host)[data-motion="off"],
+:is(.ui-layer, .ui-toast-host)[data-motion="off"] :is([class^="ui-"], [class*=" ui-"]) { animation: none !important; transition: none !important; }
+
+/* ---------- Utility ---------- */
+.ui-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

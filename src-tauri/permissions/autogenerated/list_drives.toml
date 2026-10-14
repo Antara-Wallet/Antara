@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-list-drives"
+description = "Enables the list_drives command without any pre-configured scope."
+commands.allow = ["list_drives"]
+
+[[permission]]
+identifier = "deny-list-drives"
+description = "Denies the list_drives command without any pre-configured scope."
+commands.deny = ["list_drives"]

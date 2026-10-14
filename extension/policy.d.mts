@@ -1,0 +1,18 @@
+export declare const EXTENSION_CSP: string;
+export declare const EXTENSION_PERMISSIONS: readonly string[];
+export declare const GEOLOCATION_CALL_SITES: number;
+export declare const MINIMUM_CHROME_VERSION: string;
+export declare const PRODUCTION_API_BASE: string;
+export declare const PASSKEY_RP_ID: string;
+export declare const EXTENSION_HOST_PERMISSIONS: readonly string[];
+export declare const DEV_API_HOST_PERMISSIONS: readonly string[];
+export declare const EXTENSION_DEV_HOST_PERMISSIONS: readonly string[];
+export declare function hostPermissionsFor(development: boolean): readonly string[];
+export declare const CORS_ORIGINS: readonly string[];
+export declare const FRAME_ORIGINS: readonly string[];
+export declare const PRIVY_APP_ID_FORMAT: RegExp;
+export declare const PRIVY_CLIENT_ID_FORMAT: RegExp;
+export declare const SECRET_ENV_NAME: RegExp;
+export declare const PUBLIC_ENV_NAMES: ReadonlySet<string>;
+export declare function isSecretEnvName(name: string): boolean;
+export declare function urlSecretProblems(value: string, options?: { strict?: boolean }): string[];

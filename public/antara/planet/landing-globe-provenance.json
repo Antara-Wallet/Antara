@@ -1,0 +1,23 @@
+{
+  "created": "2026-10-13",
+  "purpose": "Public landing hero (src/solares/landing/LandingGlobe.tsx). No generative image model was used for these files.",
+  "files": {
+    "land-mask.png": {
+      "tool": "Python (Pillow + NumPy), local script",
+      "source": "earth-obsidian.png in this folder (see provenance.json)",
+      "method": "Grey land pixels (red channel above 9 and above 0.55 x blue) scaled, Gaussian blur 2.5 px, threshold, 5 px morphological closing and 5 px median at full size; resized to 720x360 equirectangular, thresholded, 3 px closing; top 5 rows cleared. 1 bit per pixel in an 8-bit greyscale PNG.",
+      "use": "Sampled at runtime to decide which globe dots are land."
+    },
+    "landing-globe-still.webp": {
+      "tool": "Headless Chromium (Playwright, SwiftShader WebGL) rendering LandingGlobe at 1440x900, device scale 2, reduced motion (composed frame), no layer selected",
+      "method": "Every element except the globe canvas hidden, transparent page background, screenshot cropped to a square 3.5 globe radii wide centred on the globe, resized to 1100x1100, WebP quality 86 with alpha.",
+      "use": "Static fallback when WebGL is unavailable or the context is lost, and while the 3D chunk loads. Positioned by the same --globe-* CSS variables as the live scene."
+    },
+    "../emblem-96.webp": {
+      "tool": "Python (Pillow)",
+      "source": "public/antara/emblem.png",
+      "method": "Lanczos resize to 96x96, WebP quality 90.",
+      "use": "Header emblem on the landing, so the page does not load the 1.4 MB source PNG."
+    }
+  }
+}

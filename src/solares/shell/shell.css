@@ -1,0 +1,321 @@
+/*
+ * Wallet shell (docs/UI_ARGUS_PARITY.md 4, 5.1, 5.2, 6.1, 6.3): sidebar, topbar, bottom
+ * tabs, account pill and account sheet. Area A. New classes use the `shell-` prefix;
+ * the only legacy hooks styled here are the shell's own (.desktop-app, .desktop-main,
+ * .desktop-content, .mobile-tabbar, .desktop-loading).
+ */
+
+/* ---------- Frame ---------- */
+/* Shared buttons keep their own type inside the shell (legacy `.desktop-app button { font: inherit }`). */
+.desktop-app :is(.ui-btn, .ui-btn-primary, .ui-btn-text, .ui-btn-danger, .ui-icon-btn) { font: 550 var(--text-body)/1.2 var(--font-ui); letter-spacing: -.005em; }
+.desktop-app :is(.ui-btn, .ui-btn-primary, .ui-btn-text, .ui-btn-danger, .ui-icon-btn, .ui-address-copy):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.desktop-app a.ui-btn-text { color: var(--accent); }
+.desktop-app.shell-app {
+  background: var(--ink-1);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  letter-spacing: -.005em;
+}
+.desktop-app .shell-main { background: transparent; }
+.desktop-app .desktop-content.shell-content {
+  padding: 28px 32px 40px;
+  scrollbar-color: var(--surface-3) transparent;
+  animation: shell-reveal var(--t-reveal) var(--ease-reveal) both;
+}
+.desktop-app .desktop-portfolio-content > * { max-width: 1120px; margin-left: auto; margin-right: auto; }
+/* Both sides of the Wallet screen have a right column on wide screens: they use up to 1320px. */
+.desktop-app .desktop-portfolio-content:is([data-side="wallet"], [data-side="vault"]) > * { max-width: 1320px; }
+.desktop-app .shell-loading { padding: 28px 0; color: var(--muted); font-size: var(--text-body); }
+.desktop-app .shell-loading p { margin: 0; }
+@keyframes shell-reveal { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- Sidebar (desktop) ---------- */
+.shell-sidebar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 76px;
+  width: 76px;
+  min-height: 0;
+  padding: 0 12px 16px;
+  overflow: hidden auto;
+  background: #0b0c0f;
+  border-right: 1px solid var(--hair);
+  scrollbar-width: none;
+}
+.shell-sidebar.is-expanded { flex-basis: 202px; width: 202px; }
+.shell-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  height: 73px;
+  margin: 0 -12px;
+  padding: 0 18px;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  background: none;
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+}
+.shell-sidebar:not(.is-expanded) .shell-brand { justify-content: center; padding: 0; }
+.shell-brand-mark { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; object-fit: contain; mix-blend-mode: screen; }
+.shell-brand-word { font: 600 19px/1 var(--font-display); letter-spacing: .1em; color: var(--fg); }
+.shell-nav { display: flex; flex-direction: column; gap: 4px; margin-top: 18px; }
+.shell-nav-bottom { display: flex; flex-direction: column; gap: 4px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--hair); }
+.shell-nav-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: none;
+  color: var(--muted);
+  font: 500 var(--text-body)/1 var(--font-ui);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-hover), color var(--t-hover);
+}
+.shell-nav-button svg { flex-shrink: 0; }
+.shell-nav-button:hover { background: #ffffff08; color: var(--fg); }
+.shell-nav-button[aria-current="page"] { background: var(--accent-tint); color: var(--fg); }
+.shell-nav-button[aria-current="page"] svg { color: var(--accent); }
+.shell-sidebar:not(.is-expanded) .shell-nav-button { justify-content: center; padding: 0; }
+.shell-sidebar:not(.is-expanded) :is(.shell-nav-button > span, .shell-brand-word) { display: none; }
+:is(.shell-brand, .shell-nav-button):focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+
+/* ---------- Topbar ---------- */
+.shell-topbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-shrink: 0;
+  height: 73px;
+  padding: 0 28px 0 18px;
+  background: var(--glass-topbar);
+  -webkit-backdrop-filter: var(--blur-topbar);
+  backdrop-filter: var(--blur-topbar);
+  border-bottom: 1px solid var(--hair);
+}
+.shell-topbar-start, .shell-topbar-end { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.desktop-app .shell-topbar h1 { margin: 0; font: 600 var(--text-title)/1.2 var(--font-display); letter-spacing: -.01em; color: var(--fg); white-space: nowrap; }
+.shell-brand-small { display: block; flex-shrink: 0; width: 27px; height: 27px; border-radius: 7px; object-fit: contain; mix-blend-mode: screen; }
+
+/* ---------- Account pill ---------- */
+.shell-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  max-width: 280px;
+  min-height: 44px;
+  padding: 5px 12px 5px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface-1);
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--t-hover), border-color var(--t-hover);
+}
+.shell-pill:hover { background: var(--surface-3); border-color: #ffffff1f; }
+.shell-pill:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.shell-pill-logo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-3);
+  color: var(--fg-2);
+}
+.shell-pill-logo svg { width: 17px; height: 17px; }
+.shell-pill-text { display: grid; gap: 2px; min-width: 0; }
+.shell-pill-text strong { overflow: hidden; font: 600 var(--text-body)/1.2 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.shell-pill-text small { overflow: hidden; font: 450 var(--text-min)/1.25 var(--font-ui); color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+.shell-pill[data-signed-in] .shell-pill-text small { font-family: var(--font-mono); }
+.shell-pill-tag {
+  flex-shrink: 0;
+  padding: 3px 7px;
+  border: 1px solid #9cbfff2e;
+  border-radius: var(--r-xs);
+  background: var(--accent-tint);
+  color: var(--accent);
+  font: 600 var(--text-min)/1.2 var(--font-ui);
+}
+.shell-pill-chevron { flex-shrink: 0; color: var(--muted); }
+
+/* ---------- Account sheet ---------- */
+/*
+ * Every level is a single minmax(0, 1fr) column with min-width: 0, so a long name, address
+ * or vault status can never widen the drawer: names truncate, the status chip wraps. The
+ * sheet body keeps equal left and right padding at every width.
+ */
+.shell-accounts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; min-width: 0; padding-top: 6px; }
+.shell-account-group { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; min-width: 0; }
+.shell-account-heading { margin: 0; overflow-wrap: anywhere; text-wrap: balance; font: 550 var(--text-small)/1.4 var(--font-ui); letter-spacing: .01em; color: var(--muted); }
+.shell-account-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.shell-account-item { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; min-width: 0; }
+/* One card per wallet: the select button fills it, the settings cog sits at its right edge. */
+.shell-account-card {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  transition: background-color var(--t-hover), border-color var(--t-hover);
+}
+.shell-account-card:hover { background: var(--surface-3); }
+.shell-account-card[data-current] { border-color: #9cbfff59; background: var(--surface-3); }
+.shell-account-row, .shell-vault-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.shell-account-row {
+  flex: 1 1 auto;
+  min-height: 60px;
+  margin: 0;
+  padding: 10px 6px 10px 14px;
+  border: 0;
+  /* All four corners follow the card, so the inset focus ring is rounded where it meets the cog too. */
+  border-radius: calc(var(--r-md) - 1px);
+  background: none;
+}
+.ui-layer .shell-account-row:focus-visible { outline-offset: -2px; }
+/* ui.css's .ui-icon-btn { margin: 0 } loads later at the same specificity, so the inset needs the card in the selector. */
+.shell-account-card > .shell-account-cog { margin-right: 8px; }
+.shell-account-logo {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-1);
+  color: var(--fg-2);
+}
+.shell-account-logo svg { width: 19px; height: 19px; }
+.shell-account-text { display: grid; flex: 1 1 auto; gap: 3px; min-width: 0; }
+.shell-account-name { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.shell-account-name strong { min-width: 0; overflow: hidden; font: 550 var(--text-body)/1.25 var(--font-ui); text-overflow: ellipsis; white-space: nowrap; }
+.shell-account-tag { flex: 0 0 auto; padding: 1px 6px; border: 1px solid var(--line); border-radius: var(--r-xs); color: var(--muted); font: 500 var(--text-min)/1.35 var(--font-ui); letter-spacing: .01em; }
+.shell-account-text small { overflow: hidden; font: 450 var(--text-min)/1.3 var(--font-mono); color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+.shell-account-check { flex-shrink: 0; color: var(--accent); }
+/* The Vault row, nested under the ANTARA Solana wallet. */
+.shell-vault-row {
+  margin: 0 0 0 24px;
+  min-height: 52px;
+  /* The right padding centres the arrow under the cog above it (40px cog + 8px inset; 44px + 6px when narrow). */
+  padding: 8px 20px 8px 12px;
+  border: 1px dashed #ffffff1a;
+  border-radius: var(--r-md);
+  background: transparent;
+  transition: background-color var(--t-hover);
+}
+.shell-vault-row:hover { background: var(--surface-2); }
+.shell-vault-icon { display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: var(--r-xs); background: var(--surface-3); color: var(--fg-2); }
+.shell-vault-text { display: grid; flex: 1 1 auto; justify-items: start; gap: 4px; min-width: 0; }
+.shell-vault-name { font: 550 var(--text-body)/1.2 var(--font-ui); }
+/* A long status ("Not available for this wallet") wraps inside the chip instead of widening the row. */
+.ui-chip.shell-vault-chip { min-width: 0; max-width: 100%; white-space: normal; }
+.shell-vault-chip .ui-chip-label { overflow-wrap: anywhere; }
+.shell-vault-arrow { flex-shrink: 0; color: var(--muted); }
+.shell-account-none { margin: 0; color: var(--muted); font-size: var(--text-small); }
+.shell-account-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; padding-top: 18px; border-top: 1px solid var(--hair); }
+.shell-account-action { width: 100%; min-width: 0; }
+.shell-account-action svg { flex-shrink: 0; color: var(--muted); }
+.shell-accounts-empty { display: grid; justify-items: center; gap: 10px; padding: 28px 8px 12px; text-align: center; }
+.shell-accounts-empty-icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg-2); }
+.shell-accounts-empty h3 { margin: 8px 0 0; font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; color: var(--fg); }
+.shell-accounts-empty p { max-width: 30ch; margin: 0 0 10px; color: var(--muted); font-size: var(--text-body); line-height: 1.55; }
+.shell-accounts-empty .ui-btn-primary { min-width: 160px; }
+
+/* ---------- Narrow: phones (390px) and the extension side panel (360-420px) ---------- */
+.mobile-tabbar { display: none; }
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .desktop-app.shell-app { background: var(--ink-1); }
+  .desktop-app .desktop-content.shell-content { padding: 18px 16px 28px; scrollbar-width: none; }
+  .desktop-app .desktop-content.shell-content::-webkit-scrollbar { display: none; }
+  .shell-topbar {
+    height: calc(64px + env(safe-area-inset-top, 0px));
+    padding: env(safe-area-inset-top, 0px) 12px 0 16px;
+    gap: 8px;
+  }
+  .shell-topbar-start { gap: 10px; }
+  .shell-topbar-end { gap: 4px; }
+  .shell-pill { max-width: 172px; gap: 8px; padding: 4px 10px 4px 4px; }
+  .shell-pill-logo { width: 30px; height: 30px; }
+  /* Compact pill: logo, short address and the Vault tag; the name stays for assistive tech. */
+  .shell-pill[data-signed-in] .shell-pill-text strong {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .shell-pill[data-signed-in] .shell-pill-text small { font-size: var(--text-small); color: var(--fg-2); }
+  .shell-pill:not([data-signed-in]) .shell-pill-text small { display: none; }
+  .shell-pill-chevron { display: none; }
+  .shell-settings { width: 44px; height: 44px; color: var(--fg-2); }
+
+  .desktop-app .mobile-tabbar.shell-tabbar {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    flex-shrink: 0;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+    min-height: 72px;
+    padding: 6px 6px max(8px, env(safe-area-inset-bottom, 0px));
+    background: var(--glass-tabbar);
+    -webkit-backdrop-filter: var(--blur-tabbar);
+    backdrop-filter: var(--blur-tabbar);
+    border-top: 1px solid var(--hair);
+  }
+  html[data-wallet-keyboard="open"] .desktop-app .mobile-tabbar.shell-tabbar { display: none; }
+  .mobile-tabbar.shell-tabbar button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 56px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-md);
+    background: none;
+    color: var(--faint);
+    cursor: pointer;
+  }
+  .shell-tab-icon { display: grid; place-items: center; width: 48px; height: 30px; border-radius: var(--r-pill); transition: background-color var(--t-hover), color var(--t-hover); }
+  .shell-tab-label { font: 500 var(--text-min)/1.2 var(--font-ui); letter-spacing: .01em; }
+  .mobile-tabbar.shell-tabbar button[aria-current="page"] { color: var(--fg); }
+  .mobile-tabbar.shell-tabbar button[aria-current="page"] .shell-tab-icon { background: var(--accent-tint); color: var(--accent); }
+  .mobile-tabbar.shell-tabbar button:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+
+  /* The Send loading fallback backdrop: charcoal, not navy. */
+  .desktop-app .desktop-modal-backdrop { background: var(--glass-backdrop); }
+
+  .shell-vault-row { margin-left: 16px; }
+  .shell-account-row { min-height: 64px; }
+  .shell-account-card > .shell-account-cog { margin-right: 6px; }
+}
+@media (max-width: 360px) {
+  .shell-pill { max-width: 150px; }
+}

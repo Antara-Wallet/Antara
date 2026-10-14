@@ -1,0 +1,7 @@
+{
+  "created": "2026-10-12",
+  "tool": "built-in image_gen",
+  "purpose": "Obsidian Earth equirectangular texture for the interactive landing scene",
+  "file": "earth-obsidian.png",
+  "prompt": "Generate a production-ready seamless equirectangular 2:1 Earth color texture for mapping onto a 3D sphere, full rectangular map with NO sphere, NO perspective, NO text, NO UI, NO border. Geographic layout recognizable and accurate: Americas at left, Europe Africa center, Asia right, Australia lower right, Antarctica bottom. Longitude horizontally spans -180 to +180, latitude top +90 to bottom -90. Style: cinematic OBSIDIAN EARTH, oceans near-black dark smooth graphite, continents subtly raised rugged black basalt / charcoal stone plates, intricate geological fractured detail in continents, fine selective luminous cobalt blue outlines along coastlines and a few geological seams, finely detailed tactile stone. Medium-dark charcoal continents slightly brighter than almost black oceans so geography remains legible, tiny sparing silver-gray highlights in stone. Uniform flat texture lighting no baked sphere shading or highlights or shadows, no clouds, no stars, no ring, no space. Left/right edges must tile seamlessly, poles smooth and dark to reduce pinching. Premium photoreal material texture, detailed microstructure without excessive emissive areas. Landscape 2:1 atlas texture."
+}

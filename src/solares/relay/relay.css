@@ -1,0 +1,224 @@
+/*
+ * Swap (docs/UI_ARGUS_PARITY.md 6.10), Area C. ARGUS S15 structure on ANTARA's tokens
+ * (src/solares/ui/tokens.css): black and charcoal surfaces, one ice primary, the cobalt
+ * accent only on small marks. New markup uses `swap-` classes; the legacy `trade-` names
+ * kept for tests (.trade-card, span.trade-asset .trade-coin, .trade-notice) are overridden
+ * with selectors more specific than mobile.css's `.desktop-app .trade-*` rules, and every
+ * rule is scoped under `.swap-screen` or `.swap-sheet` so the shell's `.desktop-app button,
+ * input, select { font: inherit }` and heading rules never win.
+ */
+
+/* --antara-body was referenced here but never defined (4.2): define it for every swap root. */
+.swap-screen,
+.swap-sheet { --antara-body: var(--font-ui, "Inter Variable", Inter, system-ui, sans-serif); }
+.swap-screen *, .swap-sheet * { box-sizing: border-box; }
+
+/* ---------- Screen ---------- */
+.swap-screen { width: min(100%, 520px); margin: 8px auto 48px; color: var(--fg); font: 400 var(--text-body)/1.5 var(--antara-body); -webkit-font-smoothing: antialiased; }
+.swap-screen .swap-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin: 0 0 20px; }
+.swap-screen .swap-head h2 { margin: 0 0 6px; color: var(--fg); font: 550 var(--text-screen)/1.15 var(--font-display); letter-spacing: -.04em; }
+.swap-screen .swap-head p { margin: 0; color: var(--muted); font-size: var(--text-body); }
+.swap-screen .swap-settings-button { flex: 0 0 auto; margin: -4px -6px 0 0; color: var(--fg-2); }
+
+/* ---------- Card (the one card surface; overrides mobile.css .desktop-app .trade-card) ---------- */
+.swap-screen .trade-card.swap-card { padding: 8px; background: var(--surface-1); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: none; }
+.swap-screen .swap-card fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+
+/* ---------- Pay and receive panels ---------- */
+.swap-screen .swap-panel { padding: 14px 16px 12px; background: var(--surface-2); border: 1px solid var(--hair); border-radius: var(--r-md); transition: border-color var(--t-hover); }
+.swap-screen .swap-panel:focus-within { border-color: #9cbfff38; }
+.swap-screen .swap-panel[data-invalid] { border-color: #ff8f8640; }
+.swap-screen .swap-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 30px; }
+.swap-screen .swap-panel-label { flex: 0 0 auto; color: var(--fg-2); font: 500 var(--text-body)/1.3 var(--antara-body); white-space: nowrap; }
+.swap-screen .swap-estimated { padding: 2px 7px; border: 1px solid var(--line); border-radius: var(--r-xs); color: var(--muted); font: 500 var(--text-min)/1.4 var(--antara-body); }
+.swap-screen .swap-network { display: inline-flex; align-items: center; gap: 6px; min-width: 0; color: var(--muted); font-size: var(--text-small); }
+.swap-screen .swap-network label { cursor: pointer; }
+.swap-screen .swap-network select,
+.swap-sheet .swap-picker-network select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 0;
+  max-width: 190px;
+  min-height: 30px;
+  padding: 0 28px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xs);
+  background: var(--surface-3) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa5b6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 8px center / 14px;
+  color: var(--fg);
+  font: 500 var(--text-small)/1.2 var(--antara-body);
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.swap-screen .swap-network select:hover { border-color: #ffffff24; }
+.swap-screen .swap-network option,
+.swap-sheet .swap-picker-network option { background: var(--surface-2); color: var(--fg); }
+
+.swap-screen .swap-amount-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; margin: 12px 0 10px; }
+.swap-screen .swap-amount { flex: 1 1 auto; width: 100%; min-width: 0; margin: 0; padding: 0; border: 0; outline: none; background: none; color: var(--fg); font: 500 38px/1.15 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.swap-screen .swap-amount::placeholder { color: var(--faint); opacity: 1; }
+.swap-screen .swap-amount:focus-visible { outline: none; }
+.swap-screen .swap-panel[data-invalid] .swap-amount { color: var(--danger); }
+.swap-screen .swap-estimate { color: var(--fg); }
+/* Unknown amounts are a muted zero (wallet/BalancePlaceholder), never a dash. */
+.swap-screen .swap-estimate .balance-placeholder { color: var(--faint); }
+.swap-screen .swap-quote-caption { color: var(--faint); font: 500 var(--text-min)/1.4 var(--antara-body); }
+.swap-screen .swap-balance-col { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; }
+.swap-screen .swap-balance-col .balance-load-failed { font-size: var(--text-min); }
+.swap-screen .swap-balance-col .balance-retry { font-size: var(--text-min); }
+
+/* Pay asset (a label, never a control) and the receive token button. Overrides mobile.css .desktop-app .trade-asset. */
+.swap-screen .trade-asset.swap-asset,
+.swap-screen .swap-token-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 58%;
+  min-height: 44px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  color: var(--fg);
+  font: 600 15px/1.1 var(--antara-body);
+  letter-spacing: -.01em;
+}
+.swap-screen .trade-asset.swap-asset strong,
+.swap-screen .swap-token-button strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: inherit; }
+.swap-screen .swap-token-button { padding-right: 10px; cursor: pointer; transition: background-color var(--t-hover), border-color var(--t-hover); }
+.swap-screen .swap-token-button svg { flex: 0 0 auto; color: var(--muted); }
+.swap-screen .swap-token-button:hover:not(:disabled) { background: #20232a; border-color: #ffffff24; }
+
+/* Token marks (TokenAvatar). Neutral disc; only pinned Circle USDC carries the USDC mark's own colour. */
+.trade-coin { display: inline-grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line, #ffffff14); background: #1c1f25; color: var(--fg-2, #c9d2df); font: 600 11px/1 var(--font-ui, "Inter Variable", sans-serif); letter-spacing: -.02em; text-transform: none; }
+.trade-coin svg { width: 18px; height: 18px; }
+.trade-coin.trade-coin-usdc { border-color: transparent; background: #2775ca; color: #fff; }
+
+.swap-screen .swap-panel-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 30px; }
+.swap-screen .swap-balance { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.swap-screen .swap-chips { display: flex; flex: 0 0 auto; gap: 6px; }
+.swap-screen .swap-chip { min-width: 44px; min-height: 28px; margin: 0; padding: 0 10px; border: 1px solid var(--line); border-radius: var(--r-xs); background: var(--surface-3); color: var(--fg-2); font: 600 var(--text-small)/1 var(--antara-body); cursor: pointer; transition: background-color var(--t-hover), border-color var(--t-hover), color var(--t-hover); }
+.swap-screen .swap-chip:hover:not(:disabled) { border-color: #9cbfff40; background: var(--accent-tint); color: var(--fg); }
+.swap-screen .swap-chip:disabled { opacity: .45; cursor: default; }
+
+/* Decorative arrow between the panels: pay is always the stablecoin, so there is no flip. */
+.swap-screen .swap-divider { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; height: 8px; }
+.swap-screen .swap-divider span { display: grid; place-items: center; width: 36px; height: 36px; border: 4px solid var(--surface-1); border-radius: var(--r-sm); background: var(--surface-3); color: var(--muted); }
+
+/* ---------- Review (describeSettlement verbatim) ---------- */
+.swap-screen .swap-review { margin: 12px 4px 0; }
+.swap-screen .swap-spending { display: flex; align-items: center; gap: 9px; margin: 0 0 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); font-size: var(--text-small); line-height: 1.45; }
+.swap-screen .swap-spending svg { flex: 0 0 auto; color: var(--muted); }
+.swap-screen .swap-review-rows { margin: 0; padding: 0; }
+.swap-screen .swap-review-rows > div { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 8px 2px; border-bottom: 1px solid var(--hair); }
+.swap-screen .swap-review-rows dt { flex: 0 0 auto; max-width: 42%; color: var(--muted); font-size: var(--text-small); }
+.swap-screen .swap-review-rows dd { min-width: 0; margin: 0; color: var(--fg); font-size: var(--text-small); font-variant-numeric: tabular-nums; text-align: right; overflow-wrap: anywhere; }
+.swap-screen .swap-review-rows dd[data-expired] { color: var(--warn); }
+.swap-screen .swap-terms { margin: 4px 2px 0; }
+.swap-screen .swap-terms p { margin: 10px 0 0; color: var(--muted); font-size: var(--text-small); line-height: 1.6; }
+.swap-screen .swap-acknowledge { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0 0; padding: 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg); font: 400 var(--text-small)/1.55 var(--antara-body); cursor: pointer; }
+.swap-screen .swap-acknowledge input { flex: 0 0 auto; width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--primary-bg); cursor: pointer; }
+.swap-screen .swap-acknowledge input:disabled { cursor: not-allowed; }
+.swap-screen .swap-review[data-expired] .swap-acknowledge { color: var(--muted); }
+
+/* ---------- Notices, submit, attribution ---------- */
+.swap-screen .swap-error { margin: 12px 4px 0; overflow-wrap: anywhere; }
+.swap-screen .swap-notice { position: relative; margin: 12px 4px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); font-size: var(--text-small); line-height: 1.55; overflow-wrap: anywhere; }
+/* The warn tone is a small mark only (4.1). */
+.swap-screen .swap-fee-notice { padding-left: 28px; }
+.swap-screen .swap-fee-notice::before { content: ""; position: absolute; left: 12px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: var(--warn); }
+.swap-screen .ui-btn-primary.swap-submit { width: 100%; min-height: 52px; margin: 12px 0 0; border-radius: var(--r-md); font: 600 15px/1.2 var(--antara-body); white-space: normal; }
+.swap-screen .swap-attribution { margin: 10px 0 2px; color: var(--muted); font-size: var(--text-min); text-align: center; }
+
+/* ---------- Swap status ---------- */
+.swap-screen .swap-status { margin-top: 16px; padding: 4px 16px; border-radius: var(--r-lg); }
+.swap-screen .swap-status-title { margin: 14px 0 6px; color: var(--fg); font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; }
+.swap-screen .swap-status-item { padding: 14px 0; border-top: 1px solid var(--hair); }
+.swap-screen .swap-status-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.swap-screen .swap-status-head strong { min-width: 0; color: var(--fg); font: 550 var(--text-body)/1.35 var(--antara-body); overflow-wrap: anywhere; }
+.swap-screen .swap-status-item p { margin: 6px 0 0; color: var(--muted); font-size: var(--text-small); line-height: 1.55; overflow-wrap: anywhere; }
+.swap-screen .swap-status-item p.swap-status-route { margin-top: 2px; color: var(--fg-2); }
+.swap-screen .swap-status-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; margin-top: 8px; }
+.swap-screen .swap-status-links a,
+.swap-screen .swap-status-links button { display: inline-flex; align-items: center; min-height: 32px; margin: 0; padding: 0; border: 0; background: none; color: var(--accent); font: 500 var(--text-small)/1.2 var(--antara-body); text-decoration: none; cursor: pointer; }
+.swap-screen .swap-status-links a:hover,
+.swap-screen .swap-status-links button:hover:not(:disabled) { color: var(--fg); }
+.swap-screen .swap-status-links button:disabled { opacity: .45; cursor: default; }
+.swap-screen .swap-release { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); }
+.swap-screen .swap-release p { margin: 0; color: var(--fg-2); }
+
+/* One focus ring (2px, offset 2px), over the shell's older rings. */
+.swap-screen :is(button, select, input, a):focus-visible,
+.desktop-app .swap-screen :is(button, select, input, a):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.desktop-app .swap-screen .swap-amount:focus-visible { outline: none; }
+
+/* ---------- Sheets: token picker and settings (rendered in .ui-layer) ---------- */
+.swap-sheet { font-family: var(--antara-body); }
+.swap-sheet .swap-picker-controls { position: sticky; top: -4px; z-index: 1; display: grid; gap: 10px; margin: -4px -22px 0; padding: 4px 22px 12px; background: var(--surface-1); }
+.swap-sheet .swap-picker-network { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: var(--text-small); }
+.swap-sheet .swap-picker-network select { width: min(62%, 260px); max-width: none; min-height: 40px; padding-left: 12px; border-radius: var(--r-sm); background-color: var(--surface-2); font-size: var(--text-body); }
+.swap-sheet .swap-picker-search { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--muted); }
+.swap-sheet .swap-picker-search:focus-within { border-color: #9cbfff59; }
+.swap-sheet .swap-picker-search input { flex: 1 1 auto; min-width: 0; height: 42px; margin: 0; padding: 0; border: 0; background: none; color: var(--fg); font: 400 14px/1.2 var(--antara-body); }
+.swap-sheet .swap-picker-search input::placeholder { color: var(--faint); opacity: 1; }
+.ui-layer .swap-sheet .swap-picker-search input:focus-visible { outline: none; }
+.ui-layer .swap-sheet .swap-picker-search:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.swap-sheet .swap-picker-results { display: grid; gap: 6px; min-height: 96px; padding-top: 2px; }
+.swap-sheet .swap-picker-group { margin: 6px 2px 2px; }
+.swap-sheet .swap-picker-row { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 60px; margin: 0; padding: 10px 12px; border: 1px solid var(--hair); border-radius: var(--r-md); background: #ffffff03; color: var(--fg); font: inherit; text-align: left; cursor: pointer; transition: background-color var(--t-hover), border-color var(--t-hover); }
+.swap-sheet .swap-picker-row:hover { background: var(--surface-2); border-color: var(--line); }
+.swap-sheet .swap-picker-row[data-selected] { background: var(--surface-2); border-color: var(--line); }
+.swap-sheet .swap-picker-identity { flex: 1 1 auto; min-width: 0; display: grid; gap: 2px; }
+.swap-sheet .swap-picker-identity strong { color: var(--fg); font: 600 14px/1.25 var(--antara-body); }
+.swap-sheet .swap-picker-identity small { color: var(--muted); font-size: var(--text-small); }
+.swap-sheet .swap-picker-identity code,
+.swap-sheet .swap-picker-contract { margin-top: 2px; color: var(--muted); font: 450 var(--text-min)/1.5 var(--font-mono); overflow-wrap: anywhere; }
+.swap-sheet .swap-picker-contract .ui-address { display: inline; }
+.swap-sheet .swap-picker-contract .ui-address-text { font-size: var(--text-min); }
+.swap-sheet .swap-picker-check { flex: 0 0 auto; display: grid; place-items: center; color: var(--ice); }
+.swap-sheet .swap-picker-state { margin: 0; padding: 12px 4px; color: var(--muted); font-size: var(--text-small); line-height: 1.6; }
+.swap-sheet .swap-picker-error { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+.swap-sheet .swap-picker-error .ui-btn-text { min-height: 32px; }
+.swap-sheet .swap-picker-note { margin: 14px 2px 0; color: var(--muted); font-size: var(--text-min); line-height: 1.6; }
+
+.swap-sheet .swap-slippage { min-width: 0; margin: 0; padding: 0; border: 0; }
+.swap-sheet .swap-slippage legend { padding: 0; color: var(--fg); font: 550 var(--text-section)/1.3 var(--font-display); letter-spacing: -.015em; }
+.swap-sheet .swap-settings-hint { margin: 4px 0 0; color: var(--muted); font-size: var(--text-small); line-height: 1.55; }
+.swap-sheet .swap-segments { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.swap-sheet .swap-segment { position: relative; display: grid; place-items: center; min-height: 44px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface-2); color: var(--fg-2); font: 600 14px/1 var(--antara-body); cursor: pointer; transition: background-color var(--t-hover), border-color var(--t-hover), color var(--t-hover); }
+.swap-sheet .swap-segment:hover { background: var(--surface-3); }
+.swap-sheet .swap-segment[data-selected] { border-color: #9cbfff59; background: var(--accent-tint); color: var(--fg); }
+.swap-sheet .swap-segment input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.ui-layer .swap-sheet .swap-segment input:focus-visible { outline: none; }
+.ui-layer .swap-sheet .swap-segment:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.swap-sheet .swap-settings-note { margin: 20px 0 0; color: var(--muted); font-size: var(--text-small); line-height: 1.6; }
+.swap-sheet .swap-sheet-done { min-width: 128px; }
+
+/* ---------- Narrow: phones (390px) and the side panel (360-420px). 44px touch targets. ---------- */
+@media (max-width: 640px), (max-height: 500px) and (pointer: coarse) {
+  .swap-screen { margin: 2px auto 24px; }
+  .swap-screen .swap-head { margin-bottom: 16px; }
+  .swap-screen .swap-card.trade-card { padding: 6px; border-radius: var(--r-lg); }
+  .swap-screen .swap-panel { padding: 12px 12px 10px; }
+  .swap-screen .swap-panel-head { min-height: 44px; }
+  .swap-screen .swap-network select { min-height: 40px; max-width: 150px; font-size: var(--text-body); }
+  .swap-screen .swap-amount { font-size: 32px; }
+  .swap-screen .trade-asset.swap-asset,
+  .swap-screen .swap-token-button { gap: 7px; font-size: 14px; }
+  .swap-screen .swap-chip { min-height: 44px; min-width: 48px; }
+  .swap-screen .swap-panel-foot { min-height: 44px; }
+  .swap-screen .swap-review { margin-inline: 2px; }
+  .swap-screen .swap-review-rows > div { gap: 12px; }
+  .swap-screen .swap-status { padding-inline: 14px; }
+  .swap-screen .swap-status-links a,
+  .swap-screen .swap-status-links button { min-height: 44px; }
+  .swap-sheet .swap-picker-controls { margin-inline: -18px; padding-inline: 18px; }
+  .swap-sheet .swap-picker-network select { min-height: 44px; font-size: 16px; }
+  .swap-sheet .swap-picker-search { min-height: 48px; }
+  .swap-sheet .swap-picker-search input { height: 46px; font-size: 16px; }
+  .swap-sheet .swap-picker-row { min-height: 64px; }
+}
+@media (max-width: 360px) {
+  .swap-screen .swap-amount { font-size: 28px; }
+  .swap-screen .swap-network select { max-width: 128px; }
+}

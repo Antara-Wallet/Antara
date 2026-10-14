@@ -1,0 +1,11 @@
+# Automatically generated - DO NOT EDIT!
+
+[[permission]]
+identifier = "allow-reveal-mnemonic"
+description = "Enables the reveal_mnemonic command without any pre-configured scope."
+commands.allow = ["reveal_mnemonic"]
+
+[[permission]]
+identifier = "deny-reveal-mnemonic"
+description = "Denies the reveal_mnemonic command without any pre-configured scope."
+commands.deny = ["reveal_mnemonic"]

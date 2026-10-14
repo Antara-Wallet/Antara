@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "files": [
+    {
+      "id": "desktop-windows",
+      "name": "ANTARA for Windows (64-bit installer)",
+      "file": "/downloads/ANTARA-Setup-1.0.0-x64.exe",
+      "size": 42383510,
+      "sha256": "443bbe5ef6cfd3bef947789df7f8b01fd39b056c5e21d59b40544689e5000eb5"
+    },
+    {
+      "id": "chrome-extension",
+      "name": "ANTARA Chrome extension (zip, load unpacked)",
+      "file": "/downloads/ANTARA-Chrome-Extension-1.0.0.zip",
+      "size": 17765428,
+      "sha256": "4ad5514403547d1dc55a9a95c15774ae45996ec444fdaa554ed7669f21416d8e"
+    }
+  ]
+}
